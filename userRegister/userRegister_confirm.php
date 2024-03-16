@@ -17,6 +17,7 @@ $company_name = $_POST['company_name'];
 $business = $_POST['business'];
 $staff_code = $_POST['staff_code'];
 $image = $_POST['image'];
+$remarks = $_POST['remarks'];
 $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
 
   // もしログインしていなければ、ログインページにリダイレクト
@@ -105,6 +106,10 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
               <td><?php echo $image; ?></td>
           </tr>
           <tr>
+              <td>備考</td>
+              <td><?php echo $remarks; ?></td>
+          </tr>
+          <tr>
               <td>アカウント権限</td>
               <td><?php echo $authority; ?></td>
           </tr>
@@ -126,12 +131,13 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
           <input type="hidden" name="business" value="<?php echo isset($_POST['business']) ? htmlspecialchars($_POST['business'], ENT_QUOTES) : ''; ?>">
           <input type="hidden" name="staff_code" value="<?php echo isset($_POST['staff_code']) ? htmlspecialchars($_POST['staff_code'], ENT_QUOTES) : ''; ?>">
           <input type="hidden" name="image" value="<?php echo isset($_POST['image']) ? htmlspecialchars($_POST['image'], ENT_QUOTES) : ''; ?>">
+          <input type="hidden" name="remarks" value="<?php echo isset($_POST['remarks']) ? htmlspecialchars($_POST['remarks'], ENT_QUOTES) : ''; ?>">
           <input type="hidden" name="authority" value="<?php echo isset($_POST['authority']) ? htmlspecialchars($_POST['authority'], ENT_QUOTES) : ''; ?>">
           <button type="submit">前に戻る</button>
         </form>
 
         <!-- 登録処理をしてアカウント登録完了画面に遷移 -->
-        <form method="post" action="useerRegister_complete.php" id="registerDatabase">
+        <form method="post" action="userRegister_complete.php" id="registerDatabase">
           <!-- 各確認要素 -->
           <button type="submit">登録する</button>
           <input type="hidden" name="familyName" value="<?php echo isset($_POST['familyName']) ? htmlspecialchars($_POST['familyName'], ENT_QUOTES) : ''; ?>">
@@ -147,6 +153,7 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
           <input type="hidden" name="business" value="<?php echo isset($_POST['business']) ? htmlspecialchars($_POST['business'], ENT_QUOTES) : ''; ?>">
           <input type="hidden" name="staff_code" value="<?php echo isset($_POST['staff_code']) ? htmlspecialchars($_POST['staff_code'], ENT_QUOTES) : ''; ?>">
           <input type="hidden" name="image" value="<?php echo isset($_POST['image']) ? htmlspecialchars($_POST['image'], ENT_QUOTES) : ''; ?>">
+          <input type="hidden" name="remarks" value="<?php echo isset($_POST['remarks']) ? htmlspecialchars($_POST['remarks'], ENT_QUOTES) : ''; ?>">
           <input type="hidden" name="authority" value="<?php echo isset($_POST['authority']) ? htmlspecialchars($_POST['authority'], ENT_QUOTES) : ''; ?>">
         </form>
 
@@ -156,6 +163,5 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
   <footer>
     <p>Copytifht the one which provides A to Z about programming</p>
   </footer>
-
 </body>
 </html>

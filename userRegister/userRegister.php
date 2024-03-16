@@ -36,7 +36,7 @@
         <br>
 
         <label for="postalCode">郵便番号:</label>
-        <input type="text" id="postalCode" name="postalCode" maxlength="8" pattern="^" required placeholder="半角英数字" <?php if (isset($_POST['postalCode'])) echo 'value="' . htmlspecialchars($_POST['postalCode'], ENT_QUOTES) . '"'; ?>>
+        <input type="text" id="postalCode" name="postalCode" maxlength="8"  required placeholder="半角英数字" <?php if (isset($_POST['postalCode'])) echo 'value="' . htmlspecialchars($_POST['postalCode'], ENT_QUOTES) . '"'; ?>>
         <br>
 
         <!-- 住所 -->
@@ -58,6 +58,10 @@
 
         <label for="image">証明写真:</label>
         <input type="file" id="image" name="image" accept=".jpg, .jpeg, .png, .gif" placeholder="画像選択してください">
+        <br>
+
+        <label for="remarks">備考:</label>
+        <input type="text" id="remarks" name="remarks" maxlength="1000" placeholder=""oninput="validateAddress(this)" <?php if (isset($_POST['remarks'])) echo 'value="' . htmlspecialchars($_POST['remarks'], ENT_QUOTES) . '"'; ?>>
         <br>
 
         <label for="authority">アカウント権限:</label>
