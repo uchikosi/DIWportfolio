@@ -1,13 +1,11 @@
 <main>
-    <?php if ($role === '管理者'): ?>
     <div id="regist">
-      <h1>アカウント登録フォーム</h1>
+      <h1>スタッフ登録フォーム</h1>
       <form method="post" action="userRegist_confirm.php" onsubmit="return validateForm()">
         <label for="familyName">名前（姓）:</label>
         <input type="text" id="familyName" name="familyName" maxlength="10" autofocus oninput="validateName(this, true)" placeholder="漢字orひらがな"
           <?php if (isset($_POST['familyName'])) echo 'value="' . htmlspecialchars($_POST['familyName'], ENT_QUOTES) . '"'; ?>>
         <br>
-        <!-- validateName(this, true)"　validateNameの引数をLastNameになっているためelseの時に発火する -->
 
         <label for="lastName">名前（名）:</label>
         <input type="text" id="lastName" name="lastName" maxlength="10" autofocus oninput="validateName(this, false)"  placeholder="漢字orひらがな"
@@ -41,9 +39,9 @@
         <input type="text" id="postalCode" name="postalCode" maxlength="7" pattern="^[0-9]+$" required placeholder="半角英数字" <?php if (isset($_POST['postalCode'])) echo 'value="' . htmlspecialchars($_POST['postalCode'], ENT_QUOTES) . '"'; ?>>
         <br>
 
-        <!-- 住所（番地） -->
+        <!-- 住所 -->
         <label for="address2">住所（番地）:</label>
-        <input type="text" id="address2" name="address2" maxlength="100" required placeholder="日本語で入力"oninput="validateAddress(this)" <?php if (isset($_POST['address2'])) echo 'value="' . htmlspecialchars($_POST['address2'], ENT_QUOTES) . '"'; ?>>
+        <input type="text" id="address" name="address" maxlength="100" required placeholder="日本語で入力"oninput="validateAddress(this)" <?php if (isset($_POST['address'])) echo 'value="' . htmlspecialchars($_POST['address2'], ENT_QUOTES) . '"'; ?>>
         <br>
 
         <label for="authority">アカウント権限:</label>
@@ -53,16 +51,10 @@
         </select>
         <br>
 
-        <!-- oninput 入力フィールドに変更を加えるたびにjsに設定したバリデーションが行われる -->
-        <!-- pattern属性 それぞれの項目の入力可能な文字を制限する　正規表現 -->
-        <!-- required属性　入力必須 -->
-        <!-- placeholder属性　フォームに説明を記入できる -->
-
         <button type="submit">確認する</button>
       </form>
-      <?php else: ?>
          <h1>一般の権限では登録できません。</h1>
-      <?php endif; ?>
+
     </div>
   </main>
   <footer>
