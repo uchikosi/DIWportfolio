@@ -1,7 +1,7 @@
 <main>
     <div id="regist">
       <h1>スタッフ登録フォーム</h1>
-      <form method="post" action="userRegist_confirm.php" onsubmit="return validateForm()">
+      <form method="post" action="userRegister_confirm.php" onsubmit="return validateForm()">
         <label for="familyName">名前（姓）:</label>
         <input type="text" id="familyName" name="familyName" maxlength="10" autofocus oninput="validateName(this, true)" placeholder="漢字orひらがな"
           <?php if (isset($_POST['familyName'])) echo 'value="' . htmlspecialchars($_POST['familyName'], ENT_QUOTES) . '"'; ?>>
@@ -36,12 +36,28 @@
         <br>
 
         <label for="postalCode">郵便番号:</label>
-        <input type="text" id="postalCode" name="postalCode" maxlength="7" pattern="^[0-9]+$" required placeholder="半角英数字" <?php if (isset($_POST['postalCode'])) echo 'value="' . htmlspecialchars($_POST['postalCode'], ENT_QUOTES) . '"'; ?>>
+        <input type="text" id="postalCode" name="postalCode" maxlength="8" pattern="^" required placeholder="半角英数字" <?php if (isset($_POST['postalCode'])) echo 'value="' . htmlspecialchars($_POST['postalCode'], ENT_QUOTES) . '"'; ?>>
         <br>
 
         <!-- 住所 -->
-        <label for="address2">住所（番地）:</label>
-        <input type="text" id="address" name="address" maxlength="100" required placeholder="日本語で入力"oninput="validateAddress(this)" <?php if (isset($_POST['address'])) echo 'value="' . htmlspecialchars($_POST['address2'], ENT_QUOTES) . '"'; ?>>
+        <label for="address">住所:</label>
+        <input type="text" id="address" name="address" maxlength="100" required placeholder="日本語で入力"oninput="validateAddress(this)" <?php if (isset($_POST['address'])) echo 'value="' . htmlspecialchars($_POST['address'], ENT_QUOTES) . '"'; ?>>
+        <br>
+
+        <label for="company_name">勤務先会社名:</label>
+        <input type="text" id="company_name" name="company_name" maxlength="50" required placeholder=""oninput="validateAddress(this)" <?php if (isset($_POST['company_name'])) echo 'value="' . htmlspecialchars($_POST['company_name'], ENT_QUOTES) . '"'; ?>>
+        <br>
+
+        <label for="business">担当業務:</label>
+        <input type="text" id="business" name="business" maxlength="50"  placeholder=""oninput="validateAddress(this)" <?php if (isset($_POST['business'])) echo 'value="' . htmlspecialchars($_POST['business'], ENT_QUOTES) . '"'; ?>>
+        <br>
+
+        <label for="staff_code">スタッフコード:</label>
+        <input type="text" id="staff_code" name="staff_code" maxlength="6" required placeholder=""oninput="validateAddress(this)" <?php if (isset($_POST['staff_code'])) echo 'value="' . htmlspecialchars($_POST['staff_code'], ENT_QUOTES) . '"'; ?>>
+        <br>
+
+        <label for="image">証明写真:</label>
+        <input type="file" id="image" name="image" accept=".jpg, .jpeg, .png, .gif" placeholder="画像選択してください">
         <br>
 
         <label for="authority">アカウント権限:</label>
@@ -53,8 +69,6 @@
 
         <button type="submit">確認する</button>
       </form>
-         <h1>一般の権限では登録できません。</h1>
-
     </div>
   </main>
   <footer>
