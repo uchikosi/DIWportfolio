@@ -2,9 +2,9 @@
 // セッションを開始または再開します
 session_start();
 
-// セッション変数を破棄してログアウトします
-session_unset(); // セッション変数をクリア
-session_destroy(); // セッションを破棄
+// セッションを破棄してログアウトします
+session_unset();
+session_destroy();
 
 // ログインページにリダイレクトします
 header("Location: login.php");

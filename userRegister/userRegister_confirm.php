@@ -34,7 +34,7 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="css/shareStyle.css">
+  <link rel="stylesheet" type="text/css" href="css/">
   <title>スタッフデータ入力確認画面</title>
 </head>
 <body>
@@ -49,74 +49,72 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
     </div>
   </header>
   <main>
-    <div id="">
-      <div class="leftmain">
-         <h1>スタッフデータ入力確認<</h1>
+    <div class="main">
+      <h1>スタッフデータ入力確認<</h1>
       <table>
+        <tr>
+          <td>名前（姓）</td>
+          <td><?php echo $familyName; ?></td>
+        </tr>
+        <tr>
+          <td>名前（名）</td>
+          <td><?php echo $lastName; ?></td>
+        </tr>
+        <tr>
+          <td>カナ（姓）</td>
+          <td><?php echo $familyNameKana; ?></td>
+        </tr>
+        <tr>
+          <td>カナ（名）</td>
+          <td><?php echo $lastNameKana; ?></td>
+        </tr>
+        <tr>
+          <td>メールアドレス</td>
+          <td><?php echo $mail; ?></td>
+        </tr>
+        <tr>
+          <td>パスワード</td>
+          <td><?php echo str_repeat("●", strlen($password)); ?></td>
+        </tr>
+        <tr>
+          <td>性別</td>
+          <td><?php echo $gender; ?></td>
+        </tr>
+        <tr>
+          <td>郵便番号</td>
+          <td><?php echo $postalCode; ?></td>
+        </tr>
+        <tr>
+          <td>住所</td>
+          <td><?php echo $address; ?></td>
+        </tr>
+        <tr>
+          <td>勤務先会社名</td>
+          <td><?php echo $company_name; ?></td>
+        </tr>
           <tr>
-              <td>名前（姓）</td>
-              <td><?php echo $familyName; ?></td>
-          </tr>
+          <td>担当業務</td>
+          <td><?php echo $business; ?></td>
+        </tr>
           <tr>
-              <td>名前（名）</td>
-              <td><?php echo $lastName; ?></td>
-          </tr>
+          <td>スタッフコード</td>
+          <td><?php echo $staff_code; ?></td>
+        </tr>
           <tr>
-              <td>カナ（姓）</td>
-              <td><?php echo $familyNameKana; ?></td>
-          </tr>
-          <tr>
-              <td>カナ（名）</td>
-              <td><?php echo $lastNameKana; ?></td>
-          </tr>
-          <tr>
-              <td>メールアドレス</td>
-              <td><?php echo $mail; ?></td>
-          </tr>
-          <tr>
-              <td>パスワード</td>
-              <td><?php echo str_repeat("●", strlen($password)); ?></td>
-          </tr>
-          <tr>
-              <td>性別</td>
-              <td><?php echo $gender; ?></td>
-          </tr>
-          <tr>
-              <td>郵便番号</td>
-              <td><?php echo $postalCode; ?></td>
-          </tr>
-          <tr>
-              <td>住所</td>
-              <td><?php echo $address; ?></td>
-          </tr>
-          <tr>
-              <td>勤務先会社名</td>
-              <td><?php echo $company_name; ?></td>
-          </tr>
-           <tr>
-              <td>担当業務</td>
-              <td><?php echo $business; ?></td>
-          </tr>
-           <tr>
-              <td>スタッフコード</td>
-              <td><?php echo $staff_code; ?></td>
-          </tr>
-           <tr>
-              <td>写真</td>
-              <td><?php echo $image; ?></td>
-          </tr>
-          <tr>
-              <td>備考</td>
-              <td><?php echo $remarks; ?></td>
-          </tr>
-          <tr>
-              <td>アカウント権限</td>
-              <td><?php echo $authority; ?></td>
-          </tr>
+          <td>写真</td>
+          <td><?php echo $image; ?></td>
+        </tr>
+        <tr>
+          <td>備考</td>
+          <td><?php echo $remarks; ?></td>
+        </tr>
+        <tr>
+          <td>アカウント権限</td>
+          <td><?php echo $authority; ?></td>
+        </tr>
       </table>
 
       <div class="button-container">
-
         <form method="post" action="userRegister.php" id="registBack">
           <!-- hiddenフィールドの値をフォームに戻す -->
           <input type="hidden" name="familyName" value="<?php echo isset($_POST['familyName']) ? htmlspecialchars($_POST['familyName'], ENT_QUOTES) : ''; ?>">
@@ -156,7 +154,6 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
           <input type="hidden" name="remarks" value="<?php echo isset($_POST['remarks']) ? htmlspecialchars($_POST['remarks'], ENT_QUOTES) : ''; ?>">
           <input type="hidden" name="authority" value="<?php echo isset($_POST['authority']) ? htmlspecialchars($_POST['authority'], ENT_QUOTES) : ''; ?>">
         </form>
-
       </div>
     </div>
   </main>
