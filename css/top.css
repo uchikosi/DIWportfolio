@@ -1,0 +1,20 @@
+li {
+  list-style: none;
+}
+
+#administrator {
+  display: flex;
+
+}
+
+#general {
+  display: flex;
+
+}
+
+li {
+  margin: 5%;
+  padding: 10%;
+  font-size: 30px;
+  background-color: darkgrey;
+}

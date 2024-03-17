@@ -21,13 +21,13 @@ $remarks = $_POST['remarks'];
 $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
 
   // もしログインしていなければ、ログインページにリダイレクト
-  // if (!isset($_SESSION['mail'])) {
-  //   header("Location: login.php");
-  //   exit();
-  // }
+  if (!isset($_SESSION['mail'])) {
+    header("Location: login.php");
+    exit();
+  }
 
   // ユーザーの権限を取得
-  // $role = $_SESSION['role'] ?? null;
+  $role = $_SESSION['role'] ?? null;
 ?>
 
 <!DOCTYPE html>

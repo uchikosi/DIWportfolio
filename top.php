@@ -1,16 +1,19 @@
 <?php
 session_start();
+// セッションの有効期限を設定（1日）
+$expireAfter = 60 * 60 * 24; // 1日（秒数で指定）
+session_set_cookie_params($expireAfter);
 
 // もしログインしていなければ、ログインページにリダイレクト
 if (!isset($_SESSION['mail'])) {
-    header("Location: login.php");
-    exit();
+  header("Location: login.php");
+  exit();
 } else {
-    // ユーザーの権限を取得
-    $role = $_SESSION['role'] ?? null;
-    $user_id = $_SESSION['user_id'] ?? null; // ユーザーIDを取得
-    $family_name = $_SESSION['family_name'] ?? null;
-    $last_name = $_SESSION['last_name'] ?? null;
+  // ユーザーの権限を取得
+  $role = $_SESSION['role'] ?? null;
+  $user_id = $_SESSION['user_id'] ?? null; // ユーザーIDを取得
+  $family_name = $_SESSION['family_name'] ?? null;
+  $last_name = $_SESSION['last_name'] ?? null;
 }
 ?>
 <!DOCTYPE html>
@@ -23,7 +26,7 @@ if (!isset($_SESSION['mail'])) {
 <body>
   <header>
     <div id="menu">
-      <p>勤怠報告</p>
+      <h2>勤怠報告</h2>
       <p>ようこそ <?php echo $family_name.$last_name ; ?>様</p>
       <p> <?php echo $_SESSION['mail']; ?></p>
       <?php if ($role === '管理者'): ?>
@@ -34,23 +37,24 @@ if (!isset($_SESSION['mail'])) {
   </header>
   <main>
     <ul>
-      <li>
-        <a href="timeRegister/timeRegister.php">勤務入力</a>
-      </li>
-      <li>
-        <a href="">勤務一覧</a>
-      </li>
-      <li>
+      <div id='general'>
+        <li>
+          <a href="http://localhost:8888/AttendanceManagementSystem/timeRegister/timeRegister.php">勤務入力</a>
+        </li>
+        <li>
         <a href="">登録情報</a>
       </li>
-      <?php if ($role === '管理者'): ?>
+      </div>
+      <div id=administrator>
+        <?php if ($role === '管理者'): ?>
         <li>
-          <a href="userRegister/userRegister.php">従業員登録</a>
+          <a href="http://localhost:8888/AttendanceManagementSystem/userRegister/userRegister.php">従業員登録</a>
         </li>
         <li>
-          <a href="">従業員検索</a>
+          <a href="#">従業員検索</a>
         </li>
-      <?php endif; ?>
+        <?php endif; ?>
+      </div>
     </ul>
   </main>
 </body>

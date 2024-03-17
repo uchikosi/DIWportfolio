@@ -1,3 +1,25 @@
+<?php
+session_start();
+// もしログインしていなければ、ログインページにリダイレクト
+  if (!isset($_SESSION['mail'])) {
+    header("Location: ../login.php");
+    exit();
+  }
+
+  // ユーザーの権限を取得
+  $role = $_SESSION['role'] ?? null;
+?>
+<header>
+    <div id="menu">
+      <p>勤怠報告</p>
+      <p>ようこそ <?php echo $family_name.$last_name ; ?>様</p>
+      <p> <?php echo $_SESSION['mail']; ?></p>
+      <?php if ($role === '管理者'): ?>
+        <p>このアカウント権限は管理者です</p>
+      <?php endif; ?>
+      <p><a href="logout.php">Logout</a></p>
+    </div>
+  </header>
 <main>
     <div id="regist">
       <h1>スタッフ登録フォーム</h1>

@@ -44,14 +44,18 @@ try {
 }
 
 session_start();
-  // // もしログインしていなければ、ログインページにリダイレクト
-  // if (!isset($_SESSION['mail'])) {
-  //   header("Location: login.php");
-  //   exit();
-  // }
+  // もしログインしていなければ、ログインページにリダイレクト
+  if (!isset($_SESSION['mail'])) {
+    header("Location: login.php");
+    exit();
+  }
 
   // ユーザーの権限を取得
-  // $role = $_SESSION['role'] ?? null;
+  $role = $_SESSION['role'] ?? null;
+  $user_id = $_SESSION['user_id'] ?? null; // ユーザーIDを取得
+  $family_name = $_SESSION['family_name'] ?? null;
+  $last_name = $_SESSION['last_name'] ?? null;
+
 ?>
 
 <!DOCTYPE html>
