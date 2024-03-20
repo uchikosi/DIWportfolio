@@ -17,7 +17,7 @@ session_start();
       <?php if ($role === '管理者'): ?>
         <p>このアカウント権限は管理者です</p>
       <?php endif; ?>
-      <p><a href="logout.php">Logout</a></p>
+      <p><a href="../logout.php">Logout</a></p>
     </div>
   </header>
 <main>

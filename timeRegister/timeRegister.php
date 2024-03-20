@@ -69,6 +69,7 @@ try {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../css/time.css">
 <title>Date Calendar</title>
 <!-- <link rel="stylesheet" href="styles.css"> -->
 <style>
@@ -92,8 +93,11 @@ try {
     </div>
   </header>
 
+  <!-- 登録 -->
+  <h2>勤怠入力</h2>
   <div>
     <form action="timeRegisterComplete.php" method="post" id="attendanceForm">
+
       <label>年月日:</label>
       <input type="date" min="2024-01" name="date" id="selectedDate" value="">
       <br>
@@ -128,9 +132,18 @@ try {
     </form>
   </div>
 
-  <div id="list">
-     <p><?php echo date('Y', strtotime($result[0]['date'])); ?>年</p>
-    <p><?php echo date('m', strtotime($result[0]['date'])); ?>月</p>
+  <!-- 表示 -->
+  <?php
+// 現在の年と月を取得
+$current_year = date('Y');
+$current_month = date('m');
+?>
+
+<div id="list">
+    <div id=YearAndMonth>
+      <h3><?php echo $current_year; ?>年</h3>
+      <h3><?php echo $current_month; ?>月</h3>
+    </div>
     <table>
       <tr>
         <th>日</th>
@@ -142,28 +155,29 @@ try {
         <th>残業時間</th>
         <th>登録日時</th>
       </tr>
-    <?php
+      <?php
       if ($result) {
         foreach ($result as $row) {
-            $day = date('d', strtotime($row['date']));
+          $day = date('d', strtotime($row['date']));
+          // 登録日時のフォーマットを月、日、時、分だけに変更
+          $registered_time = date('m/d H:i', strtotime($row['registered_time']));
           echo "<tr>";
           echo "<td>{$day}</td>";
-          echo "<td>{$date}</td>";
           echo "<td>{$row['category']}</td>";
           echo "<td>{$row['start_time']}</td>";
           echo "<td>{$row['end_time']}</td>";
           echo "<td>{$row['break_time']}</td>";
           echo "<td>{$row['standard_working_time']}</td>";
           echo "<td>{$row['over_time']}</td>";
-          echo "<td>{$row['registered_time']}</td>";
+          echo "<td>{$registered_time}</td>"; // 登録日時をフォーマットしたものを表示
           echo "</tr>";
         }
       } else {
         echo "<tr><td colspan='9'>現在該当するデータがありません。</td></tr>";
       }
-    ?>
-    </table>
-  </div>
+      ?>
+  </table>
+</div>
   <script type="text/javascript" src="../js/time.js"></script>
 </body>
 </html>

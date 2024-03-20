@@ -1,4 +1,12 @@
 <?php
+session_start();
+// ユーザーの権限を取得
+  $role = $_SESSION['role'] ?? null;
+  $user_id = $_SESSION['user_id'] ?? null;
+
+  // ユーザーIDを取得
+$user_id = $_SESSION['user_id'];
+
 // POSTリクエストを受け取る
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // フォームから送信されたデータを取得
@@ -32,7 +40,6 @@ switch ($categoryValue) {
         $category = '不明';
 }
 
-
     $start_time = $_POST["start_time"];
     $end_time = $_POST["end_time"];
     $break_time = $_POST["break_time"];
@@ -53,18 +60,16 @@ switch ($categoryValue) {
 
     var_dump($category);
 
-
-
 // データをデータベースに挿入するSQLクエリを作成
 $sql = "INSERT INTO timeSheet (user_id,date, category, start_time, end_time, break_time, standard_working_time, over_time, remarks)
-        VALUES ('13','$date', '$category', '$start_time', '$end_time', '$break_time', '$standard_working_time', '$over_time', '')";
+        VALUES ('$user_id','$date', '$category', '$start_time', '$end_time', '$break_time', '$standard_working_time', '$over_time', '')";
 
 
     // クエリを実行してデータを挿入
 if ($conn->query($sql) === TRUE) {
    echo "レコードが正常に挿入されました";
     // 挿入が成功した場合
-    // header("Location: timeRegister.php?message=success");
+    header("Location: timeRegister.php?message=success");
     exit();
 } else {
    echo "エラー: " . $sql . "<br>" . $conn->error;
