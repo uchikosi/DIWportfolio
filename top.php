@@ -66,5 +66,8 @@ if (!isset($_SESSION['mail'])) {
       </div>
     </ul>
   </main>
+  <footer>
+Copytifht  is the one which provides A to Z about programming
+  </footer>
 </body>
 </html>

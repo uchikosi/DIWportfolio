@@ -134,8 +134,6 @@ try {
 
   <!-- 表示 -->
   <?php
-
-
 // 分を計算する関数
 function convertToMinutes($time) {
     list($hours, $minutes) = explode(':', $time);
@@ -145,6 +143,12 @@ function convertToMinutes($time) {
 // 合計値を初期化
 $total_working_time_minutes = 0;
 $total_overtime_minutes = 0;
+
+// 各区分のカウントを初期化
+$attendance_count = 0;
+$late_count = 0;
+$early_leave_count = 0;
+$holiday_work_count = 0;
 
 // データが存在するかどうかを確認
 if ($result) {
@@ -156,6 +160,32 @@ if ($result) {
         // ここに他の処理を記述
     }
 }
+if ($result) {
+    foreach ($result as $row) {
+        // 区分ごとにカウントを増やす
+        switch ($row['category']) {
+            case '出勤':
+                $attendance_count++;
+                break;
+            case '遅刻':
+                $late_count++;
+                break;
+            case '早退':
+                $early_leave_count++;
+                break;
+            case '休日出勤':
+                $holiday_work_count++;
+                break;
+            default:
+                // 何もしない
+                break;
+        }
+    }
+}
+
+// 出勤日数の合計
+$total_attendance_days = $attendance_count + $late_count + $early_leave_count + $holiday_work_count;
+
 
 // 分を時間と分に変換する関数
 function convertToHoursAndMinutes($minutes) {
@@ -206,9 +236,10 @@ $total_overtime_formatted = convertToHoursAndMinutes($total_overtime_minutes);
                 echo "<td>{$registered_time}</td>"; // 登録日時をフォーマットしたものを表示
                 echo "</tr>";
             }
-            // 合計行を追加
+            // 合計行
             echo "<tr>";
-            echo "<td colspan='5'><strong>合計</strong></td>";
+            echo "<td colspan='2'><strong>合計</strong></td>";
+            echo "<td colspan='3'><strong>出勤日数</strong>{$total_attendance_days}<strong>日</strong></td>"; // 出勤日数の合計
             echo "<td><strong>{$total_working_time_formatted}</strong></td>";
             echo "<td><strong>{$total_overtime_formatted}</strong></td>";
             echo "<td></td>"; // 登録日時の列は空白にする
