@@ -25,8 +25,8 @@ if (!isset($_SESSION['mail'])) {
 </head>
 <body>
   <header>
-    <div id="menu">
-      <h2>勤怠報告</h2>
+    <h1>勤怠報告</h1>
+    <div id="head">
       <p>ようこそ <?php echo $family_name.$last_name ; ?>様</p>
       <p> <?php echo $_SESSION['mail']; ?></p>
       <?php if ($role === '管理者'): ?>
@@ -38,11 +38,17 @@ if (!isset($_SESSION['mail'])) {
   <main>
     <ul>
       <div id='general'>
-        <li>
-          <a href="http://localhost:8888/AttendanceManagementSystem/timeRegister/timeRegister.php">勤務入力</a>
-        </li>
-        <li>
+      <li>
+        <a href="http://localhost:8888/AttendanceManagementSystem/timeRegister/timeRegister.php">勤務入力</a>
+      </li>
+      <li>
         <a href="">登録情報</a>
+      </li>
+      <li>
+        <a href="http://localhost:8888/AttendanceManagementSystem/timeSheet/timeSheet.php">タイムシート</a>
+      </li>
+      <li>
+        <a href="">申請</a>
       </li>
       </div>
       <div id=administrator>
@@ -51,7 +57,10 @@ if (!isset($_SESSION['mail'])) {
           <a href="http://localhost:8888/AttendanceManagementSystem/userRegister/userRegister.php">従業員登録</a>
         </li>
         <li>
-          <a href="#">従業員検索</a>
+          <a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php">従業員検索</a>
+        </li>
+        <li>
+          <a href="">勤務状況検索</a>
         </li>
         <?php endif; ?>
       </div>

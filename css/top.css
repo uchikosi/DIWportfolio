@@ -1,3 +1,15 @@
+body {}
+
+header {
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.678) 0%, rgba(0, 0, 192, 0.822) 100%);
+}
+
+#head {
+  display: flex;
+}
+
+main {}
+
 li {
   list-style: none;
 }
@@ -13,8 +25,17 @@ li {
 }
 
 li {
-  margin: 5%;
-  padding: 10%;
-  font-size: 30px;
-  background-color: darkgrey;
+  margin: 3%;
+  padding: 3%;
+  font-size: 20px;
+  background-color: #C2EEFF;
+  /* 角を丸くする */
+  border-radius: 10px;
+}
+
+main a {
+  /* アンカーの下線消し */
+  text-decoration: none;
+  color: #5D99FF;
+
 }

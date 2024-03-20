@@ -134,49 +134,90 @@ try {
 
   <!-- 表示 -->
   <?php
-// 現在の年と月を取得
-$current_year = date('Y');
-$current_month = date('m');
-?>
 
+
+// 分を計算する関数
+function convertToMinutes($time) {
+    list($hours, $minutes) = explode(':', $time);
+    return $hours * 60 + $minutes;
+}
+
+// 合計値を初期化
+$total_working_time_minutes = 0;
+$total_overtime_minutes = 0;
+
+// データが存在するかどうかを確認
+if ($result) {
+    foreach ($result as $row) {
+        // 実働時間と残業時間を分単位に変換して合計に追加
+        $total_working_time_minutes += convertToMinutes($row['standard_working_time']);
+        $total_overtime_minutes += convertToMinutes($row['over_time']);
+
+        // ここに他の処理を記述
+    }
+}
+
+// 分を時間と分に変換する関数
+function convertToHoursAndMinutes($minutes) {
+    $hours = floor($minutes / 60);
+    $remaining_minutes = $minutes % 60;
+    return sprintf('%02d:%02d', $hours, $remaining_minutes);
+}
+
+// 合計値のフォーマット
+$total_working_time_formatted = convertToHoursAndMinutes($total_working_time_minutes);
+$total_overtime_formatted = convertToHoursAndMinutes($total_overtime_minutes);
+?>
 <div id="list">
     <div id=YearAndMonth>
+      <?php
+      // 現在の年と月を取得
+      $current_year = date('Y');
+      $current_month = date('m');
+      ?>
       <h3><?php echo $current_year; ?>年</h3>
       <h3><?php echo $current_month; ?>月</h3>
     </div>
     <table>
-      <tr>
-        <th>日</th>
-        <th>区分</th>
-        <th>出勤時間</th>
-        <th>退勤時間</th>
-        <th>休憩時間</th>
-        <th>実働時間</th>
-        <th>残業時間</th>
-        <th>登録日時</th>
-      </tr>
-      <?php
-      if ($result) {
-        foreach ($result as $row) {
-          $day = date('d', strtotime($row['date']));
-          // 登録日時のフォーマットを月、日、時、分だけに変更
-          $registered_time = date('m/d H:i', strtotime($row['registered_time']));
-          echo "<tr>";
-          echo "<td>{$day}</td>";
-          echo "<td>{$row['category']}</td>";
-          echo "<td>{$row['start_time']}</td>";
-          echo "<td>{$row['end_time']}</td>";
-          echo "<td>{$row['break_time']}</td>";
-          echo "<td>{$row['standard_working_time']}</td>";
-          echo "<td>{$row['over_time']}</td>";
-          echo "<td>{$registered_time}</td>"; // 登録日時をフォーマットしたものを表示
-          echo "</tr>";
+        <tr>
+            <th>月/日</th>
+            <th>区分</th>
+            <th>出勤時間</th>
+            <th>退勤時間</th>
+            <th>休憩時間</th>
+            <th>実働時間</th>
+            <th>残業時間</th>
+            <th>登録日時</th>
+        </tr>
+        <?php
+        if ($result) {
+            foreach ($result as $row) {
+                $day = date('m/d', strtotime($row['date']));
+                // 登録日時のフォーマットを月、日、時、分だけに変更
+                $registered_time = date('m/d H:i', strtotime($row['registered_time']));
+                echo "<tr>";
+                echo "<td>{$day}</td>";
+                echo "<td>{$row['category']}</td>";
+                echo "<td>{$row['start_time']}</td>";
+                echo "<td>{$row['end_time']}</td>";
+                echo "<td>{$row['break_time']}</td>";
+                echo "<td>{$row['standard_working_time']}</td>";
+                echo "<td>{$row['over_time']}</td>";
+                echo "<td>{$registered_time}</td>"; // 登録日時をフォーマットしたものを表示
+                echo "</tr>";
+            }
+            // 合計行を追加
+            echo "<tr>";
+            echo "<td colspan='5'><strong>合計</strong></td>";
+            echo "<td><strong>{$total_working_time_formatted}</strong></td>";
+            echo "<td><strong>{$total_overtime_formatted}</strong></td>";
+            echo "<td></td>"; // 登録日時の列は空白にする
+            echo "</tr>";
+        } else {
+            echo "<tr><td colspan='9'>現在該当するデータがありません。</td></tr>";
         }
-      } else {
-        echo "<tr><td colspan='9'>現在該当するデータがありません。</td></tr>";
-      }
-      ?>
-  </table>
+        ?>
+    </table>
 </div>
   <script type="text/javascript" src="../js/time.js"></script>
 </body>
