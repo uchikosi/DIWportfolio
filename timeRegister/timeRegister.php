@@ -77,6 +77,9 @@ try {
     .hidden {
         display: none;
     }
+    .attendance-cell {
+        margin-right: 20px;
+    }
 </style>
 </head>
 <body>
@@ -134,32 +137,18 @@ try {
 
   <!-- 表示 -->
   <?php
-// 分を計算する関数
-function convertToMinutes($time) {
-    list($hours, $minutes) = explode(':', $time);
-    return $hours * 60 + $minutes;
-}
-
-// 合計値を初期化
-$total_working_time_minutes = 0;
-$total_overtime_minutes = 0;
-
 // 各区分のカウントを初期化
 $attendance_count = 0;
 $late_count = 0;
 $early_leave_count = 0;
 $holiday_work_count = 0;
 
-// データが存在するかどうかを確認
-if ($result) {
-    foreach ($result as $row) {
-        // 実働時間と残業時間を分単位に変換して合計に追加
-        $total_working_time_minutes += convertToMinutes($row['standard_working_time']);
-        $total_overtime_minutes += convertToMinutes($row['over_time']);
-
-        // ここに他の処理を記述
-    }
+// 分を計算する関数
+function convertToMinutes($time) {
+    list($hours, $minutes) = explode(':', $time);
+    return $hours * 60 + $minutes;
 }
+
 if ($result) {
     foreach ($result as $row) {
         // 区分ごとにカウントを増やす
@@ -186,7 +175,20 @@ if ($result) {
 // 出勤日数の合計
 $total_attendance_days = $attendance_count + $late_count + $early_leave_count + $holiday_work_count;
 
+// 合計値を初期化
+$total_working_time_minutes = 0;
+$total_overtime_minutes = 0;
 
+// データが存在するかどうかを確認
+if ($result) {
+    foreach ($result as $row) {
+        // 実働時間と残業時間を分単位に変換して合計に追加
+        $total_working_time_minutes += convertToMinutes($row['standard_working_time']);
+        $total_overtime_minutes += convertToMinutes($row['over_time']);
+
+        // ここに他の処理を記述
+    }
+}
 // 分を時間と分に変換する関数
 function convertToHoursAndMinutes($minutes) {
     $hours = floor($minutes / 60);
@@ -197,6 +199,16 @@ function convertToHoursAndMinutes($minutes) {
 // 合計値のフォーマット
 $total_working_time_formatted = convertToHoursAndMinutes($total_working_time_minutes);
 $total_overtime_formatted = convertToHoursAndMinutes($total_overtime_minutes);
+// 合計残業時間の値に基づいてスタイルを適用するための条件
+$overtime_hours = floor($total_overtime_minutes / 60);
+$overtime_minutes = $total_overtime_minutes % 60;
+if ($overtime_hours > 20 || ($overtime_hours == 20 && $overtime_minutes > 0)) {
+    $overtime_style = 'background-color: yellow;'; // 黄色
+} elseif ($overtime_hours > 10 || ($overtime_hours == 10 && $overtime_minutes > 0)) {
+    $overtime_style = 'background-color: red;';// 赤色
+} else {
+    $overtime_style = ''; // デフォルトのスタイル
+}
 ?>
 <div id="list">
     <div id=YearAndMonth>
@@ -211,6 +223,7 @@ $total_overtime_formatted = convertToHoursAndMinutes($total_overtime_minutes);
     <table>
         <tr>
             <th>月/日</th>
+             <th>曜日</th>
             <th>区分</th>
             <th>出勤時間</th>
             <th>退勤時間</th>
@@ -223,10 +236,15 @@ $total_overtime_formatted = convertToHoursAndMinutes($total_overtime_minutes);
         if ($result) {
             foreach ($result as $row) {
                 $day = date('m/d', strtotime($row['date']));
+                 $date = strtotime($row['date']); // 日付を取得
+                $day_of_week = date('w', $date); // 曜日を取得 (0: 日曜日, 1: 月曜日, ..., 6: 土曜日)
+                $day_of_week_name = ['日', '月', '火', '水', '木', '金', '土'][$day_of_week]; // 曜日名
+                $day = date('m/d', $date);
                 // 登録日時のフォーマットを月、日、時、分だけに変更
                 $registered_time = date('m/d H:i', strtotime($row['registered_time']));
                 echo "<tr>";
                 echo "<td>{$day}</td>";
+                echo "<td>{$day_of_week_name}</td>";
                 echo "<td>{$row['category']}</td>";
                 echo "<td>{$row['start_time']}</td>";
                 echo "<td>{$row['end_time']}</td>";
@@ -238,10 +256,10 @@ $total_overtime_formatted = convertToHoursAndMinutes($total_overtime_minutes);
             }
             // 合計行
             echo "<tr>";
-            echo "<td colspan='2'><strong>合計</strong></td>";
-            echo "<td colspan='3'><strong>出勤日数</strong>{$total_attendance_days}<strong>日</strong></td>"; // 出勤日数の合計
+            echo "<td colspan='3'><strong>合計</strong></td>";
+            echo "<td colspan='3'><strong class=\"attendance-cell\">出勤日数</strong>{$total_attendance_days}<strong>日</strong></td>"; // 出勤日数の合計
             echo "<td><strong>{$total_working_time_formatted}</strong></td>";
-            echo "<td><strong>{$total_overtime_formatted}</strong></td>";
+            echo "<td style='{$overtime_style}'><strong>{$total_overtime_formatted}</strong></td>"; // スタイルを適用
             echo "<td></td>"; // 登録日時の列は空白にする
             echo "</tr>";
         } else {
