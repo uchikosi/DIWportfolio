@@ -42,7 +42,7 @@ if (!isset($_SESSION['mail'])) {
         <a href="http://localhost:8888/AttendanceManagementSystem/timeRegister/timeRegister.php">勤務入力</a>
       </li>
       <li>
-        <a href="">登録情報</a>
+        <a href="http://localhost:8888/AttendanceManagementSystem/userSearch/registrationInformation.php">登録情報</a>
       </li>
       <li>
         <a href="http://localhost:8888/AttendanceManagementSystem/timeSheet/timeSheet.php">タイムシート</a>

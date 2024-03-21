@@ -70,6 +70,7 @@ try {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../css/time.css">
+<link rel="stylesheet" type="text/css" href="../css/common.css">
 <title>Date Calendar</title>
 <!-- <link rel="stylesheet" href="styles.css"> -->
 <style>
@@ -84,16 +85,17 @@ try {
 </head>
 <body>
   <header>
-    <div id="menu">
-      <p>勤怠報告</p>
-      <p>ようこそ <?php echo $family_name.$last_name ; ?>様</p>
-      <p> <?php echo $_SESSION['mail']; ?></p>
-      <?php if ($role === '管理者'): ?>
-        <p>このアカウント権限は管理者です</p>
-      <?php endif; ?>
-      <p><a href="../logout.php">Logout</a></p>
-      <p><a href="../top.php">TOPへ戻る</a></p>
-    </div>
+    <ul id="menu">
+      <h1 id=mainTitole>勤怠報告</h1>
+      <div>
+        <li>ようこそ <?php echo $family_name.$last_name ; ?>様</li>
+        <li> <?php echo $_SESSION['mail']; ?></li>
+        <?php if ($role === '管理者'): ?>
+          <li>アカウント権限  管理者</li>
+        <?php endif; ?>
+      </div>
+      <li><a href="../logout.php" id="logout">Logout</a></li>
+      </ul>
   </header>
 
   <!-- 登録 -->
@@ -133,6 +135,7 @@ try {
 
       <input type="submit" value="送信">
     </form>
+    <p><a href="../top.php">TOPへ戻る</a></p>
   </div>
 
   <!-- 表示 -->
@@ -232,40 +235,47 @@ if ($overtime_hours > 20 || ($overtime_hours == 20 && $overtime_minutes > 0)) {
             <th>残業時間</th>
             <th>登録日時</th>
         </tr>
-        <?php
-        if ($result) {
-            foreach ($result as $row) {
-                $day = date('m/d', strtotime($row['date']));
-                 $date = strtotime($row['date']); // 日付を取得
-                $day_of_week = date('w', $date); // 曜日を取得 (0: 日曜日, 1: 月曜日, ..., 6: 土曜日)
-                $day_of_week_name = ['日', '月', '火', '水', '木', '金', '土'][$day_of_week]; // 曜日名
-                $day = date('m/d', $date);
-                // 登録日時のフォーマットを月、日、時、分だけに変更
-                $registered_time = date('m/d H:i', strtotime($row['registered_time']));
-                echo "<tr>";
-                echo "<td>{$day}</td>";
-                echo "<td>{$day_of_week_name}</td>";
-                echo "<td>{$row['category']}</td>";
-                echo "<td>{$row['start_time']}</td>";
-                echo "<td>{$row['end_time']}</td>";
-                echo "<td>{$row['break_time']}</td>";
-                echo "<td>{$row['standard_working_time']}</td>";
-                echo "<td>{$row['over_time']}</td>";
-                echo "<td>{$registered_time}</td>"; // 登録日時をフォーマットしたものを表示
-                echo "</tr>";
-            }
-            // 合計行
-            echo "<tr>";
-            echo "<td colspan='3'><strong>合計</strong></td>";
-            echo "<td colspan='3'><strong class=\"attendance-cell\">出勤日数</strong>{$total_attendance_days}<strong>日</strong></td>"; // 出勤日数の合計
-            echo "<td><strong>{$total_working_time_formatted}</strong></td>";
-            echo "<td style='{$overtime_style}'><strong>{$total_overtime_formatted}</strong></td>"; // スタイルを適用
-            echo "<td></td>"; // 登録日時の列は空白にする
-            echo "</tr>";
-        } else {
-            echo "<tr><td colspan='9'>現在該当するデータがありません。</td></tr>";
-        }
-        ?>
+       <?php
+
+// 時間のフォーマットを整形する関数
+function formatTime($time) {
+    return date('H:i', strtotime($time));
+}
+
+if ($result) {
+    foreach ($result as $row) {
+        $day = date('m/d', strtotime($row['date']));
+        $date = strtotime($row['date']); // 日付を取得
+        $day_of_week = date('w', $date); // 曜日を取得 (0: 日曜日, 1: 月曜日, ..., 6: 土曜日)
+        $day_of_week_name = ['日', '月', '火', '水', '木', '金', '土'][$day_of_week]; // 曜日名
+
+        $day = date('m/d', $date);
+
+        $registered_time = date('m/d H:i', strtotime($row['registered_time']));
+        echo "<tr>";
+        echo "<td>{$day}</td>";
+        echo "<td>{$day_of_week_name}</td>";
+        echo "<td>{$row['category']}</td>";
+        echo "<td>" . formatTime($row['start_time']) . "</td>"; // 出勤時間を整形して表示
+        echo "<td>" . formatTime($row['end_time']) . "</td>"; // 退勤時間を整形して表示
+        echo "<td>" . formatTime($row['break_time']) . "</td>"; // 休憩時間を整形して表示
+        echo "<td>" . formatTime($row['standard_working_time']) . "</td>"; // 実働時間を整形して表示
+        echo "<td>" . formatTime($row['over_time']) . "</td>"; // 残業時間を整形して表示
+        echo "<td>{$registered_time}</td>"; // 登録日時をフォーマットしたものを表示
+        echo "</tr>";
+    }
+    // 合計行
+    echo "<tr>";
+    echo "<td colspan='3'><strong>合計</strong></td>";
+    echo "<td colspan='3'><strong class=\"attendance-cell\">出勤日数</strong>{$total_attendance_days}<strong>日</strong></td>"; // 出勤日数の合計
+    echo "<td><strong>{$total_working_time_formatted}</strong></td>";
+    echo "<td style='{$overtime_style}'><strong>{$total_overtime_formatted}</strong></td>"; // スタイルを適用
+    echo "<td></td>"; // 登録日時の列は空白にする
+    echo "</tr>";
+} else {
+    echo "<tr><td colspan='9'>現在該当するデータがありません。</td></tr>";
+}
+?>
     </table>
 </div>
   <script type="text/javascript" src="../js/time.js"></script>

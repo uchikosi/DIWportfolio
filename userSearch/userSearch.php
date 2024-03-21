@@ -169,13 +169,16 @@
             <th>カナ（名）</th>
             <th>メールアドレス</th>
             <th>性別</th>
+            <th>勤務先会社名</th>
+            <th>担当業務</th>
+            <th>スタッフコード</th>
             <th>アカウント権限</th>
-            <th>削除フラグ</th>
             <th>登録日時</th>
             <th>更新日時</th>
             <?php if ($role === '管理者'): ?>
               <th>更新</th>
               <th>削除</th>
+              <th>勤怠情報</th>
             <?php endif; ?>
           </tr>
 
@@ -191,13 +194,16 @@
               echo "<td>{$row['last_name']}</td>";
               echo "<td>{$row['family_name_kana']}</td>";
               echo "<td>{$row['last_name_kana']}</td>";
+              $id = $row['id'];
               // メールアドレスが50文字以上の場合に折り返して表示
               $mail = $row['mail'];
               $mailClass = strlen($mail) > 50 ? 'long-text' : ''; // 適切な文字数を設定
               echo "<td class='$mailClass'>{$mail}</td>";
               echo "<td>" . ($row['gender'] == 0 ? '男' : '女') . "</td>";
-              echo "<td>" . ($row['authority'] == 0 ? '一般' : '管理者') . "</td>";
-              echo "<td>" . ($row['delete_flag'] == 0 ? '有効' : '無効') . "</td>";
+             echo "<td>{$row['company_name']}</td>";
+             echo "<td>{$row['work']}</td>";
+             echo "<td>{$row['staff_code']}</td>";
+             echo "<td>" . ($row['authority'] == 0 ? '一般' : '管理者') . "</td>";
               // 登録日時
               echo "<td>" . date("Y/m/d", strtotime($row['registered_time'])) . "</td>";
               // 更新日時
@@ -210,8 +216,10 @@
               }
               echo "</td>";
               if ($role === '管理者'):
-                echo "<td><a href='update/update.php?id={$row['id']}'>更新</a></td>";
-                echo "<td><a href='delete/delete.php?id={$row['id']}'>削除</a></td>";
+                echo "<td><a href='../update/update.php?id={$row['id']}'>更新</a></td>";
+                echo "<td><a href='../delete/delete.php?id={$row['id']}'>削除</a></td>";
+                // リンク先にuser_idを含めてtimeSheetSearch.phpに遷移する
+echo "<td><a href='../timeSheet/timeSheetSearch.php?user_id={$id}'>勤怠情報</a></td>";
               endif;
               echo "</tr>";
             }

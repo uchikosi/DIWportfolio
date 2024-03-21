@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #D9E5FF;
+}
+
+/* ヘッダー */
+header {
+  width: 100vw;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.678) 0%, rgba(0, 0, 192, 0.822) 100%);
+}
+
+#menu {
+  display: flex;
+}
+
+#mainTitole {
+  margin: 0 5%;
+  flex-basis: 50%;
+}
+
+li {
+  list-style: none;
+
+}
+
+#logout {
+  background-color: #0000FF;
+  color: #FFFFF0;
+  border-radius: 10px;
+  padding: 8px;
+  /* flex-basis: 10%; */
+}
+
+/* フッダー */
+footer {
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.678) 0%, rgba(0, 0, 192, 0.822) 100%);
+}
+
+footer p {
+  width: 100vw;
+  margin: 0;
+}
