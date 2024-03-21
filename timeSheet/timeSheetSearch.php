@@ -15,8 +15,6 @@ if ($conn->connect_error) {
 if(isset($_GET['user_id'])) {
     $_SESSION['id'] = $_GET['user_id'];
 }
-// echo "取得したID: " . $user_id;
-// var_dump($_SESSION);
 
 // ユーザーIDがセッションにない場合はエラーを表示して終了
 if(!isset($_SESSION['id'])) {
@@ -29,6 +27,33 @@ if(!isset($_SESSION['id'])) {
     <label for="year_month">年月:</label>
     <input type="month" id="year_month" name="year_month" value="<?php echo isset($_GET['year_month']) ? $_GET['year_month'] : date('Y-m'); ?>">
 
+    <label for="day">日:</label>
+    <select id="day" name="day">
+    <option value="">選択してください</option>
+    <?php for($i = 1; $i <= 31; $i++): ?>
+        <option value="<?php echo $i; ?>" <?php if(isset($_GET['day']) && $_GET['day'] == $i) echo "selected"; ?>><?php echo $i; ?></option>
+    <?php endfor; ?>
+</select>
+
+    <label for="category">区分:</label>
+    <select id="category" name="category">
+        <option value="" selected disabled>選択してください</option>
+        <option value="公休">公休</option>
+        <option value="出勤">出勤</option>
+        <option value="欠勤">欠勤</option>
+        <option value="有給">有給</option>
+        <option value="休日出勤">休日出勤</option>
+        <option value="遅刻">遅刻</option>
+        <option value="早退">早退</option>
+    </select>
+
+    <label for="overtime">残業時間:</label>
+    <select id="overtime" name="overtime">
+        <option value="" selected disabled>選択してください</option>
+        <option value="あり">あり</option>
+        <option value="なし">なし</option>
+    </select>
+
     <button type="submit">検索</button>
 </form>
 
@@ -36,27 +61,55 @@ if(!isset($_SESSION['id'])) {
 // 勤怠情報の検索クエリの作成
 $sql = "SELECT * FROM timeSheet WHERE user_id = {$_SESSION['id']}";
 
-// 追加された検索条件（年月）
+// 検索条件（年月）
 if(isset($_GET['year_month']) && !empty($_GET['year_month'])) {
     $year_month = $_GET['year_month'];
     $sql .= " AND DATE_FORMAT(date, '%Y-%m') = '$year_month'";
 }
 
+// 検索条件（日）
+if(isset($_GET['day']) && !empty($_GET['day'])) {
+    $day = $_GET['day'];
+    $sql .= " AND DAY(date) = $day";
+}
+
+// 検索条件（区分）
+if(isset($_GET['category']) && !empty($_GET['category'])) {
+    $category = $_GET['category'];
+    $sql .= " AND category = '$category'";
+}
+
+// 検索条件（残業時間）
+if(isset($_GET['overtime']) && !empty($_GET['overtime'])) {
+    $overtime = $_GET['overtime'];
+    if ($overtime == "あり") {
+        $sql .= " AND over_time != '00:00:00'";
+    } else if ($overtime == "なし") {
+        $sql .= " AND over_time = '00:00:00'";
+    }
+}
+
+
 // 検索結果の取得
 $result = $conn->query($sql);
 
+// 年と月の表示
+echo "<h3>".date_format(date_create($year_month), "Y年n月")."</h3>";
 // 検索結果の表示
 if ($result->num_rows > 0) {
     echo "<table border='1'>";
-    echo "<tr><th>年</th><th>月</th><th>日</th><th>区分</th><th>残業時間</th></tr>";
+       echo "<tr><th>日</th><th>区分</th><th>出勤時間</th><th>退勤時間</th><th>休憩時間</th><th>実働時間</th><th>残業時間</th></tr>";
+
     while($row = $result->fetch_assoc()) {
         $date = date_create($row["date"]);
         echo "<tr>";
-        echo "<td>".date_format($date, "Y")."</td>";
-        echo "<td>".date_format($date, "n")."</td>";
         echo "<td>".date_format($date, "j")."</td>";
         echo "<td>".$row["category"]."</td>";
-        echo "<td>".$row["over_time"]."</td>"; // カラム名を「over_time」に修正
+       echo "<td>".substr($row["start_time"], 0, 5)."</td>";
+        echo "<td>".substr($row["end_time"], 0, 5)."</td>";
+        echo "<td>".substr($row["break_time"], 0, 5)."</td>";
+        echo "<td>".substr($row["standard_working_time"], 0, 5)."</td>";
+        echo "<td>".substr($row["over_time"], 0, 5)."</td>";
         echo "</tr>";
     }
     echo "</table>";
