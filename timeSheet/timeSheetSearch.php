@@ -89,29 +89,73 @@ if(isset($_GET['overtime']) && !empty($_GET['overtime'])) {
     }
 }
 
-
 // 検索結果の取得
 $result = $conn->query($sql);
 
 // 年と月の表示
 echo "<h3>".date_format(date_create($year_month), "Y年n月")."</h3>";
+
+// 残業時間と実働時間の合計を初期化
+$total_overtime = 0;
+$total_working_time = 0;
+
+// カウント変数を初期化
+$count_attendance = 0;
+$count_late = 0;
+$count_early_leave = 0;
+$count_holiday_work = 0;
+
 // 検索結果の表示
 if ($result->num_rows > 0) {
     echo "<table border='1'>";
-       echo "<tr><th>日</th><th>区分</th><th>出勤時間</th><th>退勤時間</th><th>休憩時間</th><th>実働時間</th><th>残業時間</th></tr>";
+    echo "<tr><th>日</th><th>区分</th><th>出勤時間</th><th>退勤時間</th><th>休憩時間</th><th>実働時間</th><th>残業時間</th></tr>";
 
     while($row = $result->fetch_assoc()) {
         $date = date_create($row["date"]);
         echo "<tr>";
         echo "<td>".date_format($date, "j")."</td>";
         echo "<td>".$row["category"]."</td>";
-       echo "<td>".substr($row["start_time"], 0, 5)."</td>";
+        echo "<td>".substr($row["start_time"], 0, 5)."</td>";
         echo "<td>".substr($row["end_time"], 0, 5)."</td>";
         echo "<td>".substr($row["break_time"], 0, 5)."</td>";
         echo "<td>".substr($row["standard_working_time"], 0, 5)."</td>";
         echo "<td>".substr($row["over_time"], 0, 5)."</td>";
-        echo "</tr>";
+
+        // 残業時間と実働時間の合計を計算
+        $total_overtime += strtotime($row["over_time"]);
+        $total_working_time += strtotime($row["standard_working_time"]);
+
+        // 区分ごとのカウント
+        switch ($row["category"]) {
+            case '出勤':
+                $count_attendance++;
+                break;
+            case '遅刻':
+                $count_late++;
+                break;
+            case '早退':
+                $count_early_leave++;
+                break;
+            case '休日出勤':
+                $count_holiday_work++;
+                break;
+            default:
+                break;
+        }
     }
+
+    // 出勤日数を加算
+    $total_attendance = $count_attendance + $count_late + $count_early_leave + $count_holiday_work;
+
+    // 合計行を表示
+    echo "<tr>";
+    echo "<td colspan='2'>合計</td>";
+    echo "<td colspan='3'>出勤日数$total_attendance 日</td>";
+    echo "<td>".substr(gmdate("H:i:s",$total_working_time), 0, 5)."</td>";
+echo "<td>".substr(gmdate("H:i:s",$total_overtime), 0, 5)."</td>";
+    echo "</tr>";
+    echo "</tr>";
+
     echo "</table>";
 } else {
     echo "該当する勤怠情報がありません";
