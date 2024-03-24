@@ -30,6 +30,7 @@ if(!isset($_SESSION['id'])) {
     <label for="day">日:</label>
     <select id="day" name="day">
     <option value=""selected disabled>選択してください</option>
+    <option value="全て" <?php if(isset($_GET['day']) && $_GET['day'] == "全て") echo "selected"; ?>>全て</option>
     <?php for($i = 1; $i <= 31; $i++): ?>
         <option value="<?php echo $i; ?>" <?php if(isset($_GET['day']) && $_GET['day'] == $i) echo "selected"; ?>><?php echo $i; ?></option>
     <?php endfor; ?>
@@ -38,6 +39,7 @@ if(!isset($_SESSION['id'])) {
     <label for="category">区分:</label>
     <select id="category" name="category">
         <option value="" <?php if(!isset($_GET['category'])) echo "selected disabled"; ?>>選択してください</option>
+        <option value="全て" <?php if(isset($_GET['category']) && $_GET['category'] == "全て") echo "selected"; ?>>全て</option>
         <option value="公休" <?php if(isset($_GET['category']) && $_GET['category'] == "公休") echo "selected"; ?>>公休</option>
         <option value="出勤" <?php if(isset($_GET['category']) && $_GET['category'] == "出勤") echo "selected"; ?>>出勤</option>
         <option value="欠勤" <?php if(isset($_GET['category']) && $_GET['category'] == "欠勤") echo "selected"; ?>>欠勤</option>
@@ -51,6 +53,7 @@ if(!isset($_SESSION['id'])) {
     <label for="overtime">残業時間:</label>
     <select id="overtime" name="overtime">
         <option value="" <?php if(!isset($_GET['overtime'])) echo "selected disabled"; ?>>選択してください</option>
+        <option value="全て" <?php if(isset($_GET['overtime']) && $_GET['overtime'] == "全て") echo "selected"; ?>>全て</option>
         <option value="あり" <?php if(isset($_GET['overtime']) && $_GET['overtime'] == "あり") echo "selected"; ?>>あり</option>
         <option value="なし" <?php if(isset($_GET['overtime']) && $_GET['overtime'] == "なし") echo "selected"; ?>>なし</option>
     </select>
@@ -60,39 +63,45 @@ if(!isset($_SESSION['id'])) {
 </form>
 
 <?php
-
 // 検索フォームの送信処理
 if(isset($_GET['year_month']) || isset($_GET['day']) || isset($_GET['category']) || isset($_GET['overtime'])){
     // 勤怠情報の検索クエリの作成
-$sql = "SELECT * FROM timeSheet WHERE user_id = {$_SESSION['id']}";
+    $sql = "SELECT * FROM timeSheet WHERE user_id = {$_SESSION['id']}";
 
-// 検索条件（年月）
+    // 検索条件（年月）
     if(isset($_GET['year_month']) && !empty($_GET['year_month'])) {
         $year_month = $_GET['year_month'];
         $sql .= " AND DATE_FORMAT(date, '%Y-%m') = '$year_month'";
     }
 
-// 検索条件（日）
-   if(isset($_GET['day']) && !empty($_GET['day'])){
-    $day = $_GET['day'];
-    $sql .= " AND DAY(date) = $day";
-}
-
-// 検索条件（区分）
-  if(isset($_GET['category']) && !empty($_GET['category'])){
-    $category = $_GET['category'];
-    $sql .= " AND category = '$category'";
-}
-
-// 検索条件（残業時間）
-    if(isset($_GET['overtime']) && !empty($_GET['overtime'])) {
-    $overtime = $_GET['overtime'];
-    if ($overtime == "あり") {
-        $sql .= " AND over_time != '00:00:00'";
-    } else if ($overtime == "なし") {
-        $sql .= " AND over_time = '00:00:00'";
+    // 検索条件（日）
+    if(isset($_GET['day']) && !empty($_GET['day'])){
+        $day = $_GET['day'];
+        if ($day !== "全て") {
+            $sql .= " AND DAY(date) = $day";
+        }
     }
-}
+
+    // 検索条件（区分）
+    if(isset($_GET['category']) && !empty($_GET['category'])){
+        $category = $_GET['category'];
+        if ($category !== "全て") {
+            $sql .= " AND category = '$category'";
+        }
+    }
+
+    // 検索条件（残業時間）
+    if(isset($_GET['overtime']) && !empty($_GET['overtime'])) {
+        $overtime = $_GET['overtime'];
+        if ($overtime !== "全て") {
+            if ($overtime == "あり") {
+                $sql .= " AND over_time != '00:00:00'";
+            } else if ($overtime == "なし") {
+                $sql .= " AND over_time = '00:00:00'";
+            }
+        }
+    }
+
 
 // 検索結果の取得
 $result = $conn->query($sql);
@@ -119,7 +128,8 @@ $count_holiday_work = 0;
 if(isset($result)) {
     if($result->num_rows > 0) {
     echo "<table border='1'>";
-    echo "<tr><th>日</th><th>区分</th><th>出勤時間</th><th>退勤時間</th><th>休憩時間</th><th>実働時間</th><th>残業時間</th></tr>";
+    echo "<tr><th>日</th><th>区分</th><th>出勤時間</th><th>退勤時間</th><th>休憩時間</th><th>実働時間</th><th>残業時間</th><th>更新</th><th>削除</th></tr>";
+    $timeid = $row['id'];
 
     while($row = $result->fetch_assoc()) {
         $date = date_create($row["date"]);
@@ -131,6 +141,8 @@ if(isset($result)) {
         echo "<td>".substr($row["break_time"], 0, 5)."</td>";
         echo "<td>".substr($row["standard_working_time"], 0, 5)."</td>";
         echo "<td>".substr($row["over_time"], 0, 5)."</td>";
+        echo "<td><a href='../update/timeUpdate.php?id={$row['id']}'>更新</a></td>";
+        echo "<td><a href='../delete/timeDelete.php?id={$row['id']}'>削除</a></td>";
 
         // 残業時間と実働時間の合計を計算
         $total_overtime += strtotime($row["over_time"]);
