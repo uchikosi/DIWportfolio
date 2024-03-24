@@ -74,21 +74,21 @@ if(isset($_GET['year_month']) || isset($_GET['day']) || isset($_GET['category'])
 
     <label for="category">区分:</label>
     <select id="category" name="category">
-        <option value="" selected disabled>選択してください</option>
-        <option value="公休">公休</option>
-        <option value="出勤">出勤</option>
-        <option value="欠勤">欠勤</option>
-        <option value="有給">有給</option>
-        <option value="休日出勤">休日出勤</option>
-        <option value="遅刻">遅刻</option>
-        <option value="早退">早退</option>
+        <option value="" <?php if(!isset($_GET['category'])) echo "selected disabled"; ?>>選択してください</option>
+        <option value="公休" <?php if(isset($_GET['category']) && $_GET['category'] == "公休") echo "selected"; ?>>公休</option>
+        <option value="出勤" <?php if(isset($_GET['category']) && $_GET['category'] == "出勤") echo "selected"; ?>>出勤</option>
+        <option value="欠勤" <?php if(isset($_GET['category']) && $_GET['category'] == "欠勤") echo "selected"; ?>>欠勤</option>
+        <option value="有給" <?php if(isset($_GET['category']) && $_GET['category'] == "有給") echo "selected"; ?>>有給</option>
+        <option value="休日出勤" <?php if(isset($_GET['category']) && $_GET['category'] == "休日出勤") echo "selected"; ?>>休日出勤</option>
+        <option value="遅刻" <?php if(isset($_GET['category']) && $_GET['category'] == "遅刻") echo "selected"; ?>>遅刻</option>
+        <option value="早退" <?php if(isset($_GET['category']) && $_GET['category'] == "早退") echo "selected"; ?>>早退</option>
     </select>
 
     <label for="overtime">残業時間:</label>
     <select id="overtime" name="overtime">
-        <option value="" selected disabled>選択してください</option>
-        <option value="あり">あり</option>
-        <option value="なし">なし</option>
+        <option value="" <?php if(!isset($_GET['overtime'])) echo "selected disabled"; ?>>選択してください</option>
+        <option value="あり" <?php if(isset($_GET['overtime']) && $_GET['overtime'] == "あり") echo "selected"; ?>>あり</option>
+        <option value="なし" <?php if(isset($_GET['overtime']) && $_GET['overtime'] == "なし") echo "selected"; ?>>なし</option>
     </select>
 
     <button type="submit">検索</button>
