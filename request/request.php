@@ -14,21 +14,18 @@ if (!isset($_SESSION['mail'])) {
   $user_id = $_SESSION['user_id'] ?? null; // ユーザーIDを取得
   $family_name = $_SESSION['family_name'] ?? null;
   $last_name = $_SESSION['last_name'] ?? null;
-  $family_name_kana = $_SESSION['family_name_kana'] ?? null;
-  $last_name_kana = $_SESSION['last_name_kana'] ?? null;
-  var_dump($_SESSION);
 }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="css/top.css">
+  <link rel="stylesheet" type="text/css" href="../css/top.css">
   <title>TOP</title>
 </head>
 <body>
   <header>
-    <h1>勤怠報告</h1>
+    <h1>申請</h1>
     <div id="head">
       <p>ようこそ <?php echo $family_name.$last_name ; ?>様</p>
       <p> <?php echo $_SESSION['mail']; ?></p>
@@ -42,27 +39,15 @@ if (!isset($_SESSION['mail'])) {
     <ul>
       <div id='general'>
       <li>
-        <a href="http://localhost:8888/AttendanceManagementSystem/timeRegister/timeRegister.php">勤務入力</a>
+        <a href="http://localhost:8888/AttendanceManagementSystem/request/absenceRequest.php">欠勤、遅刻、早退 <br>申請</a>
       </li>
       <li>
-        <a href="http://localhost:8888/AttendanceManagementSystem/userSearch/registrationInformation.php">登録情報</a>
+        <a href="http://localhost:8888/AttendanceManagementSystem/request/holidayRequest.php">休日申請</a>
       </li>
       <li>
-        <a href="http://localhost:8888/AttendanceManagementSystem/timeSheet/timeSheet.php">タイムシート</a>
-      </li>
-      <li>
-        <a href="http://localhost:8888/AttendanceManagementSystem/request/request.php">申請</a>
+        <a href="http://localhost:8888/AttendanceManagementSystem/request/requestLog.php">申請のログ</a>
       </li>
       </div>
-      <div id=administrator>
-        <?php if ($role === '管理者'): ?>
-        <li>
-          <a href="http://localhost:8888/AttendanceManagementSystem/userRegister/userRegister.php">従業員登録</a>
-        </li>
-        <li>
-          <a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php">検索</a>
-        </li>
-        <?php endif; ?>
       </div>
     </ul>
   </main>

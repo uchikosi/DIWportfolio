@@ -50,7 +50,7 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
   </header>
   <main>
     <div class="main">
-      <h1>スタッフデータ入力確認<</h1>
+      <h1>スタッフデータ入力確認</h1>
       <table>
         <tr>
           <td>名前（姓）</td>

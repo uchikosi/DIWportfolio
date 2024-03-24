@@ -43,6 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['user_id'] = $row['id']; // ユーザーIDを保存
         $_SESSION['family_name'] = $row['family_name'];
         $_SESSION['last_name'] = $row['last_name'];
+        $_SESSION['family_name_kana'] = $row['family_name_kana'];
+        $_SESSION['last_name_kana'] = $row['last_name_kana'];
 
         $_SESSION['staff_code'] = $row['staff_code'];
         header("Location: top.php");

@@ -1,0 +1,130 @@
+<?php
+session_start();
+// セッションの有効期限を設定（1日）
+$expireAfter = 60 * 60 * 24; // 1日（秒数で指定）
+session_set_cookie_params($expireAfter);
+
+// もしログインしていなければ、ログインページにリダイレクト
+if (!isset($_SESSION['mail'])) {
+  header("Location: login.php");
+  exit();
+} else {
+  // ユーザーの権限を取得
+  $role = $_SESSION['role'] ?? null;
+  $user_id = $_SESSION['user_id'] ?? null; // ユーザーIDを取得
+  $family_name = $_SESSION['family_name'] ?? null;
+  $last_name = $_SESSION['last_name'] ?? null;
+  $family_name_kana = $_SESSION['family_name_kana'] ?? null;
+  $last_name_kana = $_SESSION['last_name_kana'] ?? null;
+  $staff_code = $_SESSION['staff_code'] ?? null;
+  var_dump($_SESSION);
+}
+
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/">
+  <title>TOP</title>
+</head>
+<body>
+  <header>
+    <h1>休日申請入力</h1>
+    <div id="head">
+      <p>ようこそ <?php echo $family_name.$last_name ; ?>様</p>
+      <p> <?php echo $_SESSION['mail']; ?></p>
+      <?php if ($role === '管理者'): ?>
+        <p>このアカウント権限は管理者です</p>
+      <?php endif; ?>
+      <p><a href="logout.php">Logout</a></p>
+    </div>
+  </header>
+<form action="holidayRequestConfirm.php" method="POST" id="updateForm">
+        <input type="hidden" name="id" value="">
+
+        <label for="name">名前:</label>
+        <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($family_name . $last_name, ENT_QUOTES); ?>"readonly>
+        <i>※編集できません</i>
+        <br>
+
+        <label for="name_kana">名前(カナ):</label>
+        <input type="text" id="name_kana" name="name_kana" value="<?php echo htmlspecialchars($family_name_kana . $last_name_kana, ENT_QUOTES); ?>"readonly>
+        <i>※編集できません</i>
+        <br>
+
+        <label for="staff_code">スタッフコード:</label>
+        <input type="text" id="staff_code" name="staff_code" value="<?php echo htmlspecialchars($staff_code, ENT_QUOTES); ?>"readonly>
+        <i>※編集できません</i>
+        <br>
+
+        <label for="request_date_start">申請年月日:</label>
+<input type="date" name="request_date_start" id="request_date_start" placeholder="" oninput="validateAddress(this)" <?php if (!empty($_POST['request_date_start'])) echo 'value="' . htmlspecialchars($_POST['request_date_start'], ENT_QUOTES) . '"'; ?>>
+
+<label for="reqeuest_date_end">〜</label>
+<input type="date" name="reqeuest_date_end" id="reqeuest_date_end" placeholder="" oninput="validateAddress(this)" <?php if (!empty($_POST['reqeuest_date_end'])) echo 'value="' . htmlspecialchars($_POST['reqeuest_date_end'], ENT_QUOTES) . '"'; ?>>
+<br>
+
+<label for="category">区分:</label>
+<select id="category" name="category">
+    <option value="" <?php if(!isset($_POST['category']) || $_POST['category'] === '') echo "selected disabled"; ?>>選択してください</option>
+    <option value="有休" <?php if (isset($_POST['category']) && $_POST['category'] === '有休') echo 'selected'; ?>>有休</option>
+    <option value="欠勤" <?php if (isset($_POST['category']) && $_POST['category'] === '欠勤') echo 'selected'; ?>>欠勤</option>
+    <option value="代休" <?php if (isset($_POST['category']) && $_POST['category'] === '代休') echo 'selected'; ?>>代休</option>
+</select>
+    <label for="remarks">備考:</label>
+        <input type="text" id="remarks" name="remarks" maxlength="1000" placeholder=""oninput="validateAddress(this)" <?php if (isset($_POST['remarks'])) echo 'value="' . htmlspecialchars($_POST['remarks'], ENT_QUOTES) . '"'; ?>>
+        <br>
+        <!-- 日数を計算して隠しフィールドに格納 -->
+         <input type="hidden" name="calculated_days" id="calculated_days" value="<?php echo calculateDays(); ?>">
+         <?php
+function calculateDays() {
+    // 開始日と終了日を取得
+    $start_date = $_POST['request_date_start'];
+    $end_date = $_POST['reqeuest_date_end'];
+
+    // 開始日と終了日をUNIXタイムスタンプに変換
+    $start_timestamp = strtotime($start_date);
+    $end_timestamp = strtotime($end_date);
+
+    // 日数を計算
+    $difference_in_days = floor(($end_timestamp - $start_timestamp) / (60 * 60 * 24)) + 1;
+
+    return $difference_in_days;
+}
+?>
+
+
+    <input type="submit" value="入力確認画面へ" >
+
+        </form>
+
+    <p>申請後に申請した日の勤務入力を行ってください</p>
+<script>
+    // reqeuest_date_endの日付がrequest_date_startより前の日付を選択できないように制約を設ける
+    document.getElementById("reqeuest_date_end").addEventListener("change", function() {
+        var requestDate1 = document.getElementById("request_date_start").value;
+        var requestDate2 = document.getElementById("reqeuest_date_end").value;
+        // request_date_startまたはreqeuest_date_endのどちらかが空の場合は制約をかけない
+        if (requestDate1 !== "" && requestDate2 !== "") {
+            if (requestDate2 < requestDate1) {
+                alert("申請終了日は申請開始日より後の日付を選択してください。");
+                document.getElementById("reqeuest_date_end").value = "";
+            }
+        }
+    });
+
+       // request_date_startの日付がreqeuest_date_endより後の日付を選択できないように制約を設ける
+    document.getElementById("request_date_start").addEventListener("change", function() {
+        var requestDate1 = document.getElementById("request_date_start").value;
+        var requestDate2 = document.getElementById("reqeuest_date_end").value;
+
+        // request_date_startまたはreqeuest_date_endのどちらかが空の場合は制約をかけない
+        if (requestDate1 !== "" && requestDate2 !== "") {
+            if (requestDate1 > requestDate2) {
+                alert("申請開始日は申請終了日より前の日付を選択してください。");
+                document.getElementById("request_date_start").value = "";
+            }
+        }
+    });
+</script>
