@@ -40,22 +40,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "エラー: " . $sql . "<br>" . $conn->error;
     }
 
-    // データベース接続を閉じる
-    $conn->close();
+    // // データベース接続を閉じる
+    // $conn->close();
 }
 
-// 遷移前のページからIDを取得
-$id = $_GET['id'];
-var_dump($_SESSION);
-// 更新フォームの表示
+// 遷移前のページからIDを取得してセッションに保存
 if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+    $_SESSION['time_id'] = $_GET['id'];
+}
+var_dump($_SESSION);
+// セッションからIDを取得
+if (isset($_SESSION['time_id'])) {
+    $id = $_SESSION['time_id'];
+
     // データベースから選択した行の情報を取得するクエリを実行するなどの処理を行う
     $sql = "SELECT * FROM timeSheet WHERE id = $id";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
+        // 実働時間を計算
+        $start_time = strtotime($row['start_time']);
+        $end_time = strtotime($row['end_time']);
+        $break_time = strtotime($row['break_time']) - strtotime('00:00:00');
+
+        $working_seconds = $end_time - $start_time - $break_time;
+        $working_hours = floor($working_seconds / 3600);
+        $working_minutes = floor(($working_seconds % 3600) / 60);
         ?>
+
         <form action="timeUpdate.php" method="POST" id="updateForm">
             <input type="hidden" name="id" value="<?php echo $id; ?>">
 
@@ -119,6 +131,6 @@ if (isset($_GET['id'])) {
         echo "データが見つかりません";
     }
 } else {
-//     echo "IDが指定されていません";
+    echo "IDが指定されていません";
 }
 ?>

@@ -94,6 +94,15 @@
           <input type="radio" id="female" name="gender" value="1">
           <label for="female">女</label><br>
 
+          <label for="company_name">勤務先会社名:</label>
+          <input type="text" id="company_name" name="company_name" value=""><br>
+
+          <label for="work">担当業務:</label>
+          <input type="text" id="work" name="work" value=""><br>
+
+          <label for="staff_code">スタッフコード:</label>
+          <input type="text" id="staff_code" name="staff_code" value=""><br>
+
           <label for="authority">アカウント権限:</label>
           <select id="authority" name="authority">
             <option value="" selected>全て</option>
@@ -116,6 +125,9 @@
       $last_name_kana = $_GET["last_name_kana"] ?? "";
       $email = $_GET["mail"] ?? "";
       $gender = $_GET["gender"] ?? "";
+       $company_name = $_GET["company_name"] ?? "";
+    $work = $_GET["work"] ?? "";
+    $staff_code = $_GET["staff_code"] ?? "";
       $authority = $_GET["authority"] ?? "";
 
       // SQLクエリを構築
@@ -139,6 +151,16 @@
         $sql .= " AND gender = '$gender'";
       }
 
+      if (!empty($company_name)) {
+        $sql .= " AND company_name LIKE '%$company_name%'";
+      }
+      if (!empty($work)) {
+        $sql .= " AND work LIKE '%$work%'";
+      }
+      if (!empty($staff_code)) {
+        $sql .= " AND staff_code LIKE '%$staff_code%'";
+      }
+
       // アカウント権限が「一般」の場合も条件に追加
       if ($authority !== "") {
         $sql .= " AND authority = '$authority'";
@@ -156,7 +178,7 @@
     }
     ?>
 
-    <?php if ($_SERVER["REQUEST_METHOD"] == "GET" && !isset($_GET['family_name']) && !isset($_GET['last_name']) && !isset($_GET['family_name_kana']) && !isset($_GET['last_name_kana']) && !isset($_GET['mail']) && !isset($_GET['gender']) && !isset($_GET['authority'])): ?>
+    <?php if ($_SERVER["REQUEST_METHOD"] == "GET" && !isset($_GET['family_name']) && !isset($_GET['last_name']) && !isset($_GET['family_name_kana']) && !isset($_GET['last_name_kana']) && !isset($_GET['mail']) && !isset($_GET['gender']) && !isset($_GET['company_name']) && !isset($_GET['work']) && !isset($_GET['staff_code']) && !isset($_GET['authority'])): ?>
     <!-- <p>検索を行ってください。</p> -->
     <?php else: ?>
       <div id="list">
