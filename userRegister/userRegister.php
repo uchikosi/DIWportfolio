@@ -8,18 +8,34 @@ session_start();
 
   // ユーザーの権限を取得
   $role = $_SESSION['role'] ?? null;
+  $user_id = $_SESSION['user_id'] ?? null;
+  $family_name = $_SESSION['family_name'] ?? null;
+  $last_name = $_SESSION['last_name'] ?? null;
+  var_dump($user_id);
 ?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <link rel="stylesheet" type="text/css" href="../css/.css"> -->
+<link rel="stylesheet" type="text/css" href="../css/common.css">
 <header>
-    <div id="menu">
-      <p>勤怠報告</p>
-      <p>ようこそ <?php echo $family_name.$last_name ; ?>様</p>
-      <p> <?php echo $_SESSION['mail']; ?></p>
+    <ul id="menu">
+      <h1 id=mainTitole>勤怠アプリ</h1>
+      <div class="nav">
+        <li class="nav_list">ようこそ <?php echo $family_name.$last_name ; ?>様</li>
+        <li class="nav_list"> <?php echo $_SESSION['mail']; ?></li>
+      </div>
       <?php if ($role === '管理者'): ?>
-        <p>このアカウント権限は管理者です</p>
+      <li class="supervisor">アカウント権限 管理者</li>
       <?php endif; ?>
-      <p><a href="../logout.php">Logout</a></p>
-    </div>
-  </header>
+      <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
+    </ul>
+</header>
+
+
+<body>
 <main>
     <div id="regist">
       <h1>スタッフ登録フォーム</h1>
@@ -78,13 +94,13 @@ session_start();
         <input type="text" id="staff_code" name="staff_code" maxlength="6" required placeholder=""oninput="validateAddress(this)" <?php if (isset($_POST['staff_code'])) echo 'value="' . htmlspecialchars($_POST['staff_code'], ENT_QUOTES) . '"'; ?>>
         <br>
 
-        <label for="image">証明写真:</label>
+        <!-- <label for="image">証明写真:</label>
         <input type="file" id="image" name="image" accept=".jpg, .jpeg, .png, .gif" placeholder="画像選択してください">
-        <br>
+        <br> -->
 
-        <label for="remarks">備考:</label>
-        <input type="text" id="remarks" name="remarks" maxlength="1000" placeholder=""oninput="validateAddress(this)" <?php if (isset($_POST['remarks'])) echo 'value="' . htmlspecialchars($_POST['remarks'], ENT_QUOTES) . '"'; ?>>
-        <br>
+        <!-- <label for="remarks">備考:</label>
+        <input type="text" id="remarks" name="remarks" maxlength="1000" placeholder=""oninput="validateAddress(this)" <?php //if (isset($_POST['remarks'])) echo 'value="' . htmlspecialchars($_POST['remarks'], ENT_QUOTES) . '"'; ?>>
+        <br> -->
 
         <label for="authority">アカウント権限:</label>
         <select id="authority" name="authority" required>
@@ -100,3 +116,4 @@ session_start();
   <footer>
     <p>Copytifht the one which provides A to Z about programming</p>
   </footer>
+</body>

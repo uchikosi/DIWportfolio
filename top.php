@@ -24,6 +24,7 @@ if (!isset($_SESSION['mail'])) {
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="css/top.css">
+  <link rel="stylesheet" type="text/css" href="../css/common.css">
   <title>TOP</title>
 </head>
 <body>
@@ -63,7 +64,7 @@ if (!isset($_SESSION['mail'])) {
           <a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php">検索</a>
         </li>
         <li>
-          <a href="http://localhost:8888/AttendanceManagementSystem/report/report.php">報告、申請一覧</a>
+          <a href="http://localhost:8888/AttendanceManagementSystem/report/reportList.php">報告、申請一覧</a>
         </li>
         <?php endif; ?>
       </div>

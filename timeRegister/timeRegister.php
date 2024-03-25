@@ -72,7 +72,7 @@ try {
 <link rel="stylesheet" type="text/css" href="../css/time.css">
 <link rel="stylesheet" type="text/css" href="../css/common.css">
 <title>Date Calendar</title>
-<!-- <link rel="stylesheet" href="styles.css"> -->
+
 <style>
     /* ユーザーが直接入力できないようにする */
     .hidden {
@@ -86,12 +86,12 @@ try {
 <body>
   <header>
     <ul id="menu">
-      <h1 id=mainTitole>勤怠報告</h1>
+      <h1 id=mainTitole>勤怠アプリ</h1>
       <div>
         <li>ようこそ <?php echo $family_name.$last_name ; ?>様</li>
         <li> <?php echo $_SESSION['mail']; ?></li>
         <?php if ($role === '管理者'): ?>
-          <li>アカウント権限  管理者</li>
+          <li>アカウント権限管理者</li>
         <?php endif; ?>
       </div>
       <li><a href="../logout.php" id="logout">Logout</a></li>

@@ -45,7 +45,7 @@ if (!isset($_SESSION['mail'])) {
         <a href="http://localhost:8888/AttendanceManagementSystem/request/holidayRequest.php">休日申請</a>
       </li>
       <li>
-        <a href="http://localhost:8888/AttendanceManagementSystem/request/requestLog.php">申請のログ</a>
+        <a href="http://localhost:8888/AttendanceManagementSystem/report/reportLog.php">申請のログ</a>
       </li>
       </div>
       </div>
