@@ -61,8 +61,8 @@ if (!isset($_SESSION['mail'])) {
         <label for="request_date_start">申請年月日:</label>
 <input type="date" name="request_date_start" id="request_date_start" placeholder="" oninput="validateAddress(this)" <?php if (!empty($_POST['request_date_start'])) echo 'value="' . htmlspecialchars($_POST['request_date_start'], ENT_QUOTES) . '"'; ?>>
 
-<label for="reqeuest_date_end">〜</label>
-<input type="date" name="reqeuest_date_end" id="reqeuest_date_end" placeholder="" oninput="validateAddress(this)" <?php if (!empty($_POST['reqeuest_date_end'])) echo 'value="' . htmlspecialchars($_POST['reqeuest_date_end'], ENT_QUOTES) . '"'; ?>>
+<label for="request_date_end">〜</label>
+<input type="date" name="request_date_end" id="request_date_end" placeholder="" oninput="validateAddress(this)" <?php if (!empty($_POST['request_date_end'])) echo 'value="' . htmlspecialchars($_POST['request_date_end'], ENT_QUOTES) . '"'; ?>>
 <br>
 
 <label for="category">区分:</label>
@@ -75,51 +75,31 @@ if (!isset($_SESSION['mail'])) {
     <label for="remarks">備考:</label>
         <input type="text" id="remarks" name="remarks" maxlength="1000" placeholder=""oninput="validateAddress(this)" <?php if (isset($_POST['remarks'])) echo 'value="' . htmlspecialchars($_POST['remarks'], ENT_QUOTES) . '"'; ?>>
         <br>
-        <!-- 日数を計算して隠しフィールドに格納 -->
-         <input type="hidden" name="calculated_days" id="calculated_days" value="<?php echo calculateDays(); ?>">
-         <?php
-function calculateDays() {
-    // 開始日と終了日を取得
-    $start_date = $_POST['request_date_start'];
-    $end_date = $_POST['reqeuest_date_end'];
-
-    // 開始日と終了日をUNIXタイムスタンプに変換
-    $start_timestamp = strtotime($start_date);
-    $end_timestamp = strtotime($end_date);
-
-    // 日数を計算
-    $difference_in_days = floor(($end_timestamp - $start_timestamp) / (60 * 60 * 24)) + 1;
-
-    return $difference_in_days;
-}
-?>
-
 
     <input type="submit" value="入力確認画面へ" >
-
-        </form>
+  </form>
 
     <p>申請後に申請した日の勤務入力を行ってください</p>
 <script>
-    // reqeuest_date_endの日付がrequest_date_startより前の日付を選択できないように制約を設ける
-    document.getElementById("reqeuest_date_end").addEventListener("change", function() {
+    // request_date_endの日付がrequest_date_startより前の日付を選択できないように制約を設ける
+    document.getElementById("request_date_end").addEventListener("change", function() {
         var requestDate1 = document.getElementById("request_date_start").value;
-        var requestDate2 = document.getElementById("reqeuest_date_end").value;
-        // request_date_startまたはreqeuest_date_endのどちらかが空の場合は制約をかけない
+        var requestDate2 = document.getElementById("request_date_end").value;
+        // request_date_startまたはrequest_date_endのどちらかが空の場合は制約をかけない
         if (requestDate1 !== "" && requestDate2 !== "") {
             if (requestDate2 < requestDate1) {
                 alert("申請終了日は申請開始日より後の日付を選択してください。");
-                document.getElementById("reqeuest_date_end").value = "";
+                document.getElementById("request_date_end").value = "";
             }
         }
     });
 
-       // request_date_startの日付がreqeuest_date_endより後の日付を選択できないように制約を設ける
+       // request_date_startの日付がrequest_date_endより後の日付を選択できないように制約を設ける
     document.getElementById("request_date_start").addEventListener("change", function() {
         var requestDate1 = document.getElementById("request_date_start").value;
-        var requestDate2 = document.getElementById("reqeuest_date_end").value;
+        var requestDate2 = document.getElementById("request_date_end").value;
 
-        // request_date_startまたはreqeuest_date_endのどちらかが空の場合は制約をかけない
+        // request_date_startまたはrequest_date_endのどちらかが空の場合は制約をかけない
         if (requestDate1 !== "" && requestDate2 !== "") {
             if (requestDate1 > requestDate2) {
                 alert("申請開始日は申請終了日より前の日付を選択してください。");
