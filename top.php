@@ -62,6 +62,9 @@ if (!isset($_SESSION['mail'])) {
         <li>
           <a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php">検索</a>
         </li>
+        <li>
+          <a href="http://localhost:8888/AttendanceManagementSystem/report/report.php">報告、申請一覧</a>
+        </li>
         <?php endif; ?>
       </div>
     </ul>
