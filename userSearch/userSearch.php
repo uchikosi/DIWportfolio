@@ -1,4 +1,24 @@
 <?php
+
+session_start();
+// セッションの有効期限を設定（1日）
+$expireAfter = 60 * 60 * 24; // 1日（秒数で指定）
+session_set_cookie_params($expireAfter);
+
+// もしログインしていなければ、ログインページにリダイレクト
+if (!isset($_SESSION['mail'])) {
+  header("Location: login.php");
+  exit();
+} else {
+  // ユーザーの権限を取得
+  $role = $_SESSION['role'] ?? null;
+  $user_id = $_SESSION['user_id'] ?? null; // ユーザーIDを取得
+  $family_name = $_SESSION['family_name'] ?? null;
+  $last_name = $_SESSION['last_name'] ?? null;
+  $family_name_kana = $_SESSION['family_name_kana'] ?? null;
+  $last_name_kana = $_SESSION['last_name_kana'] ?? null;
+  var_dump($_SESSION);
+}
   // データベースへの接続
   mb_internal_encoding("utf8");
   $servername = "localhost";
@@ -32,7 +52,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="css/searc.css">
+  <link rel="stylesheet" type="text/css" href="../css/common.css">
   <title>ユーザー一覧</title>
   <style>
     /* 罫線 */
@@ -43,32 +63,39 @@
     }
 
     table, th, td {
-      border: 1px solid black;
+      border: 1px solid #dddddd;
       text-align: center; /* 中央配置 */
       padding: 8px; /* セル内の余白を追加 */
     }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
   </style>
 </head>
 <body>
   <header>
-    <div>
-      <p>ようこそ ID  <?php echo $user_id; ?>様</p>
-      <p> <?php echo $_SESSION['mail']; ?></p>
-      <?php if ($role === '一般'): ?>
-        <p>このアカウント権限は一般です</p>
-      <?php elseif ($role === '管理者'): ?>
-        <p>このアカウント権限は管理者です</p>
-      <?php endif; ?>
-      <p><a href="logout.php">Logout</a></p>
-    </div>
-
-    <div id="menu">
-      <ul>
+    <ul id="menu">
+      <h1 id=mainTitole>勤怠アプリ</h1>
+      <div>
+        <li>ようこそ <?php echo $family_name.$last_name ; ?>様</li>
+        <li> <?php echo $_SESSION['mail']; ?></li>
+        <?php if ($role === '管理者'): ?>
+          <li>アカウント権限管理者</li>
+        <?php endif; ?>
+      </div>
+      <li><a href="../logout.php" id="logout">Logout</a></li>
       </ul>
-    </div>
   </header>
+
   <main>
-     <h3>従業員一覧</h3>
+     <h2>従業員一覧</h2>
     <div>
       <form method="GET" action="userSearch.php">
         <div>
@@ -238,10 +265,10 @@
               }
               echo "</td>";
               if ($role === '管理者'):
-                echo "<td><a href='../update/update.php?id={$row['id']}'>更新</a></td>";
+                echo "<td><a href='../update/userUpdate.php?id={$row['id']}'>更新</a></td>";
                 echo "<td><a href='../delete/delete.php?id={$row['id']}'>削除</a></td>";
                 // リンク先にuser_idを含めてtimeSheetSearch.phpに遷移する
-echo "<td><a href='../timeSheet/timeSheetSearch.php?user_id={$id}'>勤怠情報</a></td>";
+                echo "<td><a href='../timeSheet/timeSheetSearch.php?user_id={$id}'>勤怠情報</a></td>";
               endif;
               echo "</tr>";
             }

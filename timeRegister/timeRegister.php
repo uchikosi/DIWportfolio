@@ -105,7 +105,7 @@ try {
 
       <label>年月日:</label>
       <input type="date" min="2024-01" name="date" id="selectedDate" value="">
-      <br>
+      <!-- <br> -->
 
       <label>区分:</label>
       <select name="category" id="categorySelect" onchange="handleCategoryChange()">
@@ -120,18 +120,21 @@ try {
       </select><br>
 
       <label for="start_time" id="startTimeLabel">出勤時間:</label>
-      <input type="time" id="start_time" name="start_time" onchange="calculateWorkTime()"><br>
+      <input type="time" id="start_time" name="start_time" onchange="calculateWorkTime()">
+      <!-- <br> -->
 
       <label for="end_time" id="endTimeLabel">退勤時間:</label>
       <input type="time" id="end_time" name="end_time" onchange="calculateWorkTime()"><br>
 
       <label for="break_time" id="breakTimeLabel">休憩時間:</label>
-      <input type="time" id="break_time" name="break_time" onchange="calculateWorkTime()"><br>
+      <input type="time" id="break_time" name="break_time" onchange="calculateWorkTime()">
+      <!-- <br> -->
 
       <label for="standard_working_time" id="standardWorkingTimeLabel">実働時間:</label>
       <input type="time" id="standard_working_time" name="standard_working_time" readonly><br>
       <label for="over_time" id="overTimeLabel">残業時間:</label>
-      <input type="time" id="over_time" name="over_time"><br>
+      <input type="time" id="over_time" name="over_time">
+      <!-- <br> -->
 
       <input type="submit" value="送信">
     </form>
@@ -278,6 +281,9 @@ if ($result) {
 ?>
     </table>
 </div>
+<footer>
+Copytifht  is the one which provides A to Z about programming
+  </footer>
   <script type="text/javascript" src="../js/time.js"></script>
 </body>
 </html>

@@ -37,7 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
         echo "更新が正常に完了しました。";
     } else {
-        echo "エラー: " . $sql . "<br>" . $conn->error;
+        // echo "エラー: " . $sql . "<br>" . $conn->error;
+        echo "更新に失敗しました。もう一度やり直してください。";
     }
 
     // // データベース接続を閉じる
