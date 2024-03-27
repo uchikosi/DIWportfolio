@@ -20,6 +20,7 @@ if (!isset($_SESSION['mail'])) {
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/top.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
   <title>TOP</title>
 </head>
