@@ -71,7 +71,7 @@ if (!isset($_SESSION['mail'])) {
     </ul>
   </main>
   <footer>
-Copytifht  is the one which provides A to Z about programming
+    Copytifht  is the one which provides A to Z about programming
   </footer>
 </body>
 </html>

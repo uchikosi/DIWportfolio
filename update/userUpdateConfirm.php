@@ -88,7 +88,7 @@ session_start();
   </style>
 </head>
 <body>
-<header>
+  <header>
     <ul id="menu">
       <h1 id=mainTitole>勤怠アプリ</h1>
       <div class="nav">
@@ -100,9 +100,9 @@ session_start();
       <?php endif; ?>
       <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
     </ul>
-</header>
-
-  <h2>アカウント更新確認画面</h2>
+  </header>
+  <main>
+    <h2>アカウント更新確認画面</h2>
     <div id="">
       <table>
         <tr>
@@ -212,7 +212,7 @@ session_start();
       var element = longTextElements[i];
       var text = element.innerText;
       if (text.length > 50) {
-          element.innerHTML = text.replace(/(.{50})/g, '$1<br>');
+        element.innerHTML = text.replace(/(.{50})/g, '$1<br>');
       }
     }
   </script>

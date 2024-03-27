@@ -68,7 +68,7 @@ try {
   $stmt->bindParam(':id', $updateId, PDO::PARAM_INT);
   $stmt->bindParam(':familyName', $newFamilyName, PDO::PARAM_STR);
   $stmt->bindParam(':lastName', $newLastName, PDO::PARAM_STR);
- $stmt->bindParam(':familyNameKana', $newfamilyNameKana, PDO::PARAM_STR);
+  $stmt->bindParam(':familyNameKana', $newfamilyNameKana, PDO::PARAM_STR);
   $stmt->bindParam(':lastNameKana', $newLastNameKana, PDO::PARAM_STR);
   $stmt->bindParam(':mail', $newMail, PDO::PARAM_STR);
   $stmt->bindParam(':hashedPassword', $newHashedPassword, PDO::PARAM_STR); // ハッシュ化済みのパスワードをバインド
@@ -77,8 +77,8 @@ try {
   $stmt->bindParam(':postalCode', $newPostalCode, PDO::PARAM_STR);
   $stmt->bindParam(':address', $newAddress, PDO::PARAM_STR);
   $stmt->bindParam(':companyName', $newCompanyName, PDO::PARAM_STR);
-   $stmt->bindParam(':business', $newBusiness, PDO::PARAM_STR);
-   $stmt->bindParam(':staffCode', $newStaffCode, PDO::PARAM_STR);
+  $stmt->bindParam(':business', $newBusiness, PDO::PARAM_STR);
+  $stmt->bindParam(':staffCode', $newStaffCode, PDO::PARAM_STR);
   $stmt->bindParam(':authority', $newAuthority, PDO::PARAM_STR);
   $update = $stmt->execute();
 
@@ -114,19 +114,19 @@ unset($_SESSION['failure']);
 </head>
 <body>
 
-<header>
-    <ul id="menu">
-      <h1 id=mainTitole>勤怠アプリ</h1>
-      <div class="nav">
-        <li class="nav_list">ようこそ <?php echo $family_name.$last_name ; ?>様</li>
-        <li class="nav_list"> <?php echo $_SESSION['mail']; ?></li>
-      </div>
-      <?php if ($role === '管理者'): ?>
-      <li class="supervisor">アカウント権限 管理者</li>
-      <?php endif; ?>
-      <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
-    </ul>
-</header>
+  <header>
+      <ul id="menu">
+        <h1 id=mainTitole>勤怠アプリ</h1>
+        <div class="nav">
+          <li class="nav_list">ようこそ <?php echo $family_name.$last_name ; ?>様</li>
+          <li class="nav_list"> <?php echo $_SESSION['mail']; ?></li>
+        </div>
+        <?php if ($role === '管理者'): ?>
+        <li class="supervisor">アカウント権限 管理者</li>
+        <?php endif; ?>
+        <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
+      </ul>
+  </header>
 
   <main>
     <div>

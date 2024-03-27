@@ -266,7 +266,7 @@ if (!isset($_SESSION['mail'])) {
               echo "</td>";
               if ($role === '管理者'):
                 echo "<td><a href='../update/userUpdate.php?id={$row['id']}'>更新</a></td>";
-                echo "<td><a href='../delete/delete.php?id={$row['id']}'>削除</a></td>";
+                echo "<td><a href='../delete/userDelete.php?id={$row['id']}'>削除</a></td>";
                 // リンク先にuser_idを含めてtimeSheetSearch.phpに遷移する
                 echo "<td><a href='../timeSheet/timeSheetSearch.php?user_id={$id}'>勤怠情報</a></td>";
               endif;

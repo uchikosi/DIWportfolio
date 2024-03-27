@@ -3,8 +3,8 @@ session_start();
 
 // もし既にログインしていれば、トップページにリダイレクト
 if (isset($_SESSION['mail'])) {
-    header("Location: top.php");
-    exit();
+  header("Location: top.php");
+  exit();
 }
 
 // データベースへの接続情報を設定します
@@ -19,44 +19,44 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // データベース接続エラーの確認
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+  die("Connection failed: " . $conn->connect_error);
 }
 
 // POSTリクエストを受け取った場合
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // フォームからの入力を取得
-    $email = $_POST['mail'];
-    $password = $_POST['password'];
+  // フォームからの入力を取得
+  $email = $_POST['mail'];
+  $password = $_POST['password'];
 
-    // データベースから入力されたメールアドレスと一致するユーザーを取得します
-    $sql = "SELECT * FROM users WHERE mail = '$email'";
-    $result = $conn->query($sql);
+  // データベースから入力されたメールアドレスと一致するユーザーを取得します
+  $sql = "SELECT * FROM users WHERE mail = '$email'";
+  $result = $conn->query($sql);
 
-    if ($result->num_rows == 1) {
-      $row = $result->fetch_assoc();
-      // パスワードが一致するか確認します
-      if (password_verify($password, $row['password'])) {
-        // password_verify() 関数を使用して、データベースから取得したハッシュ化されたパスワードとユーザーが入力したパスワードを比較しています。
-        // ログイン成功
-        $_SESSION['mail'] = $email;
-        $_SESSION['role'] = ($row['authority'] == 1) ? '管理者' : '一般';
-        $_SESSION['user_id'] = $row['id']; // ユーザーIDを保存
-        $_SESSION['family_name'] = $row['family_name'];
-        $_SESSION['last_name'] = $row['last_name'];
-        $_SESSION['family_name_kana'] = $row['family_name_kana'];
-        $_SESSION['last_name_kana'] = $row['last_name_kana'];
+  if ($result->num_rows == 1) {
+    $row = $result->fetch_assoc();
+    // パスワードが一致するか確認します
+    if (password_verify($password, $row['password'])) {
+      // password_verify() 関数を使用して、データベースから取得したハッシュ化されたパスワードとユーザーが入力したパスワードを比較しています。
+      // ログイン成功
+      $_SESSION['mail'] = $email;
+      $_SESSION['role'] = ($row['authority'] == 1) ? '管理者' : '一般';
+      $_SESSION['user_id'] = $row['id']; // ユーザーIDを保存
+      $_SESSION['family_name'] = $row['family_name'];
+      $_SESSION['last_name'] = $row['last_name'];
+      $_SESSION['family_name_kana'] = $row['family_name_kana'];
+      $_SESSION['last_name_kana'] = $row['last_name_kana'];
 
-        $_SESSION['staff_code'] = $row['staff_code'];
-        header("Location: top.php");
-        exit();
-      } else {
-        // ログイン失敗
-        $error = "メールアドレスまたはパスワードが正しくありません。";
-      }
+      $_SESSION['staff_code'] = $row['staff_code'];
+      header("Location: top.php");
+      exit();
     } else {
-      // ユーザーが見つからない場合
-      $error = "エラーが発生したためログイン情報を取得できません。";
+      // ログイン失敗
+      $error = "メールアドレスまたはパスワードが正しくありません。";
     }
+  } else {
+    // ユーザーが見つからない場合
+    $error = "エラーが発生したためログイン情報を取得できません。";
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <main>
   <div>
     <?php if (isset($error)): ?>
-        <p class="error-message"><?php echo $error; ?></p>
+      <p class="error-message"><?php echo $error; ?></p>
     <?php endif; ?>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
       <div class ="loginForm">

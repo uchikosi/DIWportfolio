@@ -16,11 +16,13 @@ session_start();
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- <link rel="stylesheet" type="text/css" href="../css/.css"> -->
-<link rel="stylesheet" type="text/css" href="../css/common.css">
-<header>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" type="text/css" href="../css/.css"> -->
+  <link rel="stylesheet" type="text/css" href="../css/common.css">
+</head>
+<body>
+  <header>
     <ul id="menu">
       <h1 id=mainTitole>勤怠アプリ</h1>
       <div class="nav">
@@ -32,11 +34,9 @@ session_start();
       <?php endif; ?>
       <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
     </ul>
-</header>
+  </header>
 
-
-<body>
-<main>
+  <main>
     <div id="regist">
       <h1>スタッフ登録フォーム</h1>
       <form method="post" action="userRegister_confirm.php" onsubmit="return validateForm()">

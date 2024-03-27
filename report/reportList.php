@@ -35,24 +35,24 @@
   $params = [];
 
   if (!empty($name)) {
-      $sql .= " AND name LIKE ?";
-      $params[] = "%$name%";
+    $sql .= " AND name LIKE ?";
+    $params[] = "%$name%";
   }
   if (!empty($name_kana)) {
-      $sql .= " AND name_kana LIKE ?";
-      $params[] = "%$name_kana%";
+    $sql .= " AND name_kana LIKE ?";
+    $params[] = "%$name_kana%";
   }
   if (!empty($staff_code)) {
-      $sql .= " AND staff_code = ?";
-      $params[] = $staff_code;
+    $sql .= " AND staff_code = ?";
+    $params[] = $staff_code;
   }
   if (!empty($category)) {
-      $sql .= " AND category = ?";
-      $params[] = $category;
+    $sql .= " AND category = ?";
+    $params[] = $category;
   }
   if (!empty($registration_date)) {
-      $sql .= " AND DATE(registered_time) = ?";
-      $params[] = $registration_date;
+    $sql .= " AND DATE(registered_time) = ?";
+    $params[] = $registration_date;
   }
 
   // SQLクエリを実行
@@ -70,55 +70,55 @@
   <title>申請、連絡一覧</title>
   <style>
     table {
-        border-collapse: collapse;
-        width: 100%;
+      border-collapse: collapse;
+      width: 100%;
     }
 
     th,
     td {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
     }
 
     th {
-        background-color: #f2f2f2;
+      background-color: #f2f2f2;
     }
 
     .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgb(0, 0, 0);
-        background-color: rgba(0, 0, 0, 0.4);
-        padding-top: 60px;
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.4);
+      padding-top: 60px;
     }
 
     .modal-content {
-        background-color: #fefefe;
-        margin: 5% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
     }
 
     .close {
-        color: #aaaaaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
     }
 
     .close:hover,
     .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
     }
   </style>
 </head>

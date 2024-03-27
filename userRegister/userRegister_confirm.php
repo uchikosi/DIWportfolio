@@ -34,19 +34,22 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="css/">
+  <link rel="stylesheet" type="text/css" href="../css/common.css">
   <title>スタッフデータ入力確認画面</title>
 </head>
 <body>
   <header>
-    <div>
-
-      <p><a href="logout.php">Logout</a></p>
-    </div>
-
-    <div id="menu">
-
-    </div>
+    <ul id="menu">
+      <h1 id=mainTitole>勤怠アプリ</h1>
+      <div class="nav">
+        <li class="nav_list">ようこそ <?php echo $family_name.$last_name ; ?>様</li>
+        <li class="nav_list"> <?php echo $_SESSION['mail']; ?></li>
+      </div>
+      <?php if ($role === '管理者'): ?>
+      <li class="supervisor">アカウント権限 管理者</li>
+      <?php endif; ?>
+      <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
+    </ul>
   </header>
   <main>
     <div class="main">
