@@ -170,7 +170,7 @@ session_start();
         <input type="hidden" name="mail" value="<?php echo htmlspecialchars($newMail, ENT_QUOTES); ?>">
         <input type="hidden" name="password" value="<?php echo htmlspecialchars($newPassword, ENT_QUOTES); ?>">
         <input type="hidden" name="postalCode" value="<?php echo htmlspecialchars($newPostalCode, ENT_QUOTES); ?>">
-        <input type="hidden" name="address2" value="<?php echo htmlspecialchars($newAddress, ENT_QUOTES); ?>">
+        <input type="hidden" name="address" value="<?php echo htmlspecialchars($newAddress, ENT_QUOTES); ?>">
         <input type="hidden" name="gender" value="<?php echo htmlspecialchars($newGender, ENT_QUOTES); ?>">
         <input type="hidden" name="companyName" value="<?php echo htmlspecialchars($newCompanyName, ENT_QUOTES); ?>">
         <input type="hidden" name="business" value="<?php echo htmlspecialchars($newBusiness, ENT_QUOTES); ?>">

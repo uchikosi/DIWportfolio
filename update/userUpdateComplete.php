@@ -84,11 +84,11 @@ try {
 
   if ($update) {
     // データベースへの更新が成功した場合
-    $success = "familyName と lastName の更新が完了しました。";
+    $success = "更新が完了しました。";
     $_SESSION['success'] = $success;
   } else {
     // データベースへの更新が失敗した場合
-    $failure = "エラーが発生したため familyName と lastName の更新ができませんでした。";
+    $failure = "エラーが発生したため更新ができませんでした。";
     $_SESSION['failure'] = $failure;
   }
 } catch (PDOException $e) {

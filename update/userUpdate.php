@@ -75,72 +75,180 @@ if (isset($_SESSION['update_id'])) {
 
 <div>
     <label for='family_name'>名前(姓)</label>
-    <input type='text' name='familyName' id="familyName" maxlength="10" autofocus placeholder="漢字orひらがな" oninput="validateName(this, true)" value='<?php echo htmlspecialchars($userData['family_name'], ENT_QUOTES); ?>'>
+    <input type='text' name='familyName' id="familyName" maxlength="10" autofocus placeholder="漢字orひらがな" oninput="validateName(this, true)" value='<?php
+     if (isset($_POST['familyName'])){
+              // userUpdateConfirm.phpから遷移した場合
+              echo htmlspecialchars($_POST['familyName'], ENT_QUOTES);
+            } elseif (isset($_GET['id'])) {
+              // userSearch.phpから遷移した場合
+              echo htmlspecialchars($userData['family_name'], ENT_QUOTES);
+            } else {
+              // その他の場合
+              echo '';
+            }?>'>
 </div>
 
 <div>
     <label for='last_name'>名前(名)</label>
-    <input type='text' name='lastName' id="lastName" maxlength="10" autofocus placeholder="漢字orひらがな" oninput="validateName(this, true)" value='<?php echo htmlspecialchars($userData['last_name'], ENT_QUOTES); ?>'>
+    <input type='text' name='lastName' id="lastName" maxlength="10" autofocus placeholder="漢字orひらがな" oninput="validateName(this, true)" value='<?php
+     if (isset($_POST['lastName'])){
+              // userUpdateConfirm.phpから遷移した場合
+              echo htmlspecialchars($_POST['lastName'], ENT_QUOTES);
+            } elseif (isset($_GET['id'])) {
+              // userSearch.phpから遷移した場合
+              echo htmlspecialchars($userData['last_name'], ENT_QUOTES);
+            } else {
+              // その他の場合
+              echo '';
+            }?>'>
 </div>
 
 <div>
     <label for='family_name_kana'>カナ(姓)</label>
-    <input type='text' id="familyNameKana" name="familyNameKana" maxlength="10" oninput="validateNameKana(this, true)" placeholder="カタカナ" value='<?php echo htmlspecialchars($userData['family_name_kana'], ENT_QUOTES); ?>'>
+    <input type='text' id="familyNameKana" name="familyNameKana" maxlength="10" oninput="validateNameKana(this, true)" placeholder="カタカナ" value='<?php
+    if (isset($_POST['familyNameKana'])){
+              // userUpdateConfirm.phpから遷移した場合
+              echo htmlspecialchars($_POST['familyNameKana'], ENT_QUOTES);
+            } elseif (isset($_GET['id'])) {
+              // userSearch.phpから遷移した場合
+              echo htmlspecialchars($userData['family_name_kana'], ENT_QUOTES);
+            } else {
+              // その他の場合
+              echo '';
+            }?>'>
 <div>
 
 <div>
     <label for='last_name_kana'>カナ(名)</label>
-    <input type='text' id="lastNameKana" name="lastNameKana" maxlength="10" oninput="validateNameKana(this, false)" placeholder="カタカナ" value='<?php echo htmlspecialchars($userData['last_name_kana'], ENT_QUOTES); ?>'>
+    <input type='text' id="lastNameKana" name="lastNameKana" maxlength="10" oninput="validateNameKana(this, false)" placeholder="カタカナ" value='<?php if (isset($_POST['lastNameKana'])){
+              // userUpdateConfirm.phpから遷移した場合
+              echo htmlspecialchars($_POST['lastNameKana'], ENT_QUOTES);
+            } elseif (isset($_GET['id'])) {
+              // userSearch.phpから遷移した場合
+              echo htmlspecialchars($userData['last_name_kana'], ENT_QUOTES);
+            } else {
+              // その他の場合
+              echo '';
+            }?>'>
 </div>
 
 <div>
     <label for='mail'>メールアドレス</label>
-    <input type='text' id="mail" name="mail" maxlength="100" oninput="validateEmail(this)" placeholder="@,ドット,半角英数字のみ" value='<?php echo htmlspecialchars($userData['mail'], ENT_QUOTES); ?>'>
+    <input type='text' id="mail" name="mail" maxlength="100" oninput="validateEmail(this)" placeholder="@,ドット,半角英数字のみ" value='<?php if (isset($_POST['mail'])){
+              // userUpdateConfirm.phpから遷移した場合
+              echo htmlspecialchars($_POST['mail'], ENT_QUOTES);
+            } elseif (isset($_GET['id'])) {
+              // userSearch.phpから遷移した場合
+              echo htmlspecialchars($userData['mail'], ENT_QUOTES);
+            } else {
+              // その他の場合
+              echo '';
+            }?>'>
 </div>
 
 <div>
     <label for='password'>パスワード:</label>
-    <input type='password' id="password" name="password" oninput="validatePassword(this)" placeholder="半角英数字 3~10文字" >
+    <input type='password' id="password" name="password" oninput="validatePassword(this)" placeholder="半角英数字 3~10文字" value='<?php
+            if (isset($_POST['password'])){
+               // userUpdateConfirm.phpから遷移した場合
+              echo htmlspecialchars($_POST['password'], ENT_QUOTES);
+            } elseif (isset($_GET['id'])) {
+              // userSearch.phpから遷移した場合
+              echo htmlspecialchars($userData[''], ENT_QUOTES);
+            } else {
+              // その他の場合
+              echo '';
+            }?>'>
 </div>
 
 <div>
     <label>性別</label>
-    <label><input type='radio' id="male" name='gender' value='0' <?php echo ($userData['gender'] == 0 ? 'checked' : ''); ?>> 男性</label>
-    <label><input type='radio' id="female" name='gender' value='1' <?php echo ($userData['gender'] == 1 ? 'checked' : ''); ?>> 女性</label>
+    <label><input type='radio' id="male" name='gender' value='0' <?php echo ((isset($_POST['gender']) && $_POST['gender'] == 0) || (!isset($_POST['gender']) && $userData['gender'] == 0) ? 'checked' : ''); ?>> 男性</label>
+    <label><input type='radio' id="female" name='gender' value='1' <?php echo ((isset($_POST['gender']) && $_POST['gender'] == 1) || (!isset($_POST['gender']) && $userData['gender'] == 1) ? 'checked' : ''); ?>> 女性</label>
 </div>
 
 <div>
     <label for='postal_code'>郵便番号:</label>
-    <input type='text' id="postalCode" name="postalCode" maxlength="7" pattern="^[0-9]+$" required placeholder="半角英数字" value='<?php echo htmlspecialchars($userData['postal_code'], ENT_QUOTES); ?>'>
+    <input type='text' id="postalCode" name="postalCode" maxlength="7" pattern="^[0-9]+$" required placeholder="半角英数字" value='<?php
+            if (isset($_POST['postalCode'])){
+               // userUpdateConfirm.phpから遷移した場合
+              echo htmlspecialchars($_POST['postalCode'], ENT_QUOTES);
+            } elseif (isset($_GET['id'])) {
+             // userSearch.phpから遷移した場合
+              echo htmlspecialchars($userData['postal_code'], ENT_QUOTES);
+            } else {
+              // その他の場合
+              echo '';
+            }?>'>
 </div>
 
 <div>
     <label for='address'>住所:</label>
-    <input type='text' id="address" name="address" maxlength="100" required placeholder="日本語で入力"oninput="validateAddress(this)" value='<?php echo htmlspecialchars($userData['address'], ENT_QUOTES); ?>'>
+    <input type='text' id="address" name="address" maxlength="100" required placeholder="日本語で入力"oninput="validateAddress(this)" value='<?php
+            if (isset($_POST['address'])){
+               // userUpdateConfirm.phpから遷移した場合
+              echo htmlspecialchars($_POST['address'], ENT_QUOTES);
+            } elseif (isset($_GET['id'])) {
+             // userSearch.phpから遷移した場合
+              echo htmlspecialchars($userData['address'], ENT_QUOTES);
+            } else {
+              // その他の場合
+              echo '';
+            }?>'>
 </div>
 
 <div>
     <label for='company_name'>勤務先会社名:</label>
-    <input type='text' id="companyName" name="companyName" maxlength="100" required placeholder="会社名を入力してください" value='<?php echo htmlspecialchars($userData['company_name'], ENT_QUOTES); ?>'>
+    <input type='text' id="companyName" name="companyName" maxlength="100" required placeholder="会社名を入力してください" value='<?php
+            if (isset($_POST['companyName'])){
+               // userUpdateConfirm.phpから遷移した場合
+              echo htmlspecialchars($_POST['companyName'], ENT_QUOTES);
+            } elseif (isset($_GET['id'])) {
+             // userSearch.phpから遷移した場合
+              echo htmlspecialchars($userData['company_name'], ENT_QUOTES);
+            } else {
+              // その他の場合
+              echo '';
+            }?>'>
 </div>
 
 <div>
     <label for='business'>担当業務:</label>
-    <input type='text' id="business" name="business" maxlength="100" required placeholder="業務内容を入力してください" value='<?php echo htmlspecialchars($userData['work'], ENT_QUOTES); ?>'>
+    <input type='text' id="business" name="business" maxlength="100" required placeholder="業務内容を入力してください" value='<?php
+            if (isset($_POST['business'])){
+               // userUpdateConfirm.phpから遷移した場合
+              echo htmlspecialchars($_POST['business'], ENT_QUOTES);
+            } elseif (isset($_GET['id'])) {
+             // userSearch.phpから遷移した場合
+              echo htmlspecialchars($userData['work'], ENT_QUOTES);
+            } else {
+              // その他の場合
+              echo '';
+            }?>'>
 </div>
 
 <div>
     <label for='staff_code'>スタッフコード:</label>
-    <input type='text' id="staffCode" name="staffCode" maxlength="20" required placeholder="スタッフコードを入力してください" value='<?php echo htmlspecialchars($userData['staff_code'], ENT_QUOTES); ?>'>
+    <input type='text' id="staffCode" name="staffCode" maxlength="20" required placeholder="スタッフコードを入力してください" value='<?php
+            if (isset($_POST['staffCode'])){
+               // userUpdateConfirm.phpから遷移した場合
+              echo htmlspecialchars($_POST['staffCode'], ENT_QUOTES);
+            } elseif (isset($_GET['id'])) {
+             // userSearch.phpから遷移した場合
+              echo htmlspecialchars($userData['staff_code'], ENT_QUOTES);
+            } else {
+              // その他の場合
+              echo '';
+            }?>'>
 </div>
 
 
 <div>
     <label for='authority'>アカウント権限</label>
     <select id="authority" name="authority" required>
-        <option value='0' <?php echo ($userData['authority'] == 0 ? 'selected' : ''); ?>>一般</option>
-        <option value='1' <?php echo ($userData['authority'] == 1 ? 'selected' : ''); ?>>管理者</option>
-    </select>
+              <option value='0' <?php echo (isset($_POST['authority']) && $_POST['authority'] == 0 ? 'selected' : ($userData['authority'] == 0 ? 'selected' : '')); ?>>一般</option>
+              <option value='1' <?php echo (isset($_POST['authority']) && $_POST['authority'] == 1 ? 'selected' : ($userData['authority'] == 1 ? 'selected' : '')); ?>>管理者</option>
+          </select>
 </div>
 
         <input type='submit' value='確認する'>
