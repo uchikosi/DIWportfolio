@@ -87,15 +87,15 @@ try {
   <header>
     <ul id="menu">
       <h1 id=mainTitole>勤怠アプリ</h1>
-      <div>
-        <li>ようこそ <?php echo $family_name.$last_name ; ?>様</li>
-        <li> <?php echo $_SESSION['mail']; ?></li>
-        <?php if ($role === '管理者'): ?>
-          <li>アカウント権限管理者</li>
-        <?php endif; ?>
+      <div class="nav">
+        <li class="nav_list">ようこそ <?php echo $family_name.$last_name ; ?>様</li>
+        <li class="nav_list"> <?php echo $_SESSION['mail']; ?></li>
       </div>
-      <li><a href="../logout.php" id="logout">Logout</a></li>
-      </ul>
+      <?php if ($role === '管理者'): ?>
+      <li class="supervisor">アカウント権限 管理者</li>
+      <?php endif; ?>
+      <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
+    </ul>
   </header>
 
   <!-- 登録 -->
@@ -209,9 +209,9 @@ try {
   $overtime_hours = floor($total_overtime_minutes / 60);
   $overtime_minutes = $total_overtime_minutes % 60;
   if ($overtime_hours > 20 || ($overtime_hours == 20 && $overtime_minutes > 0)) {
-    $overtime_style = 'background-color: yellow;'; // 黄色
+    $overtime_style = 'background-color: red;'; // 赤色
   } elseif ($overtime_hours > 10 || ($overtime_hours == 10 && $overtime_minutes > 0)) {
-    $overtime_style = 'background-color: red;';// 赤色
+    $overtime_style = 'background-color: yellow;';// 黄色
   } else {
     $overtime_style = ''; // デフォルトのスタイル
   }
