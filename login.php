@@ -6,7 +6,7 @@ if (isset($_SESSION['mail'])) {
   header("Location: top.php");
   exit();
 }
-
+var_dump($_SESSION);
 // データベースへの接続情報を設定します
 mb_internal_encoding("utf8");
 $servername = "localhost";
@@ -44,8 +44,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       $_SESSION['family_name'] = $row['family_name'];
       $_SESSION['last_name'] = $row['last_name'];
       $_SESSION['family_name_kana'] = $row['family_name_kana'];
-      $_SESSION['last_name_kana'] = $row['last_name_kana'];
-
+      $_SESSION['postal_code'] = $row['postal_code'];
+      $_SESSION['address'] = $row['address'];
+      $_SESSION['work'] = $row['work'];
+      $_SESSION['company_name'] = $row['company_name'];
       $_SESSION['staff_code'] = $row['staff_code'];
       header("Location: top.php");
       exit();

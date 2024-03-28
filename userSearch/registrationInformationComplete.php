@@ -45,7 +45,7 @@ try {
             $familyNameKana = $_POST['familyNameKana'] ?? '';
             $lastNameKana = $_POST['lastNameKana'] ?? '';
             $mail = $_POST['mail'] ?? '';
-            $password = $_POST['password'] ?? '';
+            // $password = $_POST['password'] ?? '';
             $postalCode = $_POST['postalCode'] ?? '';
             $address = $_POST['address'] ?? '';
 
