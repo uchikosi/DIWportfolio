@@ -1,64 +1,122 @@
 <?php
-  session_start();
-  // セッションの有効期限を設定（1日）
-  $expireAfter = 60 * 60 * 24; // 1日（秒数で指定）
-  session_set_cookie_params($expireAfter);
+session_start();
 
-  // もしログインしていなければ、ログインページにリダイレクト
-  if (!isset($_SESSION['mail'])) {
+// データベースへの接続
+mb_internal_encoding("utf8");
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "AttendanceManagement";
+
+try {
+    $pdo = new PDO("mysql:dbname={$dbname};host={$servername}", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("データベースへの接続に失敗しました: " . $e->getMessage());
+}
+
+// もしログインしていなければ、ログインページにリダイレクト
+if (!isset($_SESSION['mail'])) {
     header("Location: login.php");
     exit();
-  } else {
+} else {
     // ユーザーの権限を取得
     $role = $_SESSION['role'] ?? null;
     $user_id = $_SESSION['user_id'] ?? null; // ユーザーIDを取得
-    $family_name = $_SESSION['family_name'] ?? null;
-    $last_name = $_SESSION['last_name'] ?? null;
-    $family_name_kana = $_SESSION['family_name_kana'] ?? null;
-    $last_name_kana = $_SESSION['last_name_kana'] ?? null;
-    var_dump($_SESSION);
-  }
-
-  // データベース接続
-$db_host = 'localhost';
-$db_user = 'root';
-$db_pass = 'root';
-$db_name = 'AttendanceManagement';
-
-$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
 }
 
-  ?>
+// ユーザーデータ取得
+if (isset($user_id)) {
 
-  <form action="registrationInformation.php" method="post">
-  <label for="family_name">名前（姓）:</label><br>
-  <input type="text" id="family_name" name="family_name"><br>
+    // ユーザーデータを取得するクエリを実行
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+    $stmt->execute([$user_id]);
+    $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  <label for="last_name">名前（名）:</label><br>
-  <input type="text" id="last_name" name="last_name"><br>
+    if (!$userData) {
+        die("ユーザーデータが見つかりません");
+    }
+} else {
+    die("ユーザーIDがセットされていません");
+}
+// var_dump($_SESSION);
+?>
 
-  <label for="family_name_kana">カナ（姓）:</label><br>
-  <input type="text" id="family_name_kana" name="family_name_kana"><br>
 
-  <label for="last_name_kana">カナ（名）:</label><br>
-  <input type="text" id="last_name_kana" name="last_name_kana"><br>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <title>TOP</title>
+</head>
+<body>
+<header>
+    <h1>勤怠報告</h1>
+    <div id="head">
+        <p>ようこそ <?php echo $_SESSION['family_name'] . $_SESSION['last_name']; ?>様</p>
+        <p> <?php echo $_SESSION['mail']; ?></p>
+        <?php if ($role === '管理者'): ?>
+            <p>このアカウント権限は管理者です</p>
+        <?php endif; ?>
+        <p><a href="logout.php">Logout</a></p>
+    </div>
+</header>
+<main>
+    <h1>登録情報</h1>
+    <form method="post" action=' registrationInformationConfirm.php'>
+        <input type='hidden' name='user_id' value='<?php echo $user_id; ?>'>
 
-  <label for="staff_code">スタッフコード:</label><br>
-  <input type="text" id="staff_code" name="staff_code" readonly><br>
+        <!-- 名前（姓） -->
+        <label for="familyName">名前（姓）:</label>
+        <input type="text" id="familyName" name="familyName" maxlength="10" placeholder="漢字orひらがな" value="<?php echo $_SESSION['family_name']; ?>" ><br>
 
-  <label for="mail">メールアドレス:</label><br>
-  <input type="email" id="mail" name="mail"><br>
+        <!-- 名前（名） -->
+        <label for="lastName">名前（名）:</label>
+        <input type="text" id="lastName" name="lastName" maxlength="10" placeholder="漢字orひらがな" value="<?php echo $_SESSION['last_name']; ?>" ><br>
 
-  <label for="password">パスワード:</label><br>
-  <input type="password" id="password" name="password"><br>
+        <!-- カナ（姓） -->
+        <label for="familyNameKana">カナ（姓）:</label>
+        <input type="text" id="familyNameKana" name="familyNameKana" maxlength="10" placeholder="カタカナ" value="<?php echo $_SESSION['family_name_kana']; ?>" ><br>
 
-  <label for="postal_code">郵便番号:</label><br>
-  <input type="text" id="postal_code" name="postal_code"><br>
+        <!-- カナ（名） -->
+        <label for="lastNameKana">カナ（名）:</label>
+        <input type="text" id="lastNameKana" name="lastNameKana" maxlength="10" placeholder="カタカナ" value="<?php echo $_SESSION['last_name_kana']; ?>" ><br>
 
-  <label for="address">住所:</label><br>
-  <input type="text" id="address" name="address"><br>
+        <!-- メールアドレス -->
+        <label for="mail">メールアドレス:</label>
+        <input type="text" id="mail" name="mail" maxlength="50" placeholder="@,ドット,半角英数字のみ" value="<?php echo $_SESSION['mail']; ?>" readonly><br>
 
-  <input type="submit" value="更新する">
-</form>
+        <!-- パスワード -->
+        <!-- <label for="password">パスワード:</label>
+        <input type="password" id="password" name="password" minlength="3" maxlength="10" placeholder="半角英数字 3~10文字" value="<?php //echo $_SESSION['password']; ?>" ><br> -->
+
+        <!-- 郵便番号 -->
+        <label for="postalCode">郵便番号:</label>
+        <input type="text" id="postalCode" name="postalCode" maxlength="8" required placeholder="半角英数字" value="<?php echo $_SESSION['postal_code']; ?>" ><br>
+
+        <!-- 住所 -->
+        <label for="address">住所:</label>
+        <input type="text" id="address" name="address" maxlength="100" required placeholder="日本語で入力" value="<?php echo $_SESSION['address']; ?>" ><br>
+
+        <!-- 勤務先会社名 -->
+        <label for="company_name">勤務先会社名:</label>
+        <input type="text" id="company_name" name="company_name" maxlength="50" required value="<?php echo $_SESSION['company_name']; ?>" readonly>※編集できません<br>
+
+        <!-- 担当業務 -->
+        <label for="business">担当業務:</label>
+        <input type="text" id="business" name="business" maxlength="50" value="<?php echo $_SESSION['work']; ?>" readonly>※編集できません<br>
+
+        <!-- スタッフコード -->
+        <label for="staff_code">スタッフコード:</label>
+        <input type="text" id="staff_code" name="staff_code" maxlength="6" required value="<?php echo $_SESSION['staff_code']; ?>" readonly>※編集できません<br>
+
+        <!-- 変更ボタン -->
+        <input type="submit" id="change" name="change" value="変更確認へ">
+    </form>
+</main>
+<footer>
+    Copytifht is the one which provides A to Z about programming
+</footer>
+</body>
+</html>
