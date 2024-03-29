@@ -4,10 +4,15 @@ function calculateWorkTime() {
   var breakTime = document.getElementById('break_time').value;
 
   if (startTime && endTime) {
-    var startDateTime = new Date('2000-01-01T' + startTime);
-    var endDateTime = new Date('2000-01-01T' + endTime);
+    var startDate = new Date('2000-01-01T' + startTime);
+    var endDate = new Date('2000-01-01T' + endTime);
 
-    var totalWorkTime = endDateTime - startDateTime;
+    // 退勤時間が次の日になる場合は、日付を1日進める
+    if (endDate < startDate) {
+      endDate.setDate(endDate.getDate() + 1);
+    }
+
+    var totalWorkTime = endDate - startDate;
 
     if (breakTime) {
       var breakTimeParts = breakTime.split(":");
@@ -23,21 +28,17 @@ function calculateWorkTime() {
   }
 }
 
+
 function handleCategoryChange() {
   var category = document.getElementById('categorySelect').value;
 
   if (category === "paid" || category === "holiday" || category === "absence") {
-    // ラベルと入力フィールドを非表示にする
-    document.getElementById('startTimeLabel').classList.add('hidden');
-    document.getElementById('endTimeLabel').classList.add('hidden');
-    document.getElementById('breakTimeLabel').classList.add('hidden');
-    document.getElementById('standardWorkingTimeLabel').classList.add('hidden');
-    document.getElementById('overTimeLabel').classList.add('hidden');
-    document.getElementById('start_time').classList.add('hidden');
-    document.getElementById('end_time').classList.add('hidden');
-    document.getElementById('break_time').classList.add('hidden');
-    document.getElementById('standard_working_time').classList.add('hidden');
-    document.getElementById('over_time').classList.add('hidden');
+    // ラベルと入力フィールドをにする
+    document.getElementById('start_time').setAttribute('readonly', 'readonly');
+    document.getElementById('end_time').setAttribute('readonly', 'readonly');
+    document.getElementById('break_time').setAttribute('readonly', 'readonly');
+    document.getElementById('standard_working_time').setAttribute('readonly', 'readonly');
+    document.getElementById('over_time').setAttribute('readonly', 'readonly');
 
     // 入力フィールドの値を "00:00" に設定する
     document.getElementById('start_time').value = "00:00";
@@ -52,11 +53,10 @@ function handleCategoryChange() {
     document.getElementById('breakTimeLabel').classList.remove('hidden');
     document.getElementById('standardWorkingTimeLabel').classList.remove('hidden');
     document.getElementById('overTimeLabel').classList.remove('hidden');
-    document.getElementById('start_time').classList.remove('hidden');
-    document.getElementById('end_time').classList.remove('hidden');
-    document.getElementById('break_time').classList.remove('hidden');
-    document.getElementById('standard_working_time').classList.remove('hidden');
-    document.getElementById('over_time').classList.remove('hidden');
+    document.getElementById('start_time').removeAttribute('readonly');
+    document.getElementById('end_time').removeAttribute('readonly');
+    document.getElementById('break_time').removeAttribute('readonly');
+    document.getElementById('over_time').removeAttribute('readonly');
 
     // 入力フィールドの値を空にする
     document.getElementById('start_time').value = "";
@@ -66,10 +66,42 @@ function handleCategoryChange() {
     document.getElementById('over_time').value = "";
   }
 }
+
 document.getElementById('attendanceForm').addEventListener('submit', function (event) {
   var selectedDate = document.getElementById('selectedDate').value;
   if (selectedDate === '') {
     alert('年月日を選択してください。');
+    event.preventDefault(); // フォームの送信をキャンセルする
+  }
+});
+
+document.getElementById('attendanceForm').addEventListener('submit', function (event) {
+  var selectedDate = document.getElementById('categorySelect').value;
+  if (selectedDate === '') {
+    alert('カテゴリーを選択してください。');
+    event.preventDefault(); // フォームの送信をキャンセルする
+  }
+});
+
+document.getElementById('attendanceForm').addEventListener('submit', function (event) {
+  var selectedDate = document.getElementById('start_time').value;
+  if (selectedDate === '') {
+    alert('出勤時間を選択してください。');
+    event.preventDefault(); // フォームの送信をキャンセルする
+  }
+});
+
+document.getElementById('attendanceForm').addEventListener('submit', function (event) {
+  var selectedDate = document.getElementById('end_time').value;
+  if (selectedDate === '') {
+    alert('退勤時間を選択してください。');
+    event.preventDefault(); // フォームの送信をキャンセルする
+  }
+});
+document.getElementById('attendanceForm').addEventListener('submit', function (event) {
+  var selectedDate = document.getElementById('break_time').value;
+  if (selectedDate === '') {
+    alert('休憩時間を選択してください。休憩の無い場合は00:00と入力してください');
     event.preventDefault(); // フォームの送信をキャンセルする
   }
 });

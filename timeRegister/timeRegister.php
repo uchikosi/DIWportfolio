@@ -74,10 +74,6 @@ try {
 <title>Date Calendar</title>
 
 <style>
-    /* ユーザーが直接入力できないようにする */
-    .hidden {
-      display: none;
-    }
     .attendance-cell {
       margin-right: 20px;
     }
