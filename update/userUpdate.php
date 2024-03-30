@@ -74,7 +74,7 @@ if (isset($_SESSION['update_id'])) {
     </ul>
   </header>
   <main>
-    <form method='post' action='userUpdateConfirm.php'>
+    <form method='post' id="updateForm" action='userUpdateConfirm.php' onsubmit="return validateForm()">
       <div>
         <input type='hidden' name='update_id' value='<?php echo $update_id; ?>'>
       </div>
@@ -269,6 +269,6 @@ if (isset($_SESSION['update_id'])) {
     </div>
   </main>
   <footer>Copytifht is the one which provides A to Z about programming</footer>
-  <script type="text/javascript" src="../js/common.js"></script>
+  <script type="text/javascript" src="../js/userUpdate.js"></script>
 </body>
 </html>
