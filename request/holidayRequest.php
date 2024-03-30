@@ -110,6 +110,34 @@ if (!isset($_SESSION['mail'])) {
         }
       }
     });
+
+   document.getElementById("updateForm").addEventListener("submit", function(event) {
+    var requestDateStart = document.getElementById("request_date_start").value;
+    var requestDateEnd = document.getElementById("request_date_end").value;
+    var category = document.getElementById("category").value;
+
+    // 申請年月日の開始日が選択されていない場合、エラーメッセージを表示してフォーム送信をキャンセル
+    if (requestDateStart === "") {
+      event.preventDefault(); // フォーム送信をキャンセル
+      alert("申請年月日の開始日を選択してください。");
+      return;
+    }
+
+    // 申請年月日の終了日が選択されていない場合、エラーメッセージを表示してフォーム送信をキャンセル
+    if (requestDateEnd === "") {
+      event.preventDefault(); // フォーム送信をキャンセル
+      alert("申請年月日の終了日を選択してください。");
+      return;
+    }
+
+    // 区分が選択されていない場合、エラーメッセージを表示してフォーム送信をキャンセル
+    if (category === "") {
+      event.preventDefault(); // フォーム送信をキャンセル
+      alert("区分を選択してください。");
+      return;
+    }
+  });
+
   </script>
 </body>
 </html>

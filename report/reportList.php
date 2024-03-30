@@ -157,7 +157,8 @@
       <label for="category">区分:</label>
       <select id="category" name="category">
         <option value="" selected disabled>選択してください</option>
-        <option value="有給"<?php if ($category === '有給') echo ' selected'; ?>>有給</option>
+        <option value="" <?php if ($category === '') echo 'selected'; ?>>全て</option>
+        <option value="有休"<?php if ($category === '有休') echo ' selected'; ?>>有休</option>
         <option value="代休"<?php if ($category === '代休') echo ' selected'; ?>>代休</option>
         <option value="欠勤"<?php if ($category === '欠勤') echo ' selected'; ?>>欠勤</option>
         <option value="遅刻"<?php if ($category === '遅刻') echo ' selected'; ?>>遅刻</option>
