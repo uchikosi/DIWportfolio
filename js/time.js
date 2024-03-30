@@ -67,41 +67,60 @@ function handleCategoryChange() {
   }
 }
 
+
 document.getElementById('attendanceForm').addEventListener('submit', function (event) {
   var selectedDate = document.getElementById('selectedDate').value;
+  var category = document.getElementById('categorySelect').value;
+  var startTime = document.getElementById('start_time').value;
+  var endTime = document.getElementById('end_time').value;
+  var breakTime = document.getElementById('break_time').value;
+
+  var errorMessage = "";
+
   if (selectedDate === '') {
-    alert('年月日を選択してください。');
+    errorMessage += '年月日を選択してください。\n';
+  }
+
+  if (category === '') {
+    errorMessage += 'カテゴリーを選択してください。\n';
+  }
+
+  if (startTime === '') {
+    errorMessage += '出勤時間を選択してください。\n';
+  }
+
+  if (endTime === '') {
+    errorMessage += '退勤時間を選択してください。\n';
+  }
+
+  if (breakTime === '') {
+    errorMessage += '休憩時間を選択してください。休憩の無い場合は00:00と入力してください\n';
+  }
+
+  if (errorMessage !== '') {
+    alert(errorMessage.trim());
     event.preventDefault(); // フォームの送信をキャンセルする
   }
 });
 
+// 実動時間が休憩時間よりも少ない場合にアラートメッセージを表示するバリデーション
 document.getElementById('attendanceForm').addEventListener('submit', function (event) {
-  var selectedDate = document.getElementById('categorySelect').value;
-  if (selectedDate === '') {
-    alert('カテゴリーを選択してください。');
-    event.preventDefault(); // フォームの送信をキャンセルする
-  }
-});
+  var startTime = document.getElementById('start_time').value;
+  var endTime = document.getElementById('end_time').value;
+  var breakTime = document.getElementById('break_time').value;
+  var standardWorkingTime = document.getElementById('standard_working_time').value;
 
-document.getElementById('attendanceForm').addEventListener('submit', function (event) {
-  var selectedDate = document.getElementById('start_time').value;
-  if (selectedDate === '') {
-    alert('出勤時間を選択してください。');
-    event.preventDefault(); // フォームの送信をキャンセルする
-  }
-});
+  var startDateTime = new Date('2000-01-01T' + startTime);
+  var endDateTime = new Date('2000-01-01T' + endTime);
+  var breakTimeParts = breakTime.split(":");
+  var breakTimeInMilliseconds = (parseInt(breakTimeParts[0]) * 60 + parseInt(breakTimeParts[1])) * 60000;
+  var standardWorkingTimeParts = standardWorkingTime.split(":");
+  var standardWorkingTimeInMilliseconds = (parseInt(standardWorkingTimeParts[0]) * 60 + parseInt(standardWorkingTimeParts[1])) * 60000;
 
-document.getElementById('attendanceForm').addEventListener('submit', function (event) {
-  var selectedDate = document.getElementById('end_time').value;
-  if (selectedDate === '') {
-    alert('退勤時間を選択してください。');
-    event.preventDefault(); // フォームの送信をキャンセルする
-  }
-});
-document.getElementById('attendanceForm').addEventListener('submit', function (event) {
-  var selectedDate = document.getElementById('break_time').value;
-  if (selectedDate === '') {
-    alert('休憩時間を選択してください。休憩の無い場合は00:00と入力してください');
+  var totalWorkTime = endDateTime - startDateTime - breakTimeInMilliseconds;
+
+  if (totalWorkTime < 0) {
+    alert('実動時間が休憩時間を超過しています。');
     event.preventDefault(); // フォームの送信をキャンセルする
   }
 });
