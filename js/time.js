@@ -19,9 +19,22 @@ function calculateWorkTime() {
       var breakTimeInMilliseconds = (parseInt(breakTimeParts[0]) * 60 + parseInt(breakTimeParts[1])) * 60000;
       totalWorkTime -= breakTimeInMilliseconds;
     }
-
     var resultHours = Math.floor(totalWorkTime / (1000 * 60 * 60));
     var resultMinutes = Math.floor((totalWorkTime % (1000 * 60 * 60)) / (1000 * 60));
+
+
+    // 実動時間が8時間を超えた場合は残業時間を計算して設定
+    if (resultHours > 8) {
+      var overtimeMilliseconds = totalWorkTime - (8 * 60 * 60 * 1000);
+      var overtimeHours = Math.floor(overtimeMilliseconds / (1000 * 60 * 60));
+      var overtimeMinutes = Math.floor((overtimeMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+      var overtimeTime = overtimeHours.toString().padStart(2, '0') + ":" + overtimeMinutes.toString().padStart(2, '0');
+      document.getElementById('over_time').value = overtimeTime;
+      document.getElementById('over_time').readOnly = true;
+    } else {
+      document.getElementById('over_time').value = "00:00";
+      document.getElementById('over_time').readOnly = false;
+    }
     if (!isNaN(resultHours) && !isNaN(resultMinutes)) {
       document.getElementById('standard_working_time').value = resultHours.toString().padStart(2, '0') + ":" + resultMinutes.toString().padStart(2, '0');
     }
