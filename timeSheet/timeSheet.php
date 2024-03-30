@@ -220,6 +220,16 @@ if ($result) {
         // 実働時間と残業時間の合計を計算
         $total_working_time_minutes += convertToMinutes($row['standard_working_time']);
         $total_overtime_minutes += convertToMinutes($row['over_time']);
+        // 合計残業時間の値に基づいてスタイルを適用するための条件
+$overtime_hours = floor($total_overtime_minutes / 60);
+$overtime_minutes = $total_overtime_minutes % 60;
+if ($overtime_hours > 40 || ($overtime_hours == 40 && $overtime_minutes > 0)) {
+    $overtime_style = 'background-color: red;'; // 赤色
+} elseif ($overtime_hours > 20 || ($overtime_hours == 20 && $overtime_minutes > 0)) {
+    $overtime_style = 'background-color: yellow;'; // 黄色
+} else {
+    $overtime_style = ''; // デフォルトのスタイル
+}
     }
 
     // 合計行を出力
@@ -230,7 +240,7 @@ if ($result) {
     echo "<td><strong>" . str_pad(floor($total_working_time_minutes / 60), 2, '0', STR_PAD_LEFT) . ":" . str_pad($total_working_time_minutes % 60, 2, '0', STR_PAD_LEFT) . "</strong></td>";
 
     // 残業時間を2桁で表示
-    echo "<td><strong>" . str_pad(floor($total_overtime_minutes / 60), 2, '0', STR_PAD_LEFT) . ":" . str_pad($total_overtime_minutes % 60, 2, '0', STR_PAD_LEFT) . "</strong></td>"; // スタイルを適用
+    echo "<td style='{$overtime_style}'><strong>" . str_pad(floor($total_overtime_minutes / 60), 2, '0', STR_PAD_LEFT) . ":" . str_pad($total_overtime_minutes % 60, 2, '0', STR_PAD_LEFT) . "</strong></td>";
     echo "<td></td>"; // 登録日時の列は空白にする
     echo "</tr>";
     echo "</table>";
