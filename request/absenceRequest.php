@@ -17,7 +17,7 @@ if (!isset($_SESSION['mail'])) {
   $family_name_kana = $_SESSION['family_name_kana'] ?? null;
   $last_name_kana = $_SESSION['last_name_kana'] ?? null;
   $staff_code = $_SESSION['staff_code'] ?? null;
-  // var_dump($_SESSION);
+  var_dump($_SESSION);
 }
 ?>
 

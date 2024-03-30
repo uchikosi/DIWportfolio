@@ -49,7 +49,7 @@ try {
   $user_id = $_SESSION['user_id'] ?? null;
   $family_name = $_SESSION['family_name'] ?? null;
   $last_name = $_SESSION['last_name'] ?? null;
-  var_dump($user_id);
+  // var_dump($user_id);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -188,8 +188,6 @@ try {
       // 実働時間と残業時間を分単位に変換して合計に追加
       $total_working_time_minutes += convertToMinutes($row['standard_working_time']);
       $total_overtime_minutes += convertToMinutes($row['over_time']);
-
-      // ここに他の処理を記述
     }
   }
   // 分を時間と分に変換する関数

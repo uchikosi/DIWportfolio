@@ -95,6 +95,9 @@ session_start();
       <p>
         <a href="http://localhost:8888/AttendanceManagementSystem/top.php" id="topBack" >TOPページへ戻る</a>
       </p>
+      <p>
+        <a href="http://localhost:8888/AttendanceManagementSystem/report/reportLog.php">申請のログへ</a>
+      </p>
     </div>
   </main>
   <footer>
