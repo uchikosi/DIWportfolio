@@ -268,8 +268,7 @@ if (isset($_SESSION['update_id'])) {
       </form>
     </div>
   </main>
-  <footer>
-    <p>Copytifht D.I.Worksl D.I.blog is the one which provides A to Z about programming</p>
-  </footer>
+  <footer>Copytifht is the one which provides A to Z about programming</footer>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

@@ -41,13 +41,11 @@ session_start();
       <h1>スタッフ登録フォーム</h1>
       <form method="post" id="registerForm" action="userRegister_confirm.php" onsubmit="return validateForm()">
         <label for="familyName">名前（姓）:</label>
-        <input type="text" id="familyName" name="familyName" maxlength="10" autofocus oninput="validateName(this, true)" placeholder="漢字orひらがなorカタカナ"
-          <?php if (isset($_POST['familyName'])) echo 'value="' . htmlspecialchars($_POST['familyName'], ENT_QUOTES) . '"'; ?>>
+        <input type="text" id="familyName" name="familyName" maxlength="10" autofocus oninput="validateName(this, true)" placeholder="漢字orひらがなorカタカナ"<?php if (isset($_POST['familyName'])) echo 'value="' . htmlspecialchars($_POST['familyName'], ENT_QUOTES) . '"'; ?>>
         <br>
 
         <label for="lastName">名前（名）:</label>
-        <input type="text" id="lastName" name="lastName" maxlength="10" autofocus oninput="validateName(this, false)"  placeholder="漢字orひらがなorカタカナ"
-          <?php if (isset($_POST['lastName'])) echo 'value="' . htmlspecialchars($_POST['lastName'], ENT_QUOTES) . '"'; ?>>
+        <input type="text" id="lastName" name="lastName" maxlength="10" autofocus oninput="validateName(this, false)"  placeholder="漢字orひらがなorカタカナ"<?php if (isset($_POST['lastName'])) echo 'value="' . htmlspecialchars($_POST['lastName'], ENT_QUOTES) . '"'; ?>>
         <br>
 
         <label for="familyNameKana">カナ（姓）:</label>
@@ -119,3 +117,4 @@ session_start();
   <script type="text/javascript" src="../js/common.js"></script>
   <script type="text/javascript" src="../js/userRegister.js"></script>
 </body>
+</html>

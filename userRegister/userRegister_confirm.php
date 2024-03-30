@@ -161,7 +161,8 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
     </div>
   </main>
   <footer>
-    <p>Copytifht the one which provides A to Z about programming</p>
+    Copytifht the one which provides A to Z about programming
   </footer>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

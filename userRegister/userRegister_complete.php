@@ -101,11 +101,14 @@ session_start();
       <p>
         <a href="http://localhost:8888/AttendanceManagementSystem/top.php" id="topBack" >TOPページへ戻る</a>
       </p>
+      <p>
+        <a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php">従業員検索へ</a>
+      </p>
     </div>
   </main>
   <footer>
-    <p>Copytifht the one which provides A to Z about programming</p>
+    Copytifht the one which provides A to Z about programming
   </footer>
-
+    <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

@@ -39,7 +39,7 @@ try {
   $newfamilyNameKana = $_POST['familyNameKana'];
   $newLastNameKana = $_POST['lastNameKana'];
   $newMail = $_POST['mail'];
-  $newHashedPassword = $_POST['password'];
+  $newHashedPassword = password_hash($newPassword, PASSWORD_DEFAULT); // ハッシュ化
   $newGender = $_POST['gender'];
   $newPostalCode = $_POST['postalCode'];
   $newAddress = $_POST['address'];
@@ -155,7 +155,8 @@ unset($_SESSION['failure']);
     </div>
   </main>
    <footer>
-    <p>Copytifht D.I.Worksl D.I.blog is the one which provides A to Z about programming</p>
+    Copytifht is the one which provides A to Z about programming
   </footer>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

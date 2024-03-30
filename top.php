@@ -38,7 +38,7 @@ if (!isset($_SESSION['mail'])) {
       <?php if ($role === '管理者'): ?>
       <li class="supervisor">アカウント権限 管理者</li>
       <?php endif; ?>
-      <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
+      <li class="nav"><a href="logout.php" id="logout">Logout</a></li>
     </ul>
   </header>
   <main>
