@@ -102,15 +102,15 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
           <tr>
           <td>スタッフコード</td>
           <td><?php echo $staff_code; ?></td>
-        </tr>
+        <!-- </tr>
           <tr>
           <td>写真</td>
-          <td><?php echo $image; ?></td>
+          <td><?php //echo $image; ?></td>
         </tr>
         <tr>
           <td>備考</td>
-          <td><?php echo $remarks; ?></td>
-        </tr>
+          <td><?php //echo $remarks; ?></td>
+        </tr> -->
         <tr>
           <td>アカウント権限</td>
           <td><?php echo $authority; ?></td>

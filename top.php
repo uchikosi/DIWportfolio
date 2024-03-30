@@ -23,21 +23,23 @@ if (!isset($_SESSION['mail'])) {
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="css/top.css">
-  <link rel="stylesheet" type="text/css" href="../css/common.css">
+  <!-- <link rel="stylesheet" type="text/css" href="css/top.css"> -->
+  <link rel="stylesheet" type="text/css" href="css/common.css">
   <title>TOP</title>
 </head>
 <body>
   <header>
-    <h1>勤怠報告</h1>
-    <div id="head">
-      <p>ようこそ <?php echo $family_name.$last_name ; ?>様</p>
-      <p> <?php echo $_SESSION['mail']; ?></p>
+    <ul id="menu">
+      <h1 id=mainTitole>勤怠アプリ</h1>
+      <div class="nav">
+        <li class="nav_list">ようこそ <?php echo $family_name.$last_name ; ?>様</li>
+        <li class="nav_list"> <?php echo $_SESSION['mail']; ?></li>
+      </div>
       <?php if ($role === '管理者'): ?>
-        <p>このアカウント権限は管理者です</p>
+      <li class="supervisor">アカウント権限 管理者</li>
       <?php endif; ?>
-      <p><a href="logout.php">Logout</a></p>
-    </div>
+      <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
+    </ul>
   </header>
   <main>
     <ul>
@@ -73,5 +75,6 @@ if (!isset($_SESSION['mail'])) {
   <footer>
     Copytifht  is the one which provides A to Z about programming
   </footer>
+  <script type="text/javascript" src="js/common.js"></script>
 </body>
 </html>

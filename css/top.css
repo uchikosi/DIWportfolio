@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #D9E5FF;
+}
+
+header {
+  width: 100vw;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.678) 0%, rgba(0, 0, 192, 0.822) 100%);
+}
+
+#head {
+  display: flex;
+}
+
+main {}
+
+h1 {
+  margin: 0 10%;
+}
+
+ul {
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+#administrator {
+  display: flex;
+
+}
+
+#general {
+  display: flex;
+
+}
+
+li {
+  margin: 3%;
+  padding: 3%;
+  font-size: 20px;
+  background-color: #C2EEFF;
+  /* 角を丸くする */
+  border-radius: 10px;
+}
+
+main a {
+  /* アンカーの下線消し */
+  text-decoration: none;
+  color: #5D99FF;
+
+}

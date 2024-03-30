@@ -93,28 +93,27 @@ if (!isset($_SESSION['mail'])) {
       <li><a href="../logout.php" id="logout">Logout</a></li>
       </ul>
   </header>
-
   <main>
      <h2>従業員一覧</h2>
     <div>
       <form method="GET" action="userSearch.php">
         <div>
           <label for="family_name">名前（姓）:</label>
-          <input type="text" id="family_name" name="family_name" value=""><br>
+          <input type="text" id="family_name" name="family_name" maxlength="10" placeholder="漢字orひらがなorカタカナ" value=""><br>
           <label for="last_name">名前（名）:</label>
-          <input type="text" id="last_name" name="last_name" value=""><br>
+          <input type="text" id="last_name" name="last_name" maxlength="10" placeholder="漢字orひらがなorカタカナ" value=""><br>
         </div>
 
         <div>
           <label for="family_name_kana">カナ（姓）:</label>
-          <input type="text" id="family_name_kana" name="family_name_kana" value=""><br>
+          <input type="text" id="family_name_kana" name="family_name_kana" maxlength="10" placeholder="ひらがなorカタカナ" value=""><br>
           <label for="last_name_kana">カナ（名）:</label>
-          <input type="text" id="last_name_kana" name="last_name_kana" value=""><br>
+          <input type="text" id="last_name_kana" name="last_name_kana" maxlength="10" placeholder="ひらがなorカタカナ" value=""><br>
         </div>
 
         <div>
           <label for="mail">メールアドレス:</label>
-          <input type="text" id="mail" name="mail" value=""><br>
+          <input type="text" id="mail" name="mail" maxlength="100" placeholder="半角英数字のみ、記号" value=""><br>
 
           <input type="radio" id="male" name="gender" value="0">
           <label for="male">男</label>
@@ -122,13 +121,13 @@ if (!isset($_SESSION['mail'])) {
           <label for="female">女</label><br>
 
           <label for="company_name">勤務先会社名:</label>
-          <input type="text" id="company_name" name="company_name" value=""><br>
+          <input type="text" id="company_name" name="company_name" placeholder="スペースは入力できません" maxlength="50" value=""><br>
 
           <label for="work">担当業務:</label>
-          <input type="text" id="work" name="work" value=""><br>
+          <input type="text" id="work" name="work" maxlength="50" placeholder="全て全角で入力" value=""><br>
 
           <label for="staff_code">スタッフコード:</label>
-          <input type="text" id="staff_code" name="staff_code" value=""><br>
+          <input type="text" id="staff_code" name="staff_code" maxlength="6" placeholder="半角数字のみ" value=""><br>
 
           <label for="authority">アカウント権限:</label>
           <select id="authority" name="authority">
@@ -295,5 +294,6 @@ if (!isset($_SESSION['mail'])) {
       }
     }
   </script>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

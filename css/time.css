@@ -1,0 +1,21 @@
+#YearAndMonth {
+  display: flex;
+  padding: 0 5%;
+  background-color: cornflowerblue;
+}
+
+table {
+  border-collapse: collapse;
+  width: 98%;
+  margin: 15px;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  text-align: center;
+  /* 中央配置 */
+  padding: 8px;
+  /* セル内の余白を追加 */
+}

@@ -279,5 +279,6 @@ try {
     Copytifht  is the one which provides A to Z about programming
   </footer>
   <script type="text/javascript" src="../js/time.js"></script>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>
