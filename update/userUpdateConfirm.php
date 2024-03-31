@@ -202,8 +202,7 @@ session_start();
       </form>
     </div>
   </main>
-  <footer>
-    <p>Copytifht D.I.Worksl D.I.blog is the one which provides A to Z about programming</p>
+  <footer>Copytifht is the one which provides A to Z about programming
   </footer>
 
   <script>
@@ -216,5 +215,6 @@ session_start();
       }
     }
   </script>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

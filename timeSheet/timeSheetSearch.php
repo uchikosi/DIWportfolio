@@ -133,14 +133,20 @@ if(!isset($_SESSION['id'])) {
   echo "<h3>".date_format(date_create($year_month), "Y年n月")."</h3>";
 
   // 残業時間と実働時間の合計を初期化
-  $total_overtime = 0;
-  $total_working_time = 0;
+  $total_overtime_minutes = 0;
+  $total_working_time_minutes = 0;
 
   // カウント変数を初期化
   $count_attendance = 0;
   $count_late = 0;
   $count_early_leave = 0;
   $count_holiday_work = 0;
+
+  // 分を計算する関数
+function convertToMinutes($time) {
+    list($hours, $minutes) = explode(':', $time);
+    return $hours * 60 + $minutes;
+}
 
   // 検索結果の表示
   if(isset($result)) {
@@ -162,9 +168,19 @@ if(!isset($_SESSION['id'])) {
       echo "<td><a href='../update/timeUpdate.php?id={$row['id']}'>更新</a></td>";
       echo "<td><a href='../delete/timeDelete.php?id={$row['id']}'>削除</a></td>";
 
-      // 残業時間と実働時間の合計を計算
-      $total_overtime += strtotime($row["over_time"]);
-      $total_working_time += strtotime($row["standard_working_time"]);
+      // 実働時間と残業時間の合計を計算
+        $total_working_time_minutes += convertToMinutes($row['standard_working_time']);
+        $total_overtime_minutes += convertToMinutes($row['over_time']);
+        // 合計残業時間の値に基づいてスタイルを適用するための条件
+        $overtime_hours = floor($total_overtime_minutes / 60);
+        $overtime_minutes = $total_overtime_minutes % 60;
+        if ($overtime_hours > 40 || ($overtime_hours == 40 && $overtime_minutes > 0)) {
+            $overtime_style = 'background-color: red;'; // 赤色
+        } elseif ($overtime_hours > 20 || ($overtime_hours == 20 && $overtime_minutes > 0)) {
+            $overtime_style = 'background-color: yellow;'; // 黄色
+        } else {
+            $overtime_style = ''; // デフォルトのスタイル
+        }
 
       // 区分ごとのカウント
       switch ($row["category"]) {
@@ -192,8 +208,11 @@ if(!isset($_SESSION['id'])) {
     echo "<tr>";
     echo "<td colspan='2'>合計</td>";
     echo "<td colspan='3'>出勤日数$total_attendance 日</td>";
-    echo "<td>".substr(gmdate("H:i:s",$total_working_time), 0, 5)."</td>";
-    echo "<td>".substr(gmdate("H:i:s",$total_overtime), 0, 5)."</td>";
+    // 実働時間を2桁で表示
+    echo "<td><strong>" . str_pad(floor($total_working_time_minutes / 60), 2, '0', STR_PAD_LEFT) . ":" . str_pad($total_working_time_minutes % 60, 2, '0', STR_PAD_LEFT) . "</strong></td>";
+
+    // 残業時間を2桁で表示
+    echo "<td style='{$overtime_style}'><strong>" . str_pad(floor($total_overtime_minutes / 60), 2, '0', STR_PAD_LEFT) . ":" . str_pad($total_overtime_minutes % 60, 2, '0', STR_PAD_LEFT) . "</strong></td>";
     echo "</tr>";
     echo "</table>";
     } elseif (isset($no_result_message)) {
@@ -203,5 +222,7 @@ if(!isset($_SESSION['id'])) {
   $conn->close();
   ?>
   </main>
+  <footer>Copytifht is the one which provides A to Z about programming</footer>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

@@ -154,9 +154,7 @@ unset($_SESSION['failure']);
       <p><a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php" id="topBack" >検索画面へ</a></p>
     </div>
   </main>
-   <footer>
-    Copytifht is the one which provides A to Z about programming
-  </footer>
+   <footer>Copytifht is the one which provides A to Z about programming</footer>
   <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

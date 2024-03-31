@@ -151,8 +151,7 @@ unset($_SESSION['failure']);
       <p><a href="http://localhost:8888/AttendanceManagementSystem/userSearch/registrationInformation.php" id="" >登録情報画面へ</a></p>
     </div>
   </main>
-   <footer>
-    <p>Copytifht D.I.Worksl D.I.blog is the one which provides A to Z about programming</p>
-  </footer>
+  <footer>Copytifht is the one which provides A to Z about programming</footer>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

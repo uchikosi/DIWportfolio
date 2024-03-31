@@ -221,15 +221,15 @@ if ($result) {
         $total_working_time_minutes += convertToMinutes($row['standard_working_time']);
         $total_overtime_minutes += convertToMinutes($row['over_time']);
         // 合計残業時間の値に基づいてスタイルを適用するための条件
-$overtime_hours = floor($total_overtime_minutes / 60);
-$overtime_minutes = $total_overtime_minutes % 60;
-if ($overtime_hours > 40 || ($overtime_hours == 40 && $overtime_minutes > 0)) {
-    $overtime_style = 'background-color: red;'; // 赤色
-} elseif ($overtime_hours > 20 || ($overtime_hours == 20 && $overtime_minutes > 0)) {
-    $overtime_style = 'background-color: yellow;'; // 黄色
-} else {
-    $overtime_style = ''; // デフォルトのスタイル
-}
+        $overtime_hours = floor($total_overtime_minutes / 60);
+        $overtime_minutes = $total_overtime_minutes % 60;
+        if ($overtime_hours > 40 || ($overtime_hours == 40 && $overtime_minutes > 0)) {
+            $overtime_style = 'background-color: red;'; // 赤色
+        } elseif ($overtime_hours > 20 || ($overtime_hours == 20 && $overtime_minutes > 0)) {
+            $overtime_style = 'background-color: yellow;'; // 黄色
+        } else {
+            $overtime_style = ''; // デフォルトのスタイル
+        }
     }
 
     // 合計行を出力
@@ -250,8 +250,7 @@ if ($overtime_hours > 40 || ($overtime_hours == 40 && $overtime_minutes > 0)) {
 }
 ?>
 </main>
-<footer>
-    Copytifht is the one which provides A to Z about programming
-</footer>
+<footer>Copytifht is the one which provides A to Z about programming</footer>
+<script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

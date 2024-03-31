@@ -117,9 +117,7 @@ if(isset($_GET['id'])) {
       <p>ユーザー情報が見つかりません。</p>
     <?php endif; ?>
   </main>
-  <footer>
-    Copytifht  is the one which provides A to Z about programming
-  </footer>
+  <footer>Copytifht  is the one which provides A to Z about programming</footer>
 
   <script>
     document.getElementById("deleteForm").addEventListener("submit", function(event) {
@@ -134,5 +132,6 @@ if(isset($_GET['id'])) {
       }
     });
   </script>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

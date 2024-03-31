@@ -35,12 +35,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // クエリを実行してデータを更新する
   if ($conn->query($sql) === TRUE) {
-    echo "更新が正常に完了しました。";
+    // echo "更新が正常に完了しました。";
+    $success = "更新が正常に完了しました。";
   } else {
     // echo "エラー: " . $sql . "<br>" . $conn->error;
-    echo "更新に失敗しました。もう一度やり直してください。";
+    // echo "更新に失敗しました。もう一度やり直してください。";
+    $failure = "更新に失敗しました。もう一度やり直してください。";
   }
-
+var_dump($_SESSION);
   // // データベース接続を閉じる
   // $conn->close();
 }
@@ -93,7 +95,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <input type="hidden" name="id" value="<?php echo $id; ?>">
 
       <label for="date">年月日:</label>
-      <input type="date" name="date" id="date" value="<?php echo $row['date']; ?>">
+      <input type="date" name="date" id="date" readonly value="<?php echo $row['date']; ?>">
+      <i>※日付は編集できません</i>
       <br>
 
       <select name="category" id="category">
@@ -129,6 +132,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       <input type="submit" value="更新">
     </form>
+
+    <div>
+        <?php
+          if (isset($success)) {
+            echo $success;// 成功メッセージ
+            echo "<br>";
+          }
+
+          if (isset($failure)) {
+            echo $failure;// 失敗メッセージ
+            echo "<br>";
+          }
+        ?>
+      </h1>
+    </div>
+
+    <div>
+      <p>
+        <a href="http://localhost:8888/AttendanceManagementSystem/top.php" id="topBack" >TOPページへ戻る</a>
+      </p>
+      <p>
+        <!-- <a href="../update/timeUpdate.php?id=<?php echo $_SESSION['user_id']; ?>">勤務情報一覧へ</a> -->
+      </p>
+    </div>
   </main>
   <script>
     function calculateWorkingTime() {
@@ -156,5 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "IDが指定されていません";
   }
   ?>
+  <footer>Copytifht is the one which provides A to Z about programming</footer>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>
