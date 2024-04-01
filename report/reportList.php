@@ -207,9 +207,7 @@
       </div>
     </div>
   </main>
-  <footer>
-    <p>Copytifht the one which provides A to Z about programming</p>
-  </footer>
+  <footer>Copytifht the one which provides A to Z about programming</footer>
   <script>
     function openModal(content) {
       document.getElementById('modalContent').textContent = content;
@@ -220,5 +218,6 @@
       document.getElementById('myModal').style.display = 'none';
     }
   </script>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

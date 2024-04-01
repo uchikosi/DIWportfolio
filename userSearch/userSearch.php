@@ -277,9 +277,7 @@ if (!isset($_SESSION['mail'])) {
       </div>
     <?php endif; ?>
   </main>
-  <footer>
-    <p>Copytifht  the one which provides A to Z about programming</p>
-  </footer>
+<footer>Copytifht  is the one which provides A to Z about programming</footer>
   <?php
     // データベース接続を閉じる
     $pdo = null;

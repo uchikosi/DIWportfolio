@@ -72,9 +72,7 @@ if (!isset($_SESSION['mail'])) {
       </div>
     </ul>
   </main>
-  <footer>
-    Copytifht  is the one which provides A to Z about programming
-  </footer>
+  <footer>Copytifht  is the one which provides A to Z about programming</footer>
   <script type="text/javascript" src="js/common.js"></script>
 </body>
 </html>

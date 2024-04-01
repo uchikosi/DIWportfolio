@@ -79,7 +79,7 @@ if (!isset($_SESSION['mail'])) {
       </select>
 
       <label for="remarks">備考:</label>
-      <input type="text" id="remarks" name="remarks" maxlength="1000" placeholder="欠勤の理由等を記入してください" placeholder="日本語で入力"oninput="validateAddress(this)" <?php if (isset($_POST['remarks'])) echo 'value="' . htmlspecialchars($_POST['remarks'], ENT_QUOTES) . '"'; ?>>
+      <input type="text" id="remarks" name="remarks" maxlength="100" placeholder="欠勤の理由等を記入してください" placeholder="日本語で入力"oninput="validateAddress(this)" <?php if (isset($_POST['remarks'])) echo 'value="' . htmlspecialchars($_POST['remarks'], ENT_QUOTES) . '"'; ?>>
       <br>
 
       <input type="submit" value="入力確認画面へ" >
@@ -87,6 +87,7 @@ if (!isset($_SESSION['mail'])) {
 
     <p>申請後に申請した日の勤務入力を行ってください</p>
   </main>
+  <footer>Copytifht is the one which provides A to Z about programming</footer>
   <script>
     // request_date_endの日付がrequest_date_startより前の日付を選択できないように制約を設ける
     document.getElementById("request_date_end").addEventListener("change", function() {
@@ -142,5 +143,6 @@ if (!isset($_SESSION['mail'])) {
     }
   });
   </script>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

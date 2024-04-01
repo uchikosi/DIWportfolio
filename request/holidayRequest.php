@@ -76,7 +76,7 @@ if (!isset($_SESSION['mail'])) {
         <option value="代休" <?php if (isset($_POST['category']) && $_POST['category'] === '代休') echo 'selected'; ?>>代休</option>
       </select>
         <label for="remarks">備考:</label>
-          <input type="text" id="remarks" name="remarks" maxlength="1000" placeholder=""oninput="validateAddress(this)" <?php if (isset($_POST['remarks'])) echo 'value="' . htmlspecialchars($_POST['remarks'], ENT_QUOTES) . '"'; ?>>
+          <input type="text" id="remarks" name="remarks" maxlength="100" placeholder=""oninput="validateAddress(this)" <?php if (isset($_POST['remarks'])) echo 'value="' . htmlspecialchars($_POST['remarks'], ENT_QUOTES) . '"'; ?>>
           <br>
 
       <input type="submit" value="入力確認画面へ" >
@@ -139,5 +139,7 @@ if (!isset($_SESSION['mail'])) {
   });
 
   </script>
+  <footer>Copytifht  is the one which provides A to Z about programming</footer>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

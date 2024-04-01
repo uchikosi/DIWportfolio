@@ -191,5 +191,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
       document.getElementById('myModal').style.display = 'none';
     }
   </script>
+  <footer>Copytifht  is the one which provides A to Z about programming</footer>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

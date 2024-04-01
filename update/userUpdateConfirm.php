@@ -202,8 +202,7 @@ session_start();
       </form>
     </div>
   </main>
-  <footer>Copytifht is the one which provides A to Z about programming
-  </footer>
+  <footer>Copytifht is the one which provides A to Z about programming</footer>
 
   <script>
     var longTextElements = document.getElementsByClassName('longText');

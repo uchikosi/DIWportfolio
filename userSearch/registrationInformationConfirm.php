@@ -157,10 +157,6 @@ session_start();
       </form>
     </div>
   </main>
-  <footer>
-    <p>Copytifht D.I.Worksl D.I.blog is the one which provides A to Z about programming</p>
-  </footer>
-
   <script>
     var longTextElements = document.getElementsByClassName('longText');
     for (var i = 0; i < longTextElements.length; i++) {
@@ -171,5 +167,8 @@ session_start();
       }
     }
   </script>
+  <footer>Copytifht  is the one which provides A to Z about programming</footer>
+  <script type="text/javascript" src="../js/common.js"></script>
+
 </body>
 </html>

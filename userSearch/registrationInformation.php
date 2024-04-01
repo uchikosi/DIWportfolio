@@ -115,8 +115,7 @@ if (isset($user_id)) {
         <input type="submit" id="change" name="change" value="変更確認へ">
     </form>
 </main>
-<footer>
-    Copytifht is the one which provides A to Z about programming
-</footer>
+<footer>Copytifht  is the one which provides A to Z about programming</footer>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

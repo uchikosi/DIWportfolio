@@ -98,8 +98,7 @@ session_start();
       </p>
     </div>
   </main>
-  <footer>
-    <p>Copytifht the one which provides A to Z about programming</p>
-  </footer>
+  <footer>Copytifht  is the one which provides A to Z about programming</footer>
+  <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

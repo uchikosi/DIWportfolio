@@ -151,7 +151,7 @@ unset($_SESSION['failure']);
       <p>
         <a href="http://localhost:8888/AttendanceManagementSystem/top.php" id="topBack" >TOPページへ戻る</a>
       </p>
-      <p><a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php" id="topBack" >検索画面へ</a></p>
+      <p><a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php" id="" >検索画面へ</a></p>
     </div>
   </main>
    <footer>Copytifht is the one which provides A to Z about programming</footer>
