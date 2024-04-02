@@ -2,34 +2,6 @@
   margin: 1% 10%;
 }
 
-#attendanceForm {
-  display: flex;
-  justify-content: center;
-}
-
-#lfteForm {
-  margin: 0 4%;
-}
-
-#rightForm {
-  margin: 0 4%;
-}
-
-#YearAndMonth {
-  display: flex;
-  padding: 0 5%;
-  background-color: cornflowerblue;
-}
-
-.message {
-  font-size: 24px;
-  /* メッセージのフォントサイズ */
-  text-align: center;
-  /* メッセージを中央揃え */
-  margin-top: 10px;
-  /* 上部の余白 */
-}
-
 table {
   border-collapse: collapse;
   /* 中央配置 */
@@ -37,6 +9,29 @@ table {
   text-align: center;
   width: 80%;
   background-color: #CCFFCC;
+}
+
+#YearAndMonth {
+  padding: 10px 5%;
+  background-color: cornflowerblue;
+}
+
+#timeSheet {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  gap: 0px 15px;
+  /* 余白 */
+  margin: 2% 0;
+}
+
+.message {
+  font-size: 24px;
+  /* メッセージのフォントサイズ */
+  text-align: center;
+  /* メッセージを中央揃え */
+  margin-top: 10%;
+  /* 上部の余白 */
 }
 
 th,

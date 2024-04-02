@@ -20,9 +20,9 @@ if (!isset($_SESSION['mail'])) {
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="../css/top.css">
+  <link rel="stylesheet" type="text/css" href="../css/request.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
-  <title>TOP</title>
+  <title>申請、連絡メニュー</title>
 </head>
 <body>
   <header>
@@ -38,21 +38,22 @@ if (!isset($_SESSION['mail'])) {
       <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
     </ul>
   </header>
-  <h1>申請</h1>
+  <h1 id="title">申請、連絡メニュー</h1>
   <main>
-    <ul>
-      <div id='general'>
-      <li>
+    <ul id="general">
+      <li class="requestMenu">
         <a href="http://localhost:8888/AttendanceManagementSystem/request/absenceRequest.php">欠勤、遅刻、早退 <br>申請</a>
       </li>
-      <li>
+      <li class="requestMenu">
         <a href="http://localhost:8888/AttendanceManagementSystem/request/holidayRequest.php">休日申請</a>
       </li>
-      <li>
+      <li class="requestMenu">
         <a href="http://localhost:8888/AttendanceManagementSystem/report/reportLog.php">申請のログ</a>
       </li>
-      </div>
-      </div>
+
+      <li class="requestMenu" id="button">
+        <a href="../top.php" id="topBack">TOPへ戻る</a>
+      </li>
     </ul>
   </main>
   <footer>Copytifht  is the one which provides A to Z about programming</footer>

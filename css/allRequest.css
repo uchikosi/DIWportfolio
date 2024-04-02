@@ -1,0 +1,23 @@
+#title {
+  margin: 1% 10%;
+}
+
+#updateForm {
+  text-align: center;
+}
+
+#button {
+  text-align: center;
+}
+
+p {
+  text-align: center;
+}
+
+#topBack {
+  /* アンカーの下線消し */
+  text-decoration: none;
+  padding: 10px;
+  background-color: #CCCCFF;
+  color: #0000FF;
+}

@@ -25,8 +25,9 @@ if (!isset($_SESSION['mail'])) {
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/allRequest.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
-  <title>TOP</title>
+  <title>欠勤、遅刻、早退連絡</title>
 </head>
 <body>
   <header>
@@ -42,9 +43,8 @@ if (!isset($_SESSION['mail'])) {
       <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
     </ul>
   </header>
-
   <main>
-    <h1>欠勤、遅刻、早退連絡</h1>
+    <h1 id="title">欠勤、遅刻、早退連絡</h1>
     <form action="absenceRequestConfirm.php" method="POST" id="updateForm">
       <input type="hidden" name="id" value="">
 
@@ -84,8 +84,8 @@ if (!isset($_SESSION['mail'])) {
 
       <input type="submit" value="入力確認画面へ" >
     </form>
-
     <p>申請後に申請した日の勤務入力を行ってください</p>
+    <p id="button"><a href="../top.php" id="topBack">TOPへ戻る</a></p>
   </main>
   <footer>Copytifht is the one which provides A to Z about programming</footer>
   <script>

@@ -17,16 +17,17 @@ if (!isset($_SESSION['mail'])) {
   $family_name_kana = $_SESSION['family_name_kana'] ?? null;
   $last_name_kana = $_SESSION['last_name_kana'] ?? null;
   $staff_code = $_SESSION['staff_code'] ?? null;
-  var_dump($_SESSION);
+  // var_dump($_SESSION);
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/allRequest.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
-  <title>TOP</title>
+  <title>休日申請</title>
 </head>
 <body>
   <header>
@@ -43,6 +44,7 @@ if (!isset($_SESSION['mail'])) {
     </ul>
   </header>
   <main>
+    <h1 id="title">休日申請</h1>
     <form action="holidayRequestConfirm.php" method="POST" id="updateForm">
       <input type="hidden" name="id" value="">
 
@@ -75,14 +77,17 @@ if (!isset($_SESSION['mail'])) {
         <option value="欠勤" <?php if (isset($_POST['category']) && $_POST['category'] === '欠勤') echo 'selected'; ?>>欠勤</option>
         <option value="代休" <?php if (isset($_POST['category']) && $_POST['category'] === '代休') echo 'selected'; ?>>代休</option>
       </select>
-        <label for="remarks">備考:</label>
-          <input type="text" id="remarks" name="remarks" maxlength="100" placeholder=""oninput="validateAddress(this)" <?php if (isset($_POST['remarks'])) echo 'value="' . htmlspecialchars($_POST['remarks'], ENT_QUOTES) . '"'; ?>>
-          <br>
+      <br>
+
+      <label for="remarks">備考:</label>
+        <input type="text" id="remarks" name="remarks" maxlength="100" placeholder=""oninput="validateAddress(this)" <?php if (isset($_POST['remarks'])) echo 'value="' . htmlspecialchars($_POST['remarks'], ENT_QUOTES) . '"'; ?>>
+        <br>
 
       <input type="submit" value="入力確認画面へ" >
     </form>
+    <p>申請後に申請した日の勤務入力を行ってください</p>
+    <p id="button"><a href="../top.php" id="topBack">TOPへ戻る</a></p>
   </main>
-  <p>申請後に申請した日の勤務入力を行ってください</p>
   <script>
     // request_date_endの日付がrequest_date_startより前の日付を選択できないように制約を設ける
     document.getElementById("request_date_end").addEventListener("change", function() {

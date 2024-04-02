@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 // セッションの有効期限を設定（1日）
 $expireAfter = 60 * 60 * 24; // 1日（秒数で指定）
@@ -17,7 +16,7 @@ if (!isset($_SESSION['mail'])) {
   $last_name = $_SESSION['last_name'] ?? null;
   $family_name_kana = $_SESSION['family_name_kana'] ?? null;
   $last_name_kana = $_SESSION['last_name_kana'] ?? null;
-  var_dump($_SESSION);
+  // var_dump($_SESSION);
 }
   // データベースへの接続
   mb_internal_encoding("utf8");
@@ -36,109 +35,77 @@ if (!isset($_SESSION['mail'])) {
   // データベースからユーザー情報を取得（idの大きい順に並べる）
   $sql = "SELECT * FROM users ORDER BY id DESC";
   $result = $pdo->query($sql);
-
-  session_start();
-  // もしログインしていなければ、ログインページにリダイレクト
-  if (!isset($_SESSION['mail'])) {
-    header("Location: login.php");
-    exit();
-  }
-
-  // ユーザーの権限を取得
-  $role = $_SESSION['role'] ?? null;
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/userSearch.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
-  <title>ユーザー一覧</title>
-  <style>
-    /* 罫線 */
-    table {
-      border-collapse: collapse;
-      width: 98%;
-      margin: 15px;
-    }
-
-    table, th, td {
-      border: 1px solid #dddddd;
-      text-align: center; /* 中央配置 */
-      padding: 8px; /* セル内の余白を追加 */
-    }
-
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-  </style>
+  <title>従業員一覧</title>
 </head>
 <body>
   <header>
     <ul id="menu">
       <h1 id=mainTitole>勤怠アプリ</h1>
-      <div>
-        <li>ようこそ <?php echo $family_name.$last_name ; ?>様</li>
-        <li> <?php echo $_SESSION['mail']; ?></li>
-        <?php if ($role === '管理者'): ?>
-          <li>アカウント権限管理者</li>
-        <?php endif; ?>
+      <div class="nav">
+        <li class="nav_list">ようこそ <?php echo $family_name.$last_name ; ?>様</li>
+        <li class="nav_list"> <?php echo $_SESSION['mail']; ?></li>
       </div>
-      <li><a href="../logout.php" id="logout">Logout</a></li>
-      </ul>
+      <?php if ($role === '管理者'): ?>
+      <li class="supervisor">アカウント権限 管理者</li>
+      <?php endif; ?>
+      <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
+    </ul>
   </header>
   <main>
-     <h2>従業員一覧</h2>
+    <h1 id="title">従業員一覧</h1>
     <div>
-      <form method="GET" action="userSearch.php">
+      <form method="GET" action="userSearch.php" id="searchForm">
         <div>
           <label for="family_name">名前（姓）:</label>
           <input type="text" id="family_name" name="family_name" maxlength="10" placeholder="漢字orひらがなorカタカナ" value=""><br>
-          <label for="last_name">名前（名）:</label>
-          <input type="text" id="last_name" name="last_name" maxlength="10" placeholder="漢字orひらがなorカタカナ" value=""><br>
-        </div>
 
-        <div>
-          <label for="family_name_kana">カナ（姓）:</label>
-          <input type="text" id="family_name_kana" name="family_name_kana" maxlength="10" placeholder="ひらがなorカタカナ" value=""><br>
-          <label for="last_name_kana">カナ（名）:</label>
+           <label for="last_name_kana">カナ（名）:</label>
           <input type="text" id="last_name_kana" name="last_name_kana" maxlength="10" placeholder="ひらがなorカタカナ" value=""><br>
-        </div>
 
-        <div>
           <label for="mail">メールアドレス:</label>
           <input type="text" id="mail" name="mail" maxlength="100" placeholder="半角英数字のみ、記号" value=""><br>
 
-          <input type="radio" id="male" name="gender" value="0">
-          <label for="male">男</label>
-          <input type="radio" id="female" name="gender" value="1">
-          <label for="female">女</label><br>
-
-          <label for="company_name">勤務先会社名:</label>
+           <label for="company_name">勤務先会社名:</label>
           <input type="text" id="company_name" name="company_name" placeholder="スペースは入力できません" maxlength="50" value=""><br>
-
-          <label for="work">担当業務:</label>
-          <input type="text" id="work" name="work" maxlength="50" placeholder="全て全角で入力" value=""><br>
 
           <label for="staff_code">スタッフコード:</label>
           <input type="text" id="staff_code" name="staff_code" maxlength="6" placeholder="半角数字のみ" value=""><br>
+        </div>
 
-          <label for="authority">アカウント権限:</label>
+        <div>
+          <label for="last_name">名前（名）:</label>
+          <input type="text" id="last_name" name="last_name" maxlength="10" placeholder="漢字orひらがなorカタカナ" value=""><br>
+
+          <label for="family_name_kana">カナ（姓）:</label>
+          <input type="text" id="family_name_kana" name="family_name_kana" maxlength="10" placeholder="ひらがなorカタカナ" value=""><br>
+
+        <input type="radio" id="male" name="gender" value="0">
+        <label for="male">男</label>
+        <input type="radio" id="female" name="gender" value="1">
+        <label for="female">女</label><br>
+
+        <label for="work">担当業務:</label>
+        <input type="text" id="work" name="work" maxlength="50" placeholder="全て全角で入力" value=""><br>
+
+         <label for="authority">アカウント権限:</label>
           <select id="authority" name="authority">
             <option value="" selected>全て</option>
             <option value="0">一般</option>
             <option value="1">管理者</option>
           </select><br>
-        </div>
 
-        <button type="submit">検索</button>
+           <button type="submit">検索</button>
+        </div>
       </form>
+      <p id="button"><a href="../top.php" id="topBack">TOPへ戻る</a></p>
     </div>
 
     <?php
@@ -267,7 +234,8 @@ if (!isset($_SESSION['mail'])) {
                 echo "<td><a href='../update/userUpdate.php?id={$row['id']}'>更新</a></td>";
                 echo "<td><a href='../delete/userDelete.php?id={$row['id']}'>削除</a></td>";
                 // リンク先にuser_idを含めてtimeSheetSearch.phpに遷移する
-                echo "<td><a href='../timeSheet/timeSheetSearch.php?user_id={$id}'>勤怠情報</a></td>";
+                // 勤怠情報へのリンクを作成する部分に、ユーザーの名前をパラメータとして渡す
+                echo "<td><a href='../timeSheet/timeSheetSearch.php?user_id={$id}&user_name={$row['family_name']}&last_name={$row['last_name']}'>勤怠情報</a></td>";
               endif;
               echo "</tr>";
             }

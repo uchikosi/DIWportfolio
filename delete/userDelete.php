@@ -16,7 +16,7 @@ if (!isset($_SESSION['mail'])) {
   $last_name = $_SESSION['last_name'] ?? null;
   $family_name_kana = $_SESSION['family_name_kana'] ?? null;
   $last_name_kana = $_SESSION['last_name_kana'] ?? null;
-  var_dump($_SESSION);
+  // var_dump($_SESSION);
 }
 
 // データベースへの接続
@@ -27,43 +27,43 @@ $password = "root";
 $dbname = "AttendanceManagement";
 
 try {
-    $pdo = new PDO("mysql:dbname={$dbname};host={$servername}", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $pdo = new PDO("mysql:dbname={$dbname};host={$servername}", $username, $password);
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    die("データベースへの接続に失敗しました: " . $e->getMessage());
+  die("データベースへの接続に失敗しました: " . $e->getMessage());
 }
 
 // GETリクエストからidを取得する
 if(isset($_GET['id'])) {
-    $delete_id = $_GET['id'];
+  $delete_id = $_GET['id'];
 
-    // データベースからユーザー情報を取得するクエリを実行する
-    $query = "SELECT * FROM users WHERE id = ?";
-    $stmt = $pdo->prepare($query);
+  // データベースからユーザー情報を取得するクエリを実行する
+  $query = "SELECT * FROM users WHERE id = ?";
+  $stmt = $pdo->prepare($query);
+  $stmt->execute([$delete_id]);
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // 削除ボタンが押された場合
+  if(isset($_POST['delete'])) {
+    // ユーザーを削除するクエリを実行する
+    $delete_query = "DELETE FROM users WHERE id = ?";
+    $stmt = $pdo->prepare($delete_query);
     $stmt->execute([$delete_id]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // 削除ボタンが押された場合
-    if(isset($_POST['delete'])) {
-        // ユーザーを削除するクエリを実行する
-        $delete_query = "DELETE FROM users WHERE id = ?";
-        $stmt = $pdo->prepare($delete_query);
-        $stmt->execute([$delete_id]);
-
-        // 削除が成功した場合
-        if($stmt) {
-            echo "<script>alert('ユーザーが削除されました。');</script>";
-            echo "<script>window.location.href = 'http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php';</script>";
-        } else {
-            echo "<script>alert('削除に失敗しました。');</script>";
-        }
+    // 削除が成功した場合
+    if($stmt) {
+      echo "<script>alert('ユーザーが削除されました。');</script>";
+      echo "<script>window.location.href = 'http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php';</script>";
+    } else {
+      echo "<script>alert('削除に失敗しました。');</script>";
     }
-    // ユーザーが存在しない場合や削除された場合、リダイレクトして不正なアクセスを防ぐ
-    // ブラウザの戻るボタンを使用しても削除されたユーザーのページに戻ることはできません。
-    if(!$user) {
-        header("Location: userSearch.php");
-        exit;
-    }
+  }
+  // ユーザーが存在しない場合や削除された場合、リダイレクトして不正なアクセスを防ぐ
+  // ブラウザの戻るボタンを使用しても削除されたユーザーのページに戻ることはできません。
+  if(!$user) {
+    header("Location: userSearch.php");
+    exit;
+  }
 }
 ?>
 
@@ -71,8 +71,9 @@ if(isset($_GET['id'])) {
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/userDelete.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
-  <title>削除確認画面</title>
+  <title>従業員情報削除</title>
 </head>
 <body>
  <header>
@@ -89,8 +90,9 @@ if(isset($_GET['id'])) {
     </ul>
   </header>
   <main>
-    <h1>ユーザー削除確認</h1>
+    <h1 id="title">従業員情報削除</h1>
     <?php if(isset($user)) : ?>
+    <div id="information">
     <ul>
       <!-- <li>ID: <?php //echo $user['id']; ?></li> -->
       <li>名前（姓）: <?php echo $user['family_name']; ?></li>
@@ -110,15 +112,15 @@ if(isset($_GET['id'])) {
       <li>更新日時: <?php echo date('Y年n月j日', strtotime($user['update_time'])); ?></li>
     </ul>
     <form id="deleteForm" method="post">
-      <button><a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php">戻る</a></button>
-      <input type="submit" name="delete" value="削除">
+      <button class="button"><a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php" >戻る</a></button>
+      <input type="submit" name="delete" class="button" value="削除">
     </form>
+    </div>
     <?php else : ?>
-      <p>ユーザー情報が見つかりません。</p>
+      <p id="message">ユーザー情報が見つかりません。</p>
     <?php endif; ?>
   </main>
   <footer>Copytifht  is the one which provides A to Z about programming</footer>
-
   <script>
     document.getElementById("deleteForm").addEventListener("submit", function(event) {
       var confirmMessage = "一度削除したアカウント情報は元に戻させません。\n";

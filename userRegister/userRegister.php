@@ -11,15 +11,16 @@ session_start();
   $user_id = $_SESSION['user_id'] ?? null;
   $family_name = $_SESSION['family_name'] ?? null;
   $last_name = $_SESSION['last_name'] ?? null;
-  var_dump($user_id);
+  // var_dump($user_id);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="stylesheet" type="text/css" href="../css/.css"> -->
+  <link rel="stylesheet" type="text/css" href="../css/userRegister.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
+  <title>スタッフデータ入力</title>
 </head>
 <body>
   <header>
@@ -35,17 +36,15 @@ session_start();
       <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
     </ul>
   </header>
-
   <main>
-    <div id="regist">
-      <h1>スタッフ登録フォーム</h1>
+    <h1 id="title">スタッフ登録フォーム</h1>
       <form method="post" id="registerForm" action="userRegister_confirm.php" onsubmit="return validateForm()">
         <label for="familyName">名前（姓）:</label>
         <input type="text" id="familyName" name="familyName" maxlength="10" autofocus oninput="validateName(this, true)" placeholder="漢字orひらがなorカタカナ"<?php if (isset($_POST['familyName'])) echo 'value="' . htmlspecialchars($_POST['familyName'], ENT_QUOTES) . '"'; ?>>
         <br>
 
         <label for="lastName">名前（名）:</label>
-        <input type="text" id="lastName" name="lastName" maxlength="10" autofocus oninput="validateName(this, false)"  placeholder="漢字orひらがなorカタカナ"<?php if (isset($_POST['lastName'])) echo 'value="' . htmlspecialchars($_POST['lastName'], ENT_QUOTES) . '"'; ?>>
+        <input type="text" id="lastName" name="lastName" maxlength="10" autofocus oninput="validateName(this, false)" placeholder="漢字orひらがなorカタカナ" <?php if (isset($_POST['lastName'])) echo 'value="' . htmlspecialchars($_POST['lastName'], ENT_QUOTES) . '"'; ?>>
         <br>
 
         <label for="familyNameKana">カナ（姓）:</label>
@@ -76,7 +75,7 @@ session_start();
         <br>
 
         <label for="address">住所:</label>
-        <input type="text" id="address" name="address" maxlength="100" placeholder="全て全角で入力" oninput="validateAddress(this)" <?php if (isset($_POST['address'])) echo 'value="' . htmlspecialchars($_POST['address'], ENT_QUOTES) . '"'; ?>>
+        <input type="text" id="address" name="address" maxlength="50" placeholder="全て全角で入力" oninput="validateAddress(this)" <?php if (isset($_POST['address'])) echo 'value="' . htmlspecialchars($_POST['address'], ENT_QUOTES) . '"'; ?>>
         <br>
 
         <label for="company_name">勤務先会社名:</label>
@@ -106,14 +105,11 @@ session_start();
         </select>
         <br>
 
-        <button type="submit">確認する</button>
-      </form>
-    </div>
+      <button type="submit">確認する</button>
+    </form>
+    <p id="button"><a href="../top.php" id="topBack">TOPへ戻る</a></p>
   </main>
-  <footer>
-    Copytifht the one which provides A to Z about programming
-  </footer>
-
+  <footer>Copytifht the one which provides A to Z about programming</footer>
   <script type="text/javascript" src="../js/common.js"></script>
   <script type="text/javascript" src="../js/userRegister.js"></script>
 </body>

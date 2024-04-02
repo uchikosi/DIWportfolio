@@ -107,10 +107,10 @@ unset($_SESSION['failure']);
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
-  <title>更新完了画面</title>
+  <link rel="stylesheet" type="text/css" href="../css/registrationInformationComplete.css">
+  <title>登録情報更新完了画面</title>
 </head>
 <body>
-
   <header>
       <ul id="menu">
         <h1 id=mainTitole>勤怠アプリ</h1>
@@ -124,31 +124,30 @@ unset($_SESSION['failure']);
         <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
       </ul>
   </header>
-
   <main>
-    <div>
-      <h1 id="databaseRegistrationResults">
-        <?php
-          // 成功メッセージの表示
-          if ($successMessage) {
-            echo $successMessage;
-            echo "<br>";
-          }
+    <h1 id="title">登録情報更新完了画面</h1>
+    <div class="message">
+      <?php
+        // 成功メッセージの表示
+        if ($successMessage) {
+          echo $successMessage;
+          echo "<br>";
+        }
 
-          // 失敗メッセージの表示
-          if ($failureMessage) {
-            echo $failureMessage;
-            echo "<br>";
-          }
-        ?>
-      </h1>
+        // 失敗メッセージの表示
+        if ($failureMessage) {
+          echo $failureMessage;
+          echo "<br>";
+        }
+      ?>
     </div>
-
-    <div>
+    <div id="back">
       <p>
         <a href="http://localhost:8888/AttendanceManagementSystem/top.php" id="topBack" >TOPページへ戻る</a>
       </p>
-      <p><a href="http://localhost:8888/AttendanceManagementSystem/userSearch/registrationInformation.php" id="" >登録情報画面へ</a></p>
+      <p>
+        <a href="http://localhost:8888/AttendanceManagementSystem/userSearch/registrationInformation.php" id="registrationInformationBack" >登録情報画面へ</a>
+      </p>
     </div>
   </main>
   <footer>Copytifht is the one which provides A to Z about programming</footer>

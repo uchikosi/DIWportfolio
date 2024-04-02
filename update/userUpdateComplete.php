@@ -18,7 +18,7 @@ if (!isset($_SESSION['mail'])) {
   $last_name = $_SESSION['last_name'] ?? null;
   $family_name_kana = $_SESSION['family_name_kana'] ?? null;
   $last_name_kana = $_SESSION['last_name_kana'] ?? null;
-  var_dump($_SESSION);
+  // var_dump($_SESSION);
 }
 
 // データベース接続情報
@@ -109,11 +109,11 @@ unset($_SESSION['failure']);
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/complete.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
-  <title>アカウント更新完了画面</title>
+  <title>従業員情報編集完了</title>
 </head>
 <body>
-
   <header>
       <ul id="menu">
         <h1 id=mainTitole>勤怠アプリ</h1>
@@ -127,31 +127,31 @@ unset($_SESSION['failure']);
         <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
       </ul>
   </header>
-
   <main>
-    <div>
-      <h1 id="databaseRegistrationResults">
-        <?php
-          // 成功メッセージの表示
-          if ($successMessage) {
-            echo $successMessage;
-            echo "<br>";
-          }
+    <h1 id="title">従業員情報編集完了</h1>
+    <div id="message">
+      <?php
+        // 成功メッセージの表示
+        if ($successMessage) {
+          echo $successMessage;
+          echo "<br>";
+        }
 
-          // 失敗メッセージの表示
-          if ($failureMessage) {
-            echo $failureMessage;
-            echo "<br>";
-          }
-        ?>
-      </h1>
+        // 失敗メッセージの表示
+        if ($failureMessage) {
+          echo $failureMessage;
+          echo "<br>";
+        }
+      ?>
     </div>
 
-    <div>
+    <div id="back">
       <p>
         <a href="http://localhost:8888/AttendanceManagementSystem/top.php" id="topBack" >TOPページへ戻る</a>
       </p>
-      <p><a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php" id="" >検索画面へ</a></p>
+      <p>
+        <a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php" id="" >検索画面へ</a>
+      </p>
     </div>
   </main>
    <footer>Copytifht is the one which provides A to Z about programming</footer>

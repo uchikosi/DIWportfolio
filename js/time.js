@@ -117,23 +117,23 @@ document.getElementById('attendanceForm').addEventListener('submit', function (e
 });
 
 // 実動時間が休憩時間よりも少ない場合にアラートメッセージを表示するバリデーション
-document.getElementById('attendanceForm').addEventListener('submit', function (event) {
-  var startTime = document.getElementById('start_time').value;
-  var endTime = document.getElementById('end_time').value;
-  var breakTime = document.getElementById('break_time').value;
-  var standardWorkingTime = document.getElementById('standard_working_time').value;
+// document.getElementById('attendanceForm').addEventListener('submit', function (event) {
+//   var startTime = document.getElementById('start_time').value;
+//   var endTime = document.getElementById('end_time').value;
+//   var breakTime = document.getElementById('break_time').value;
+//   var standardWorkingTime = document.getElementById('standard_working_time').value;
 
-  var startDateTime = new Date('2000-01-01T' + startTime);
-  var endDateTime = new Date('2000-01-01T' + endTime);
-  var breakTimeParts = breakTime.split(":");
-  var breakTimeInMilliseconds = (parseInt(breakTimeParts[0]) * 60 + parseInt(breakTimeParts[1])) * 60000;
-  var standardWorkingTimeParts = standardWorkingTime.split(":");
-  var standardWorkingTimeInMilliseconds = (parseInt(standardWorkingTimeParts[0]) * 60 + parseInt(standardWorkingTimeParts[1])) * 60000;
+//   var startDateTime = new Date('2000-01-01T' + startTime);
+//   var endDateTime = new Date('2000-01-01T' + endTime);
+//   var breakTimeParts = breakTime.split(":");
+//   var breakTimeInMilliseconds = (parseInt(breakTimeParts[0]) * 60 + parseInt(breakTimeParts[1])) * 60000;
+//   var standardWorkingTimeParts = standardWorkingTime.split(":");
+//   var standardWorkingTimeInMilliseconds = (parseInt(standardWorkingTimeParts[0]) * 60 + parseInt(standardWorkingTimeParts[1])) * 60000;
 
-  var totalWorkTime = endDateTime - startDateTime - breakTimeInMilliseconds;
+//   var totalWorkTime = endDateTime - startDateTime - breakTimeInMilliseconds;
 
-  if (totalWorkTime < 0) {
-    alert('実動時間が休憩時間を超過しています。');
-    event.preventDefault(); // フォームの送信をキャンセルする
-  }
-});
+//   if (totalWorkTime < 0) {
+//     alert('実動時間が休憩時間を超過しています。');
+//     event.preventDefault(); // フォームの送信をキャンセルする
+//   }
+// });

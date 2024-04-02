@@ -16,15 +16,15 @@ if (!isset($_SESSION['mail'])) {
   $last_name = $_SESSION['last_name'] ?? null;
   $family_name_kana = $_SESSION['family_name_kana'] ?? null;
   $last_name_kana = $_SESSION['last_name_kana'] ?? null;
-  var_dump($_SESSION);
+  // var_dump($_SESSION);
 }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <!-- <link rel="stylesheet" type="text/css" href="css/top.css"> -->
   <link rel="stylesheet" type="text/css" href="css/common.css">
+  <link rel="stylesheet" type="text/css" href="css/top.css">
   <title>TOP</title>
 </head>
 <body>
@@ -44,28 +44,28 @@ if (!isset($_SESSION['mail'])) {
   <main>
     <ul>
       <div id='general'>
-      <li>
+      <li class="topMenu">
         <a href="http://localhost:8888/AttendanceManagementSystem/timeRegister/timeRegister.php">勤務入力</a>
       </li>
-      <li>
+      <li class="topMenu">
         <a href="http://localhost:8888/AttendanceManagementSystem/userSearch/registrationInformation.php">登録情報</a>
       </li>
-      <li>
+      <li class="topMenu">
         <a href="http://localhost:8888/AttendanceManagementSystem/timeSheet/timeSheet.php">タイムシート</a>
       </li>
-      <li>
-        <a href="http://localhost:8888/AttendanceManagementSystem/request/request.php">申請</a>
+      <li class="topMenu">
+        <a href="http://localhost:8888/AttendanceManagementSystem/request/request.php">申請、連絡メニュー</a>
       </li>
       </div>
       <div id=administrator>
         <?php if ($role === '管理者'): ?>
-        <li>
+        <li class="topMenu">
           <a href="http://localhost:8888/AttendanceManagementSystem/userRegister/userRegister.php">従業員登録</a>
         </li>
-        <li>
-          <a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php">検索</a>
+        <li class="topMenu">
+          <a href="http://localhost:8888/AttendanceManagementSystem/userSearch/userSearch.php">従業員検索</a>
         </li>
-        <li>
+        <li class="topMenu">
           <a href="http://localhost:8888/AttendanceManagementSystem/report/reportList.php">報告、申請一覧</a>
         </li>
         <?php endif; ?>

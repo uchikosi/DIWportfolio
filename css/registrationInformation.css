@@ -1,0 +1,28 @@
+#title {
+  margin: 1% 10%;
+}
+
+#registrationInformationForm {
+  display: flex;
+  justify-content: center;
+}
+
+#lfteForm {
+  margin: 0 4%;
+}
+
+#rightForm {
+  margin: 0 4%;
+}
+
+#button {
+  text-align: center;
+}
+
+#topBack {
+  /* アンカーの下線消し */
+  text-decoration: none;
+  padding: 10px;
+  background-color: #CCCCFF;
+  color: #0000FF;
+}

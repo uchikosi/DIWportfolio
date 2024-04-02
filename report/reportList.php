@@ -66,63 +66,10 @@
 
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/reportList.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
   <title>申請、連絡一覧</title>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    th,
-    td {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgb(0, 0, 0);
-      background-color: rgba(0, 0, 0, 0.4);
-      padding-top: 60px;
-    }
-
-    .modal-content {
-      background-color: #fefefe;
-      margin: 5% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-    }
-
-    .close {
-      color: #aaaaaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
-  </style>
 </head>
-
 <body>
   <header>
     <ul id="menu">
@@ -138,21 +85,20 @@
     </ul>
   </header>
   <main>
-    <h2>連絡、申請一覧</h2>
-
+    <h1 id="title">連絡、申請一覧</h2>
     <!-- 検索フォーム -->
-    <form method="get" action="reportList.php">
+    <form method="get" action="reportList.php" id="reportList"  onsubmit="return validateForm()">
       <label for="registration_date">申請年月日:</label>
       <input type="date" id="registration_date" name="registration_date" value="<?php echo htmlspecialchars($registration_date, ENT_QUOTES); ?>">
 
       <label for="name">名前:</label>
-      <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($name, ENT_QUOTES); ?>">
+      <input type="text" id="name" name="name" maxlength="10" placeholder="漢字orひらがなorカタカナ" value="<?php echo htmlspecialchars($name, ENT_QUOTES); ?>">
 
       <label for="name_kana">名前（カナ）:</label>
-      <input type="text" id="name_kana" name="name_kana" value="<?php echo htmlspecialchars($name_kana, ENT_QUOTES); ?>">
+      <input type="text" id="name_kana" name="name_kana" maxlength="10" placeholder="ひらがなorカタカナ" value="<?php echo htmlspecialchars($name_kana, ENT_QUOTES); ?>">
 
       <label for="staff_code">スタッフコード:</label>
-      <input type="text" id="staff_code" name="staff_code" value="<?php echo htmlspecialchars($staff_code, ENT_QUOTES); ?>">
+      <input type="text" id="staff_code" name="staff_code" maxlength="6" placeholder="半角数字のみ" value="<?php echo htmlspecialchars($staff_code, ENT_QUOTES); ?>">
 
       <label for="category">区分:</label>
       <select id="category" name="category">
@@ -168,7 +114,12 @@
       <button type="submit">検索</button>
     </form>
 
+    <p id="button"><a href="../top.php" id="topBack">TOPへ戻る</a></p>
+
     <!-- 検索結果の表示 -->
+    <?php if (empty($results)) : ?>
+      <p id="message">現在該当する申請、連絡はありません</p>
+    <?php else : ?>
     <table>
       <thead>
         <tr>
@@ -198,6 +149,7 @@
         <?php endforeach; ?>
       </tbody>
     </table>
+    <?php endif; ?>
 
     <!-- モーダル -->
     <div id="myModal" class="modal">
@@ -218,6 +170,7 @@
       document.getElementById('myModal').style.display = 'none';
     }
   </script>
+  <script type="text/javascript" src="../js/report.js"></script>
   <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

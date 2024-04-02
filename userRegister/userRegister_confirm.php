@@ -34,6 +34,7 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/userRegister_confirm.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
   <title>スタッフデータ入力確認画面</title>
 </head>
@@ -52,8 +53,8 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
     </ul>
   </header>
   <main>
-    <div class="main">
-      <h1>スタッフデータ入力確認</h1>
+    <h1 id="title">スタッフデータ入力確認</h1>
+    <div class="">
       <table>
         <tr>
           <td>名前（姓）</td>
@@ -160,9 +161,7 @@ $authority = ($_POST['authority'] == '0') ? '一般' : '管理者';
       </div>
     </div>
   </main>
-  <footer>
-    Copytifht the one which provides A to Z about programming
-  </footer>
+  <footer>Copytifht the one which provides A to Z about programming</footer>
   <script type="text/javascript" src="../js/common.js"></script>
 </body>
 </html>

@@ -1,0 +1,20 @@
+#title {
+  margin: 1% 10%;
+}
+
+#information {
+  text-align: center;
+}
+
+#message {
+  font-size: 24px;
+  /* メッセージのフォントサイズ */
+  text-align: center;
+  /* メッセージを中央揃え */
+  margin: 10%;
+  /* 上部の余白 */
+}
+
+.button {
+  margin: 5px 5%;
+}

@@ -17,7 +17,7 @@ if (!isset($_SESSION['mail'])) {
   $last_name = $_SESSION['last_name'] ?? null;
   $family_name_kana = $_SESSION['family_name_kana'] ?? null;
   $last_name_kana = $_SESSION['last_name_kana'] ?? null;
-  var_dump($_SESSION);
+  // var_dump($_SESSION);
 }
 
 // POSTリクエストの場合
@@ -45,7 +45,6 @@ session_start();
 
   // ユーザーの権限を取得
   $role = $_SESSION['role'] ?? null;
-
 ?>
 
 <!DOCTYPE html>
@@ -53,24 +52,8 @@ session_start();
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
-  <title>更新確認</title>
-  <style>
-    main {
-      margin: 10px;
-    }
-    table {
-      width: 200px;               /* 幅指定 */
-      height: 90px;               /* 高さ指定 */
-      margin:  0 auto;            /* 中央寄せ */
-    }
-    .button-container {
-      padding: 10px;              /* 余白指定 */
-      height: 50px;              /* 高さ指定 */
-      text-align:  center;        /* 中央寄せ */
-      display: flex;
-      justify-content:center
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="../css/registrationInformationConfirm.css">
+  <title>登録情報更新確認</title>
 </head>
 <body>
   <header>
@@ -87,7 +70,7 @@ session_start();
     </ul>
   </header>
   <main>
-    <h2>更新確認画面</h2>
+    <h1 id="title">更新確認画面</h1>
     <div id="">
       <table>
         <tr>
@@ -110,17 +93,17 @@ session_start();
           <td>メールアドレス</td>
           <td class = "longText"><?php echo $newMail; ?></td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>パスワード</td>
-          <td><?php echo str_repeat("●", strlen($newPassword)); ?></td>
-        </tr>
+          <td><?php //echo str_repeat("●", strlen($newPassword)); ?></td>
+        </tr> -->
         <tr>
           <td>郵便番号</td>
           <td><?php echo $newPostalCode; ?></td>
         </tr>
         <tr>
           <td>住所</td>
-          <td><?php echo $newAddress ; ?></td>
+          <td class = "longText2"><?php echo $newAddress ; ?></td>
         </tr>
       </table>
     </div>
@@ -133,10 +116,10 @@ session_start();
         <input type="hidden" name="familyNameKana" value="<?php echo htmlspecialchars($newfamilyNameKana, ENT_QUOTES); ?>">
         <input type="hidden" name="lastNameKana" value="<?php echo htmlspecialchars($newLastNameKana, ENT_QUOTES); ?>">
         <input type="hidden" name="mail" value="<?php echo htmlspecialchars($newMail, ENT_QUOTES); ?>">
-        <input type="hidden" name="password" value="<?php echo htmlspecialchars($newPassword, ENT_QUOTES); ?>">
+        <!-- <input type="hidden" name="password" value="<?php //echo htmlspecialchars($newPassword, ENT_QUOTES); ?>"> -->
         <input type="hidden" name="postalCode" value="<?php echo htmlspecialchars($newPostalCode, ENT_QUOTES); ?>">
         <input type="hidden" name="address" value="<?php echo htmlspecialchars($newAddress, ENT_QUOTES); ?>">
-        <input type="submit" value="前に戻る">
+        <input type="submit" class="button" value="前に戻る">
       </form>
       <!-- htmlspecialchars は、HTMLエスケープ処理 PHP関数　これを使うと、HTML タグや特殊文字をエスケープする。 -->
 
@@ -149,11 +132,11 @@ session_start();
         <input type="hidden" name="familyNameKana" value="<?php echo isset($_POST['familyNameKana']) ? htmlspecialchars($_POST['familyNameKana'], ENT_QUOTES) : ''; ?>">
         <input type="hidden" name="lastNameKana" value="<?php echo isset($_POST['lastNameKana']) ? htmlspecialchars($_POST['lastNameKana'], ENT_QUOTES) : ''; ?>">
         <input type="hidden" name="mail" value="<?php echo isset($_POST['mail']) ? htmlspecialchars($_POST['mail'], ENT_QUOTES) : ''; ?>">
-        <input type="hidden" name="password" value="<?php echo isset($_POST['password']) ? htmlspecialchars($_POST['password'], ENT_QUOTES) : ''; ?>">
+        <!-- <input type="hidden" name="password" value="<?php //echo isset($_POST['password']) ? htmlspecialchars($_POST['password'], ENT_QUOTES) : ''; ?>"> -->
         <input type="hidden" name="postalCode" value="<?php echo isset($_POST['postalCode']) ? htmlspecialchars($_POST['postalCode'], ENT_QUOTES) : ''; ?>">
         <input type="hidden" name="address" value="<?php echo isset($_POST['address']) ? htmlspecialchars($_POST['address'], ENT_QUOTES) : ''; ?>">
 
-        <input type="submit" name="" value="更新">
+        <input type="submit" name="" class="button" value="更新">
       </form>
     </div>
   </main>
@@ -166,9 +149,17 @@ session_start();
         element.innerHTML = text.replace(/(.{50})/g, '$1<br>');
       }
     }
+
+    var longTextElements = document.getElementsByClassName('longText2');
+    for (var i = 0; i < longTextElements.length; i++) {
+      var element = longTextElements[i];
+      var text = element.innerText;
+      if (text.length > 25) {
+        element.innerHTML = text.replace(/(.{25})/g, '$1<br>');
+      }
+    }
   </script>
   <footer>Copytifht  is the one which provides A to Z about programming</footer>
   <script type="text/javascript" src="../js/common.js"></script>
-
 </body>
 </html>

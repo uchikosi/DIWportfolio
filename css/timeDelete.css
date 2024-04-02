@@ -1,0 +1,48 @@
+#title {
+  margin: 1% 10%;
+}
+
+#button {
+  text-align: center;
+}
+
+#back {
+  display: flex;
+  justify-content: center;
+  gap: 10%;
+  /* 余白 */
+}
+
+#YearAndMonth {
+  background-color: cornflowerblue;
+  display: flex;
+  justify-content: center;
+  gap: 0 10px;
+  font-size: 120%;
+  margin: 2% 0;
+}
+
+#information {
+  /* margin: 0 auto; */
+  text-align: center;
+}
+
+.button {
+  padding: 10px;
+  background-color: #CCCCFF;
+}
+
+p a {
+  /* アンカーの下線消し */
+  text-decoration: none;
+  color: #0000FF;
+}
+
+
+#topBack {
+  /* アンカーの下線消し */
+  text-decoration: none;
+  padding: 10px;
+  background-color: #CCCCFF;
+  color: #0000FF;
+}

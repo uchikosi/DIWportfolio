@@ -1,32 +1,3 @@
-window.onload = function () {
-  document.getElementById('updateForm').addEventListener('submit', function (event) {
-    var fields = [
-      { id: 'familyName', required: true, message: '名前（姓）は入力してください' },
-      { id: 'lastName', required: true, message: '名前（名）は入力してください' },
-      { id: 'familyNameKana', required: true, message: 'カナ（姓）は入力してください' },
-      { id: 'lastNameKana', required: true, message: 'カナ（名）は入力してください' },
-      { id: 'mail', required: true, message: 'メールアドレスは入力してください' },
-      { id: 'password', required: true, message: 'パスワードは入力してください' },
-      { id: 'postalCode', required: true, message: '郵便番号は入力してください' },
-      { id: 'address', required: true, message: '住所は入力してください' },
-      { id: 'staffCode', required: true, message: 'スタッフコードは入力してください' }
-    ];
-
-    var errorMessage = '';
-
-    fields.forEach(function (field) {
-      var element = document.getElementById(field.id);
-      if (field.required && element.value === '') {
-        errorMessage += field.message + '\n';
-      }
-    });
-
-    if (errorMessage !== '') {
-      alert(errorMessage.trim());
-      event.preventDefault(); // フォームの送信をキャンセル
-    }
-  });
-};
 
 
 function validateForm() {
@@ -52,6 +23,51 @@ function validateForm() {
   var companyNameRegex = /^[^\s]+$/; // スペース以外の任意の文字が入力可能
   var businessRegex = /^[^\x01-\x7E\xA1-\xDF]+$/; // 全角全て可能、記号
   var staffCodeRegex = /^\d+$/; // 半角数字のみ
+
+  if (familyName === '') {
+    alert('名前（姓）を入力してください');
+    return false;
+  }
+  if (lastName === '') {
+    alert('名前（名）を入力してください');
+    return false;
+  }
+  if (familyNameKana === '') {
+    alert('カナ（姓）を入力してください');
+    return false;
+  }
+  if (lastNameKana === '') {
+    alert('カナ（名）を入力してください');
+    return false;
+  }
+  if (mail === '') {
+    alert('メールアドレスを入力してください');
+    return false;
+  }
+  if (password === '') {
+    alert('パスワードを入力してください');
+    return false;
+  }
+  if (postalCode === '') {
+    alert('郵便番号を入力してください');
+    return false;
+  }
+  if (address === '') {
+    alert('住所を入力してください');
+    return false;
+  }
+  if (companyName === '') {
+    alert('勤務先会社名を入力してください');
+    return false;
+  }
+  if (business === '') {
+    alert('担当業務を入力してください');
+    return false;
+  }
+  if (staffCode === '') {
+    alert('スタッフコードを入力してください');
+    return false;
+  }
 
   if (!nameRegex.test(familyName)) {
     alert('名前（姓）は漢字、カタカナ、ひらがなのみ入力してください');

@@ -49,66 +49,12 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/reportLog.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
   <title>申請、連絡ログ</title>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    th,
-    td {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgb(0, 0, 0);
-      background-color: rgba(0, 0, 0, 0.4);
-      padding-top: 60px;
-    }
-
-    .modal-content {
-      background-color: #fefefe;
-      margin: 5% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-    }
-
-    .close {
-      color: #aaaaaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
-  </style>
 </head>
-
 <body>
   <header>
     <ul id="menu">
@@ -124,12 +70,12 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </ul>
   </header>
   <main>
-    <h2>連絡、申請一覧</h2>
-
+    <h1 id="title">連絡、申請一覧</h1>
     <!-- 検索フォーム -->
-    <form method="get" action="reportLog.php">
+    <form method="get" action="reportLog.php" id="reportLog">
       <label for="registration_date">申請年月日:</label>
       <input type="date" id="registration_date" name="registration_date" value="<?php echo htmlspecialchars($registration_date, ENT_QUOTES); ?>">
+      <br>
 
       <label for="category">区分:</label>
       <select id="category" name="category">
@@ -140,11 +86,15 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <option value="遅刻"<?php if ($category === '遅刻') echo ' selected'; ?>>遅刻</option>
         <option value="早退"<?php if ($category === '早退') echo ' selected'; ?>>早退</option>
       </select>
+      <br>
 
       <button type="submit">検索</button>
     </form>
-
+     <p id="button"><a href="../top.php" id="topBack">TOPへ戻る</a></p>
     <!-- 検索結果の表示 -->
+    <?php if (empty($results)) : ?>
+      <p class="message">現在該当する申請、連絡はありません</p>
+    <?php else : ?>
     <table>
       <thead>
         <tr>
@@ -177,6 +127,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p id="modalContent"></p>
       </div>
     </div>
+    <?php endif; ?>
   </main>
   <footer>
     <p>Copytifht the one which provides A to Z about programming</p>

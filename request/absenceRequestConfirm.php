@@ -1,5 +1,20 @@
 <?php
 session_start();
+// セッションの有効期限を設定（1日）
+$expireAfter = 60 * 60 * 24; // 1日（秒数で指定）
+session_set_cookie_params($expireAfter);
+
+// もしログインしていなければ、ログインページにリダイレクト
+if (!isset($_SESSION['mail'])) {
+  header("Location: login.php");
+  exit();
+} else {
+  // ユーザーの権限を取得
+  $role = $_SESSION['role'] ?? null;
+  $user_id = $_SESSION['user_id'] ?? null; // ユーザーIDを取得
+  $family_name = $_SESSION['family_name'] ?? null;
+  $last_name = $_SESSION['last_name'] ?? null;
+}
 
 // POST データから値を取得
 $staff_code = $_POST['staff_code'];
@@ -10,16 +25,7 @@ $remarks = $_POST['remarks'];
 $name = $_POST['name'];
 $name_kana = $_POST['name_kana'];
 
-  // もしログインしていなければ、ログインページにリダイレクト
-  if (!isset($_SESSION['mail'])) {
-    header("Location: login.php");
-    exit();
-  }
-
-  // ユーザーの権限を取得
-  $role = $_SESSION['role'] ?? null;
-
-  // 送信されたデータから日数を計算
+// 送信されたデータから日数を計算
 $start_date = $_POST['request_date_start'];
 $end_date = $_POST['request_date_end'];
 
@@ -33,8 +39,9 @@ $difference_in_days = floor(($end_timestamp - $start_timestamp) / (60 * 60 * 24)
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/allRequestConfirm.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
-  <title>スタッフデータ入力確認画面</title>
+  <title>連絡内容入力確認</title>
 </head>
 <body>
   <header>
@@ -51,8 +58,8 @@ $difference_in_days = floor(($end_timestamp - $start_timestamp) / (60 * 60 * 24)
     </ul>
   </header>
   <main>
-    <div class="main">
-      <h1>連絡内容入力確認</h1>
+    <h1 id="title">連絡内容入力確認</h1>
+    <div class="">
       <table>
         <tr>
           <td>名前</td>

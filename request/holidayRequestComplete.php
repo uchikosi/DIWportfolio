@@ -38,24 +38,28 @@ try {
 }
 
 session_start();
-  // もしログインしていなければ、ログインページにリダイレクト
-  if (!isset($_SESSION['mail'])) {
-    header("Location: login.php");
-    exit();
-  }
+// セッションの有効期限を設定（1日）
+$expireAfter = 60 * 60 * 24; // 1日（秒数で指定）
+session_set_cookie_params($expireAfter);
 
+// もしログインしていなければ、ログインページにリダイレクト
+if (!isset($_SESSION['mail'])) {
+  header("Location: login.php");
+  exit();
+} else {
   // ユーザーの権限を取得
   $role = $_SESSION['role'] ?? null;
   $user_id = $_SESSION['user_id'] ?? null; // ユーザーIDを取得
   $family_name = $_SESSION['family_name'] ?? null;
   $last_name = $_SESSION['last_name'] ?? null;
-
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/allRequestComplete.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
   <title>休日申請完了画面</title>
   <style>
@@ -76,7 +80,8 @@ session_start();
     </ul>
   </header>
   <main>
-    <div>
+    <h1 id="title">休日申請完了</h1>
+    <div id="message">
         <?php
           if (isset($success)) {
             echo $success;// 成功メッセージ
@@ -91,12 +96,12 @@ session_start();
       </h1>
     </div>
 
-    <div>
+    <div id="back">
       <p>
         <a href="http://localhost:8888/AttendanceManagementSystem/top.php" id="topBack" >TOPページへ戻る</a>
       </p>
       <p>
-        <a href="http://localhost:8888/AttendanceManagementSystem/report/reportLog.php">申請のログへ</a>
+        <a href="http://localhost:8888/AttendanceManagementSystem/report/reportLog.php" id="holidayRequestBack">申請のログへ</a>
       </p>
     </div>
   </main>

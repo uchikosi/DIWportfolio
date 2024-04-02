@@ -1,0 +1,25 @@
+#title {
+  margin: 1% 10%;
+}
+
+table {
+  height: 90px;
+  /* 高さ指定 */
+  margin: 0 auto;
+  /* 中央寄せ */
+}
+
+.button-container {
+  /* 余白指定 */
+  padding: 10px;
+  /* 中央寄せ */
+  display: flex;
+  justify-content: center;
+  margin: 0 10%;
+  gap: 0px 5%;
+  /* 余白 */
+}
+
+.button {
+  margin: 0 10%;
+}

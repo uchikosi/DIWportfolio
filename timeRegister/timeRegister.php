@@ -58,13 +58,7 @@ try {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../css/time.css">
 <link rel="stylesheet" type="text/css" href="../css/common.css">
-<title>Date Calendar</title>
-
-<style>
-    .attendance-cell {
-      margin-right: 20px;
-    }
-</style>
+<title>勤務入力</title>
 </head>
 <body>
   <header>
@@ -82,14 +76,23 @@ try {
   </header>
   <main>
     <!-- 登録 -->
-    <h2>勤怠入力</h2>
-    <div>
-      <form action="timeRegisterComplete.php" method="post" id="attendanceForm">
-
+    <h1 id="title">勤怠入力</h1>
+    <form action="timeRegisterComplete.php" method="post" id="attendanceForm">
+      <div id="leftForm">
         <label>年月日:</label>
         <input type="date" min="2024-01" name="date" id="selectedDate" value="">
-        <!-- <br> -->
-
+        <br>
+        <label for="start_time" id="startTimeLabel">出勤時間:</label>
+        <input type="time" id="start_time" name="start_time" onchange="calculateWorkTime()">
+        <br>
+        <label for="break_time" id="breakTimeLabel">休憩時間:</label>
+        <input type="time" id="break_time" name="break_time" onchange="calculateWorkTime()">
+        <br>
+        <label for="over_time" id="overTimeLabel">残業時間:</label>
+        <input type="time" id="over_time" name="over_time">
+        <br>
+      </div>
+      <div id="rightForm">
         <label>区分:</label>
         <select name="category" id="categorySelect" onchange="handleCategoryChange()">
           <option value="" selected disabled>選択してください</option>
@@ -102,27 +105,17 @@ try {
           <option value="leaving_early">早退</option>
         </select><br>
 
-        <label for="start_time" id="startTimeLabel">出勤時間:</label>
-        <input type="time" id="start_time" name="start_time" onchange="calculateWorkTime()">
-        <!-- <br> -->
-
         <label for="end_time" id="endTimeLabel">退勤時間:</label>
         <input type="time" id="end_time" name="end_time" onchange="calculateWorkTime()"><br>
 
-        <label for="break_time" id="breakTimeLabel">休憩時間:</label>
-        <input type="time" id="break_time" name="break_time" onchange="calculateWorkTime()">
-        <!-- <br> -->
-
         <label for="standard_working_time" id="standardWorkingTimeLabel">実働時間:</label>
         <input type="time" id="standard_working_time" name="standard_working_time" readonly><br>
-        <label for="over_time" id="overTimeLabel">残業時間:</label>
-        <input type="time" id="over_time" name="over_time">
-        <!-- <br> -->
 
         <input type="submit" value="送信">
       </form>
-      <p><a href="../top.php">TOPへ戻る</a></p>
     </div>
+    <p id="button"><a href="../top.php" id="topBack">TOPへ戻る</a></p>
+    <div class="message">
     <?php
       // メッセージが渡されたかどうかを確認
     if (isset($_GET['message'])) {
@@ -136,6 +129,7 @@ try {
         echo "エラー：勤怠情報を送信できませんでした。";
       }
     }?>
+    </div>
   </main>
 
     <!-- 表示 -->

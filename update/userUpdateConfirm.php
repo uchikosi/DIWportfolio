@@ -17,7 +17,7 @@ if (!isset($_SESSION['mail'])) {
   $last_name = $_SESSION['last_name'] ?? null;
   $family_name_kana = $_SESSION['family_name_kana'] ?? null;
   $last_name_kana = $_SESSION['last_name_kana'] ?? null;
-  var_dump($_SESSION);
+  // var_dump($_SESSION);
 }
 
 // POSTリクエストの場合
@@ -50,42 +50,15 @@ if (isset($_POST['password']) && strlen($_POST['password']) > 10) {
 
 // 入力された値をセッションに保存する
 $_SESSION['form_values'] = $_POST;
-
-session_start();
-  // もしログインしていなければ、ログインページにリダイレクト
-  if (!isset($_SESSION['mail'])) {
-    header("Location: login.php");
-    exit();
-  }
-
-  // ユーザーの権限を取得
-  $role = $_SESSION['role'] ?? null;
-
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/confirm.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
-  <title>アカウント更新確認</title>
-  <style>
-    main {
-      margin: 10px;
-    }
-    table {
-      width: 200px;               /* 幅指定 */
-      height: 90px;               /* 高さ指定 */
-      margin:  0 auto;            /* 中央寄せ */
-    }
-    .button-container {
-      padding: 10px;              /* 余白指定 */
-      height: 50px;              /* 高さ指定 */
-      text-align:  center;        /* 中央寄せ */
-      display: flex;
-      justify-content:center
-    }
-  </style>
+  <title>従業員情報更新確認</title>
 </head>
 <body>
   <header>
@@ -102,7 +75,7 @@ session_start();
     </ul>
   </header>
   <main>
-    <h2>アカウント更新確認画面</h2>
+    <h1 id="title">従業員情報編集確認</h1>
     <div id="">
       <table>
         <tr>

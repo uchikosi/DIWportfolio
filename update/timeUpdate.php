@@ -11,6 +11,23 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
+// セッションの有効期限を設定（1日）
+$expireAfter = 60 * 60 * 24; // 1日（秒数で指定）
+session_set_cookie_params($expireAfter);
+
+// もしログインしていなければ、ログインページにリダイレクト
+if (!isset($_SESSION['mail'])) {
+  header("Location: login.php");
+  exit();
+} else {
+  // ユーザーの権限を取得
+  $role = $_SESSION['role'] ?? null;
+  $user_id = $_SESSION['user_id'] ?? null; // ユーザーIDを取得
+  $family_name = $_SESSION['family_name'] ?? null;
+  $last_name = $_SESSION['last_name'] ?? null;
+  // var_dump($_SESSION);
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // POSTリクエストからデータを受け取る
   $id = $_POST['id'];
@@ -42,55 +59,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // echo "更新に失敗しました。もう一度やり直してください。";
     $failure = "更新に失敗しました。もう一度やり直してください。";
   }
-var_dump($_SESSION);
   // // データベース接続を閉じる
   // $conn->close();
+}
+if(isset($_SESSION['user_name'])) {
+  $user_name = $_SESSION['user_name'];
+} else {
+  // セッションにユーザー名がない場合はエラーメッセージを表示して終了
+  die("ユーザー名がセットされていません");
 }
 
   // 遷移前のページからIDを取得してセッションに保存
   if (isset($_GET['id'])) {
     $_SESSION['time_id'] = $_GET['id'];
   }
-  var_dump($_SESSION);
+
   // セッションからIDを取得
   if (isset($_SESSION['time_id'])) {
     $id = $_SESSION['time_id'];
 
-  // データベースから選択した行の情報を取得するクエリを実行するなどの処理を行う
-  $sql = "SELECT * FROM timeSheet WHERE id = $id";
-  $result = $conn->query($sql);
-  if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    // 実働時間を計算
-    $start_time = strtotime($row['start_time']);
-    $end_time = strtotime($row['end_time']);
-    $break_time = strtotime($row['break_time']) - strtotime('00:00:00');
+    // データベースから選択した行の情報を取得するクエリを実行するなどの処理を行う
+    $sql = "SELECT * FROM timeSheet WHERE id = $id";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      // 実働時間を計算
+      $start_time = strtotime($row['start_time']);
+      $end_time = strtotime($row['end_time']);
+      $break_time = strtotime($row['break_time']) - strtotime('00:00:00');
 
-    $working_seconds = $end_time - $start_time - $break_time;
-    $working_hours = floor($working_seconds / 3600);
-    $working_minutes = floor(($working_seconds % 3600) / 60);
+      $working_seconds = $end_time - $start_time - $break_time;
+      $working_hours = floor($working_seconds / 3600);
+      $working_minutes = floor(($working_seconds % 3600) / 60);
+    } else {
+      echo "データが見つかりません";
+    }
+  } else {
+    echo "IDが指定されていません";
+  }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="css/top.css">
+  <link rel="stylesheet" type="text/css" href="../css/timeUpdate.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
-  <title>TOP</title>
+  <title>勤務情報編集</title>
 </head>
 <body>
   <header>
-    <h1>勤怠報告</h1>
-    <div id="head">
-      <p>ようこそ <?php echo $family_name.$last_name ; ?>様</p>
-      <p> <?php echo $_SESSION['mail']; ?></p>
+    <ul id="menu">
+      <h1 id=mainTitole>勤怠アプリ</h1>
+      <div class="nav">
+        <li class="nav_list">ようこそ <?php echo $family_name.$last_name ; ?>様</li>
+        <li class="nav_list"> <?php echo $_SESSION['mail']; ?></li>
+      </div>
       <?php if ($role === '管理者'): ?>
-        <p>このアカウント権限は管理者です</p>
+      <li class="supervisor">アカウント権限 管理者</li>
       <?php endif; ?>
-      <p><a href="logout.php">Logout</a></p>
-    </div>
+      <li class="nav"><a href="../logout.php" id="logout">Logout</a></li>
+    </ul>
   </header>
   <main>
+    <h1 id="title">勤務情報編集</h1>
+    <div id="YearAndMonth">
+      <p><?php echo $user_name; ?>さん</p>
+      <p><?php echo date('Y年m月d日', strtotime($row['date'])); ?>の勤務情報</p>
+    </div>
+
     <form action="timeUpdate.php" method="POST" id="updateForm">
       <input type="hidden" name="id" value="<?php echo $id; ?>">
 
@@ -99,6 +135,7 @@ var_dump($_SESSION);
       <i>※日付は編集できません</i>
       <br>
 
+      <label for="category">区分:</label>
       <select name="category" id="category">
         <option value="公休" <?php if($row['category'] == '公休') echo 'selected'; ?>>公休</option>
         <option value="出勤" <?php if($row['category'] == '出勤') echo 'selected'; ?>>出勤</option>
@@ -133,7 +170,17 @@ var_dump($_SESSION);
       <input type="submit" value="更新">
     </form>
 
-    <div>
+     <div id="back">
+      <p class="button">
+        <a href="http://localhost:8888/AttendanceManagementSystem/top.php" id="topBack" >TOPページへ戻る</a>
+      </p>
+      <p class="button">
+        <!-- 元のユーザーのtimeSheetSearch.phpに遷移するリンク -->
+        <a href="../timeSheet/timeSheetSearch.php?user_id=<?php echo $_SESSION['id']; ?>&user_name=<?php echo $_SESSION['user_name']; ?>" >元のページに戻る</a>
+      </p>
+    </div>
+
+    <div class="message">
         <?php
           if (isset($success)) {
             echo $success;// 成功メッセージ
@@ -147,17 +194,9 @@ var_dump($_SESSION);
         ?>
       </h1>
     </div>
-
-    <div>
-      <p>
-        <a href="http://localhost:8888/AttendanceManagementSystem/top.php" id="topBack" >TOPページへ戻る</a>
-      </p>
-      <p>
-        <!-- <a href="../update/timeUpdate.php?id=<?php echo $_SESSION['user_id']; ?>">勤務情報一覧へ</a> -->
-      </p>
-    </div>
   </main>
   <script>
+    // 合計
     function calculateWorkingTime() {
       var startTime = document.getElementById("start_time").value;
       var endTime = document.getElementById("end_time").value;
@@ -174,15 +213,37 @@ var_dump($_SESSION);
 
       document.getElementById("standard_working_time").value = ("0" + workingHours).slice(-2) + ":" + ("0" + workingMinutes).slice(-2);
     }
-    </script>
-  <?php
-    } else {
-      echo "データが見つかりません";
+
+    document.addEventListener("DOMContentLoaded", function() {
+    const updateForm = document.getElementById('updateForm');
+    const timeInputs = document.querySelectorAll('input[type="text"]');
+
+    updateForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      if (validateForm()) {
+        // フォームが妥当であれば、送信
+        this.submit();
+      } else {
+        alert('入力内容を確認してください。');
+      }
+    });
+
+    function validateForm() {
+      let isValid = true;
+      timeInputs.forEach(input => {
+        if (input.value.trim() === '') {
+          isValid = false;
+          return;
+        }
+        if (!/^\d{1,2}:\d{2}$/.test(input.value.trim())) {
+          isValid = false;
+          return;
+        }
+      });
+      return isValid;
     }
-  } else {
-    echo "IDが指定されていません";
-  }
-  ?>
+  });
+    </script>
   <footer>Copytifht is the one which provides A to Z about programming</footer>
   <script type="text/javascript" src="../js/common.js"></script>
 </body>

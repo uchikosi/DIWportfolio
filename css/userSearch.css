@@ -1,0 +1,42 @@
+#title {
+  margin: 1% 10%;
+}
+
+table {
+  border-collapse: collapse;
+  /* 中央配置 */
+  margin: 10px auto;
+  text-align: center;
+  width: 95%;
+  background-color: #CCFFCC;
+}
+
+#searchForm {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  gap: 0px 15px;
+  /* 余白 */
+  margin: 2% 0;
+}
+
+th,
+td {
+  border: 1px solid #dddddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+#button {
+  text-align: center;
+}
+
+#topBack {
+  /* アンカーの下線消し */
+  text-decoration: none;
+  padding: 10px;
+  background-color: #CCCCFF;
+  color: #0000FF;
+}

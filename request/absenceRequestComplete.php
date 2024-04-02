@@ -55,6 +55,7 @@ session_start();
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/allRequestComplete.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
   <title>欠勤、早退、遅刻、連絡完了画面</title>
   <style>
@@ -75,7 +76,8 @@ session_start();
     </ul>
   </header>
   <main>
-    <div>
+    <h1 id="title">連欠勤、早退、遅刻、連絡完了画面</h1>
+    <div id="message">
       <?php
         if (isset($success)) {
           echo $success;// 成功メッセージ
@@ -89,7 +91,7 @@ session_start();
     ?>
     </div>
 
-    <div>
+    <div id="back">
       <p>
         <a href="http://localhost:8888/AttendanceManagementSystem/top.php" id="topBack" >TOPページへ戻る</a>
       </p>

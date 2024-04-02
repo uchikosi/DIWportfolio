@@ -34,6 +34,7 @@ header {
 
 .nav {
   width: 23%;
+  margin: auto 0;
 }
 
 .nav_list {

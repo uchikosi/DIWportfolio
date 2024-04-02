@@ -55,15 +55,15 @@ session_start();
   $user_id = $_SESSION['user_id'] ?? null; // ユーザーIDを取得
   $family_name = $_SESSION['family_name'] ?? null;
   $last_name = $_SESSION['last_name'] ?? null;
-
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="../css/complete.css">
   <link rel="stylesheet" type="text/css" href="../css/common.css">
-  <title>スタッフ登録完了画面</title>
+  <title>スタッフデータ入力完了</title>
   <style>
   </style>
 </head>
@@ -82,7 +82,8 @@ session_start();
     </ul>
   </header>
   <main>
-    <div>
+    <h1 id="title">スタッフデータ入力完了</h1>
+    <div id="message">
         <?php
           if (isset($success)) {
             echo $success;// 成功メッセージ
@@ -97,7 +98,7 @@ session_start();
       </h1>
     </div>
 
-    <div>
+    <div id="back">
       <p>
         <a href="http://localhost:8888/AttendanceManagementSystem/top.php" id="topBack" >TOPページへ戻る</a>
       </p>
